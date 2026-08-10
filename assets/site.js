@@ -566,8 +566,8 @@
         mv.setAttribute('disable-zoom','');
         mv.setAttribute('disable-pan','');
         mv.setAttribute('interaction-prompt','none');
-        mv.setAttribute('exposure','0.95');
-        mv.setAttribute('shadow-intensity','0.7');
+        mv.setAttribute('exposure','1.15');
+        mv.setAttribute('shadow-intensity','0.35');
         mv.setAttribute('shadow-softness','0.9');
         mv.setAttribute('camera-orbit','0deg 78deg 105%');
         mv.addEventListener('load',()=>{
