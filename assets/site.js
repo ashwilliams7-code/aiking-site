@@ -334,8 +334,10 @@
         '<a href="/#engagements">Engagements</a>'+
         '<a href="/#faq">FAQ</a>'+
         '<a href="/founder.html"'+(path.endsWith('/founder.html')?' aria-current="page"':'')+'>Founder</a>';
-      const brief=navActions&&navActions.querySelector('[data-open-briefing]');
-      if(brief) brief.innerHTML='<span class="k-label-long">Private briefing</span><span class="k-label-short">Briefing</span> <span class="arrow">→</span>';
+      if(navActions){
+        const href=path.endsWith('/contact.html')?'#briefing':'/contact.html#briefing';
+        navActions.innerHTML='<a class="btn primary small" href="'+href+'" aria-label="Request a free 30-minute consultation"><span class="k-label-long">Free consultation</span><span class="k-label-short">Consult</span> <span class="arrow">→</span></a>';
+      }
     }
     let ticking=false;
     const onScroll=()=>{ if(ticking) return; ticking=true; requestAnimationFrame(()=>{ header.classList.toggle('scrolled',window.scrollY>10); ticking=false; }); };
