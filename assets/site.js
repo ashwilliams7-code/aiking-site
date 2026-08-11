@@ -476,6 +476,118 @@
     updateCinema();
   }
 
+  /* ---------- internal-route cinematic conductor ----------
+     Extends the homepage's directed motion language across every public route.
+     It preserves existing photographs and video sources; this layer only adds
+     atmosphere, scene pacing, restrained media movement and progress context. */
+  const routeMain=!document.body.classList.contains('home-knotch')&&document.querySelector('main#main');
+  if(routeMain){
+    const clamp=(n,a=0,b=1)=>Math.min(b,Math.max(a,n));
+    const scenes=Array.from(routeMain.children).filter(el=>el.tagName==='SECTION');
+    document.body.classList.add('cinema-route');
+    if(scenes.length<=2) document.body.classList.add('cinema-utility');
+
+    const atmosphere=document.createElement('div');
+    atmosphere.className='cinema-atmosphere';
+    atmosphere.setAttribute('aria-hidden','true');
+    atmosphere.innerHTML='<i></i><i></i><i></i>';
+    document.body.insertBefore(atmosphere,routeMain);
+
+    scenes.forEach((scene,index)=>{
+      scene.classList.add('cinema-scene');
+      scene.style.setProperty('--cinema-scene-index',index);
+      scene.dataset.cinemaScene=String(index+1).padStart(2,'0');
+      if(index===0) scene.classList.add('cinema-opening');
+    });
+
+    const motionSelector=[
+      '.section-head','.service-hero .wrap','.founder-hero-copy','.founder-hero-portrait',
+      '.founder-capability-grid > *','.consult-hero-grid > *','.consult-intake-grid > *',
+      '.consult-advisor-grid > *','.sky-hero-copy','.sky-command-stage','.sky-vision-copy',
+      '.sky-vision-media','.sky-states-copy','.sky-states-media','.card','.flow',
+      '.detail-list > *','.process > li','.quote-card','.proof-template > *',
+      '.cta-band','.form-shell','article','figure'
+    ].join(',');
+    const motionItems=Array.from(routeMain.querySelectorAll(motionSelector));
+    motionItems.forEach((el,index)=>{
+      el.classList.add('cinema-motion');
+      el.style.setProperty('--cinema-delay',Math.min((index%5)*75,300)+'ms');
+    });
+
+    const mediaFrames=Array.from(routeMain.querySelectorAll([
+      'figure','.founder-hero-portrait','.founder-seated','.founder-photo',
+      '.consult-advisor-media','.sky-vision-media','.sky-states-media'
+    ].join(','))).filter((el,index,self)=>self.indexOf(el)===index&&el.querySelector('img'));
+    mediaFrames.forEach(frame=>{
+      frame.classList.add('cinema-media-frame');
+      if(!frame.querySelector('.cinema-frame-light')){
+        const light=document.createElement('span');
+        light.className='cinema-frame-light';
+        light.setAttribute('aria-hidden','true');
+        frame.appendChild(light);
+      }
+    });
+
+    if(motionOK&&'IntersectionObserver' in window){
+      const reveal=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){ entry.target.classList.add('is-cinema-in'); reveal.unobserve(entry.target); }
+        });
+      },{rootMargin:'0px 0px -7% 0px',threshold:.04});
+      motionItems.forEach(el=>reveal.observe(el));
+      setTimeout(()=>motionItems.forEach(el=>el.classList.add('is-cinema-in')),5000);
+    }else{
+      motionItems.forEach(el=>el.classList.add('is-cinema-in'));
+    }
+
+    let routeFrame=0;
+    function updateRouteCinema(){
+      routeFrame=0;
+      const vh=Math.max(1,innerHeight);
+      const pageMax=Math.max(1,document.documentElement.scrollHeight-vh);
+      const pageP=clamp(scrollY/pageMax);
+      document.body.style.setProperty('--cinema-page-p',pageP.toFixed(4));
+      document.body.style.setProperty('--cinema-grid-y',(-80*pageP).toFixed(2)+'px');
+      document.body.style.setProperty('--cinema-horizon-y',((pageP-.5)*120).toFixed(2)+'px');
+      let active=0;
+      const focusY=vh*.46;
+      scenes.forEach((scene,index)=>{
+        const r=scene.getBoundingClientRect();
+        const p=clamp((vh-r.top)/(vh+r.height));
+        const enter=clamp((vh-r.top)/(vh*.8));
+        scene.style.setProperty('--cinema-scene-p',p.toFixed(4));
+        scene.style.setProperty('--cinema-scene-enter',enter.toFixed(4));
+        if(r.top<=focusY&&r.bottom>focusY) active=index;
+      });
+      scenes.forEach((scene,index)=>scene.classList.toggle('is-cinema-active',index===active));
+      mediaFrames.forEach(frame=>{
+        const r=frame.getBoundingClientRect();
+        const p=clamp((vh-r.top)/(vh+r.height));
+        frame.style.setProperty('--cinema-media-y',((p-.5)*-18).toFixed(2)+'px');
+        frame.style.setProperty('--cinema-media-scale',(1.035+Math.abs(p-.5)*.025).toFixed(4));
+      });
+    }
+    function scheduleRouteCinema(){ if(!routeFrame) routeFrame=requestAnimationFrame(updateRouteCinema); }
+    window.addEventListener('scroll',scheduleRouteCinema,{passive:true});
+    window.addEventListener('resize',scheduleRouteCinema,{passive:true});
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(scheduleRouteCinema);
+    updateRouteCinema();
+
+    if(motionOK&&finePointer){
+      let pointerFrame=0,px=innerWidth*.72,py=innerHeight*.28;
+      const paintPointer=()=>{
+        pointerFrame=0;
+        document.body.style.setProperty('--cinema-pointer-x',px+'px');
+        document.body.style.setProperty('--cinema-pointer-y',py+'px');
+      };
+      window.addEventListener('pointermove',event=>{
+        px=event.clientX;py=event.clientY;
+        if(!pointerFrame) pointerFrame=requestAnimationFrame(paintPointer);
+      },{passive:true});
+      paintPointer();
+    }
+  }
+
   /* ---------- hero backdrop: ambient particle field + video slot ---------- */
   const backdrop=document.querySelector('.hero-backdrop');
   let canvasStop=null;

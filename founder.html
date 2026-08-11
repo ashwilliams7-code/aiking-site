@@ -57,7 +57,8 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/assets/site.css?v=20260811-cinema2" />
+    <link rel="stylesheet" href="/assets/site.css?v=20260811-cinema1" />
+    <link rel="stylesheet" href="/assets/founder-profile.css?v=20260811-portrait1" />
     <link rel="icon" href="/assets/aiking-icon.svg" type="image/svg+xml" />
     <script type="application/ld+json">
       {
@@ -97,7 +98,7 @@
       }
     </script>
   </head>
-  <body>
+  <body class="founder-page">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap nav">
@@ -129,39 +130,74 @@
       </div>
     </header>
     <main id="main">
-      <section class="service-hero">
-        <div class="wrap">
-          <div class="breadcrumb"><a href="/">Home</a> / Founder</div>
-          <span class="eyebrow">Founder · Advisor · Builder</span>
-          <h1>Work directly with <em>Ash Williams.</em></h1>
-          <p class="lead">
-            AIKING has one advisor. Ash counsels Australian CEOs and directors
-            on where AI pays, then designs, builds and operates the systems
-            himself. The strategy and the build never change hands.
-          </p>
-          <div class="actions">
-            <button class="btn primary" type="button" data-open-briefing>
-              Request a private briefing <span class="arrow">→</span></button
-            ><a class="btn secondary" href="mailto:ash@aiking.info"
-              >Email Ash directly</a
-            >
+      <section class="founder-hero" aria-labelledby="founder-hero-title">
+        <div class="founder-hero-gridline" aria-hidden="true"></div>
+        <div class="wrap founder-hero-grid">
+          <div class="founder-hero-copy">
+            <div class="breadcrumb"><a href="/">Home</a> / Founder</div>
+            <span class="eyebrow">Founder · Advisor · Builder</span>
+            <h1 id="founder-hero-title">Work directly with <em>Ash Williams.</em></h1>
+            <p class="lead">
+              AIKING has one advisor. Ash counsels Australian CEOs and directors
+              on where AI pays, then designs, builds and operates the systems
+              himself. The strategy and the build never change hands.
+            </p>
+            <div class="actions">
+              <a class="btn primary" href="/contact.html#briefing">
+                Request a free consultation <span class="arrow">→</span></a
+              ><a class="btn secondary" href="mailto:ash@aiking.info"
+                >Email Ash directly</a
+              >
+            </div>
           </div>
+          <figure class="founder-hero-portrait">
+            <picture>
+              <source
+                media="(max-width: 680px)"
+                srcset="/assets/people/ash-founder-editorial-640.webp"
+              />
+              <img
+                src="/assets/people/ash-founder-editorial-960.webp"
+                srcset="/assets/people/ash-founder-editorial-640.webp 640w, /assets/people/ash-founder-editorial-960.webp 960w"
+                sizes="(max-width: 680px) calc(100vw - 32px), 43vw"
+                alt="Black-and-white editorial portrait of AIKING founder Ash Williams"
+                width="960"
+                height="1280"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </picture>
+            <figcaption>
+              <span>Founder / Principal</span>
+              <strong>Ash Williams</strong>
+            </figcaption>
+          </figure>
         </div>
       </section>
-      <section class="section light">
-        <div class="wrap founder-panel">
-          <div class="founder-photo">
-            <img
-              src="/assets/ash-founder.jpg"
-              alt="Ash Williams, founder of AIKING"
-              width="640"
-              height="640"
-              loading="lazy"
-            />
-          </div>
+      <section class="section founder-capability" aria-labelledby="founder-capability-title">
+        <div class="wrap founder-capability-grid">
+          <figure class="founder-seated">
+            <picture>
+              <source
+                media="(max-width: 680px)"
+                srcset="/assets/people/ash-founder-seated-640.webp"
+              />
+              <img
+                src="/assets/people/ash-founder-seated-960.webp"
+                srcset="/assets/people/ash-founder-seated-640.webp 640w, /assets/people/ash-founder-seated-960.webp 960w"
+                sizes="(max-width: 680px) calc(100vw - 32px), 40vw"
+                alt="Ash Williams seated in a black suit in an editorial studio portrait"
+                width="960"
+                height="1280"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption><span>ASH / 001</span><b>Advisor · Builder · Operator</b></figcaption>
+          </figure>
           <div class="founder-meta">
             <span class="section-kicker"><i>01</i>The capability</span>
-            <h2>The strategy, the architecture, <em>the build.</em></h2>
+            <h2 id="founder-capability-title">The strategy, the architecture, <em>the build.</em></h2>
             <p class="lead">
               Ash Williams is an Australian operations leader with a decade of
               named intelligence systems behind him. At AIKING he carries every
@@ -305,6 +341,6 @@
         </nav>
       </div>
     </footer>
-    <script src="/assets/site.js?v=20260811-consultancy3" defer></script>
+    <script src="/assets/site.js?v=20260811-cinema1" defer></script>
   </body>
 </html>

@@ -405,6 +405,8 @@ h2{font-size:clamp(30px,8.6vw,42px)}
 @media(max-width:430px){
 html.js .nav-actions .btn.small{padding:10px 12px;font-size:12px}
 .brand-logo{width:124px}
+body:not(.home-knotch) .k-header .nav{gap:12px}
+body:not(.home-knotch) .k-header .brand-logo{width:124px}
 .stat-strip .wrap{grid-template-columns:1fr 1fr}
 }
 @media(max-width:360px){
@@ -654,3 +656,199 @@ body.nav-lock .skyv-launch,body.nav-lock .skyv-panel{opacity:0;visibility:hidden
 .skyv-note .skyv-brief{border:0;background:none;color:var(--muted);font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0}
 .skyv-note .skyv-brief:hover{color:var(--lime)}
 @media(max-width:680px){.skyv-launch{right:14px;bottom:14px;padding:12px 16px}.skyv-panel{right:8px;bottom:8px;left:8px;width:auto}}
+
+/* ==================================================================
+   Route cinema — 2026-08-11
+   A shared directed-light, scene and media language for all internal
+   public routes. Existing image and video assets remain untouched.
+   ================================================================== */
+.cinema-route{
+  --cinema-pointer-x:72vw;
+  --cinema-pointer-y:28vh;
+  --cinema-page-p:0;
+  position:relative;
+  background:#050705;
+}
+.cinema-route main,
+.cinema-route .site-footer{position:relative;z-index:1}
+.cinema-route .site-header{z-index:80}
+.cinema-route:not(.modal-open):not(.nav-lock) .site-header:not(.scrolled){
+  background:rgba(5,7,5,.58);
+  border-bottom-color:rgba(255,255,255,.055);
+  box-shadow:none;
+}
+.cinema-atmosphere{
+  position:fixed;
+  z-index:0;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  opacity:.72;
+  background:
+    radial-gradient(680px 520px at var(--cinema-pointer-x) var(--cinema-pointer-y),rgba(209,254,23,.055),transparent 72%),
+    linear-gradient(90deg,transparent 49.95%,rgba(255,255,255,.018) 50%,transparent 50.05%);
+}
+.cinema-atmosphere::before{
+  content:"";
+  position:absolute;
+  inset:-18%;
+  opacity:.28;
+  background-image:
+    linear-gradient(rgba(255,255,255,.026) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.026) 1px,transparent 1px);
+  background-size:84px 84px;
+  transform:perspective(900px) rotateX(62deg) translateY(var(--cinema-grid-y,0));
+  transform-origin:50% 62%;
+  mask-image:radial-gradient(ellipse 80% 68% at 50% 46%,#000,transparent 78%);
+}
+.cinema-atmosphere::after{
+  content:"";
+  position:absolute;
+  left:-10%;right:-10%;top:44%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(209,254,23,.18),rgba(255,255,255,.1),transparent);
+  box-shadow:0 0 70px rgba(209,254,23,.11);
+  transform:translateY(var(--cinema-horizon-y,0));
+}
+.cinema-atmosphere>i{
+  position:absolute;
+  display:block;
+  border-radius:50%;
+  filter:blur(1px);
+  opacity:.5;
+}
+.cinema-atmosphere>i:nth-child(1){width:5px;height:5px;left:8%;top:19%;background:var(--lime);box-shadow:0 0 20px rgba(209,254,23,.75)}
+.cinema-atmosphere>i:nth-child(2){width:2px;height:2px;right:12%;top:38%;background:#fff;box-shadow:0 0 12px rgba(255,255,255,.52)}
+.cinema-atmosphere>i:nth-child(3){width:3px;height:3px;left:68%;bottom:13%;background:var(--lime);box-shadow:0 0 16px rgba(209,254,23,.62)}
+
+.cinema-scene{
+  position:relative;
+  isolation:isolate;
+  box-shadow:inset 0 1px rgba(255,255,255,.045);
+  transition:box-shadow 1s var(--ease);
+}
+.cinema-scene::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  top:0;right:0;
+  width:min(760px,58vw);height:420px;
+  opacity:.1;
+  pointer-events:none;
+  background:radial-gradient(ellipse at 62% 0%,rgba(209,254,23,.16),rgba(255,255,255,.025) 34%,transparent 72%);
+  transition:opacity .9s var(--ease);
+}
+.cinema-scene.is-cinema-active{
+  box-shadow:inset 0 1px rgba(209,254,23,.08),inset 0 -1px rgba(255,255,255,.035);
+}
+.cinema-scene.is-cinema-active::after{opacity:.32}
+.cinema-opening{overflow:hidden}
+.cinema-opening::after{
+  top:auto;right:-10%;bottom:-80px;
+  width:120%;height:170px;
+  opacity:.58;
+  background:radial-gradient(ellipse at 66% 0%,rgba(209,254,23,.15),rgba(255,255,255,.035) 34%,transparent 70%);
+  box-shadow:none;
+  transform:none;
+}
+.cinema-route:not(.cinema-utility) .service-hero{
+  min-height:min(76svh,820px);
+  display:grid;
+  align-items:center;
+  padding-block:clamp(88px,11vh,132px);
+  background:
+    radial-gradient(760px 520px at 86% 24%,rgba(209,254,23,.075),transparent 70%),
+    linear-gradient(180deg,rgba(6,8,6,.18),rgba(5,7,5,.82));
+}
+.cinema-route.cinema-utility .service-hero{
+  min-height:min(52svh,560px);
+  display:grid;
+  align-items:center;
+  background:radial-gradient(660px 440px at 84% 22%,rgba(209,254,23,.06),transparent 72%);
+}
+.cinema-route .service-hero .wrap{position:relative;z-index:1}
+.cinema-route .service-hero h1{
+  max-width:1040px;
+  text-shadow:0 24px 80px rgba(0,0,0,.46);
+}
+.cinema-route .service-hero .lead{max-width:800px}
+.cinema-route .service-hero .breadcrumb{opacity:.82}
+
+/* Purposeful scene arrivals: soft optical focus, no sideways mobile overflow. */
+@media(prefers-reduced-motion:no-preference){
+  .cinema-motion{
+    opacity:0;
+    filter:blur(7px);
+    transform:translate3d(0,34px,0) scale(.986);
+    transition:
+      opacity .92s var(--ease) var(--cinema-delay,0ms),
+      transform 1.08s var(--ease) var(--cinema-delay,0ms),
+      filter 1.02s var(--ease) var(--cinema-delay,0ms);
+  }
+  .cinema-motion.is-cinema-in,
+  .cinema-motion.rv.in{
+    opacity:1;
+    filter:none;
+    transform:none;
+  }
+  .cinema-scene.is-cinema-active .section-kicker::before,
+  .cinema-scene.is-cinema-active .eyebrow::before{animation:cinemaCue 1.35s var(--ease) 1}
+  .cinema-frame-light{animation:cinemaFrameSweep 9s var(--ease) infinite}
+  .cinema-atmosphere>i:nth-child(1){animation:cinemaStarA 14s ease-in-out infinite}
+  .cinema-atmosphere>i:nth-child(2){animation:cinemaStarB 18s ease-in-out infinite}
+  .cinema-atmosphere>i:nth-child(3){animation:cinemaStarA 21s ease-in-out -7s infinite}
+}
+@keyframes cinemaCue{0%{box-shadow:0 0 0 0 rgba(209,254,23,.65),0 0 16px rgba(209,254,23,.8)}75%{box-shadow:0 0 0 12px rgba(209,254,23,0),0 0 20px rgba(209,254,23,.78)}100%{box-shadow:0 0 0 0 rgba(209,254,23,0),0 0 16px rgba(209,254,23,.55)}}
+@keyframes cinemaFrameSweep{0%,48%{transform:translateX(-140%) skewX(-14deg);opacity:0}54%{opacity:.32}66%,100%{transform:translateX(160%) skewX(-14deg);opacity:0}}
+@keyframes cinemaStarA{50%{transform:translate3d(22px,-28px,0);opacity:.85}}
+@keyframes cinemaStarB{50%{transform:translate3d(-18px,32px,0);opacity:.75}}
+
+.cinema-media-frame{isolation:isolate;position:relative}
+.cinema-media-frame img{
+  transform:translate3d(0,var(--cinema-media-y,0),0) scale(var(--cinema-media-scale,1.035));
+  transform-origin:50% 50%;
+  will-change:transform;
+}
+.cinema-frame-light{
+  position:absolute;
+  z-index:4;
+  inset:-12% auto -12% -24%;
+  width:22%;
+  opacity:0;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(209,254,23,.16),rgba(255,255,255,.12),transparent);
+  mix-blend-mode:screen;
+}
+.cinema-media-frame figcaption{z-index:5}
+
+.cinema-route .site-footer::after{opacity:.58}
+@media(prefers-reduced-motion:no-preference){
+  @supports(animation-timeline:view()){
+    .cinema-route .site-footer::after{
+      animation:cinemaFooterResolve linear both;
+      animation-timeline:view();
+      animation-range:entry 0% entry 92%;
+    }
+  }
+}
+@keyframes cinemaFooterResolve{from{opacity:.12;transform:translateX(-50%) translateY(28px)}to{opacity:.72;transform:translateX(-50%) translateY(0)}}
+
+@media(max-width:680px){
+  .cinema-atmosphere{opacity:.5}
+  .cinema-atmosphere::before{background-size:58px 58px}
+  .cinema-scene::after{display:none}
+  .cinema-route:not(.cinema-utility) .service-hero{
+    min-height:min(72svh,690px);
+    padding-block:64px 58px;
+  }
+  .cinema-route.cinema-utility .service-hero{min-height:auto;padding-block:58px 46px}
+  .cinema-motion{transform:translate3d(0,22px,0) scale(.992);filter:blur(4px)}
+  .cinema-media-frame img{transform:translate3d(0,var(--cinema-media-y,0),0) scale(1.025)}
+}
+@media(prefers-reduced-motion:reduce){
+  .cinema-atmosphere{opacity:.42}
+  .cinema-atmosphere::before,.cinema-atmosphere::after{transform:none}
+  .cinema-motion{opacity:1;filter:none;transform:none}
+  .cinema-media-frame img{transform:none!important}
+  .cinema-frame-light{display:none}
+  .cinema-scene::after{opacity:.14}
+}

@@ -415,6 +415,7 @@
 .sky-founder-shell{display:grid;grid-template-columns:minmax(310px,.7fr) minmax(0,1.3fr);min-height:620px;border:1px solid var(--sky-line-strong);background:radial-gradient(circle at 82% 8%,rgba(209,254,23,.08),transparent 34%),#090c09;box-shadow:0 50px 130px rgba(0,0,0,.48);overflow:hidden}
 .sky-founder-portrait{position:relative;min-height:620px;overflow:hidden;background:#111510}
 .sky-founder-portrait::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(4,6,4,.88) 100%),linear-gradient(120deg,rgba(209,254,23,.07),transparent 44%);pointer-events:none}
+.sky-founder-portrait picture{display:block;width:100%;height:100%}
 .sky-founder-portrait img{width:100%;height:100%;object-fit:cover;object-position:center 28%;filter:saturate(.72) contrast(1.05);transition:transform .9s var(--ease),filter .9s}
 .sky-founder-shell:hover .sky-founder-portrait img{transform:scale(1.025);filter:saturate(.86) contrast(1.05)}
 .sky-founder-portrait div{position:absolute;z-index:2;left:26px;right:26px;bottom:24px;display:grid;gap:3px;padding-top:16px;border-top:1px solid rgba(255,255,255,.2)}
@@ -422,6 +423,254 @@
 .sky-founder-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(48px,7vw,100px)}
 .sky-founder-copy h2{margin-top:22px;max-width:850px;font-size:clamp(42px,5vw,70px);letter-spacing:-.05em;line-height:.94}.sky-founder-copy .lead{max-width:800px;color:#9aa198;font-size:17px}.sky-founder-copy .actions{margin-top:34px}
 .sky-founder-note{margin-top:26px;padding-top:20px;border-top:1px solid var(--sky-line);color:#727a72;font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase}
+
+/* Pinterest-inspired intelligence portraiture — original Sky-owned visual layer */
+.sky-vision{
+  position:relative;
+  min-height:900px;
+  overflow:hidden;
+  isolation:isolate;
+  border-top:1px solid rgba(255,255,255,.07);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  background:
+    radial-gradient(circle at 73% 44%,rgba(80,188,255,.11),transparent 34%),
+    #030503;
+}
+.sky-vision::before{
+  content:"";
+  position:absolute;
+  z-index:3;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,#030503 0%,rgba(3,5,3,.96) 34%,rgba(3,5,3,.44) 58%,rgba(3,5,3,.06) 100%),
+    linear-gradient(180deg,rgba(3,5,3,.42),transparent 24%,transparent 68%,#030503 100%);
+}
+.sky-vision::after{
+  content:"SKY / CONTEXT FIELD";
+  position:absolute;
+  z-index:4;
+  right:26px;
+  bottom:24px;
+  color:rgba(181,225,242,.58);
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:.19em;
+  writing-mode:vertical-rl;
+  text-transform:uppercase;
+}
+.sky-vision-media{
+  position:absolute;
+  z-index:1;
+  inset:0 0 0 auto;
+  width:min(61vw,980px);
+  overflow:hidden;
+}
+.sky-vision-media picture,
+.sky-vision-media img{
+  display:block;
+  width:100%;
+  height:100%;
+}
+.sky-vision-media img{
+  object-fit:cover;
+  object-position:52% 42%;
+  filter:saturate(.86) contrast(1.12) brightness(.82);
+  transform:scale(1.025);
+}
+.sky-vision-media::before{
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:0;
+  opacity:.62;
+  background-image:
+    linear-gradient(rgba(116,211,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(116,211,255,.055) 1px,transparent 1px);
+  background-size:42px 42px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 75% at 58% 46%,#000,transparent 80%);
+  mask-image:radial-gradient(ellipse 80% 75% at 58% 46%,#000,transparent 80%);
+  pointer-events:none;
+}
+.sky-vision-scan{
+  position:absolute;
+  z-index:3;
+  left:12%;
+  right:7%;
+  top:18%;
+  height:1px;
+  opacity:.78;
+  background:linear-gradient(90deg,transparent,rgba(119,217,255,.95),rgba(209,254,23,.78),transparent);
+  box-shadow:0 0 18px rgba(119,217,255,.46);
+  animation:skyVisionScan 7s ease-in-out infinite;
+}
+@keyframes skyVisionScan{
+  0%,10%{top:14%;opacity:0}
+  24%{opacity:.82}
+  76%{opacity:.35}
+  92%,100%{top:86%;opacity:0}
+}
+.sky-vision-shell{
+  position:relative;
+  z-index:5;
+  min-height:900px;
+  display:flex;
+  align-items:center;
+}
+.sky-vision-copy{
+  width:min(55%,780px);
+  padding:110px 0;
+}
+.sky-vision-copy .section-kicker{color:#8ae0ff;font-size:10.5px}
+.sky-vision-copy h2{
+  margin-top:24px;
+  max-width:850px;
+  font-size:clamp(70px,7.4vw,116px);
+  line-height:.88;
+  letter-spacing:-.064em;
+}
+.sky-vision-copy h2 em{
+  color:#83ddff;
+  text-shadow:0 0 38px rgba(91,203,255,.2);
+}
+.sky-vision-copy>p{
+  max-width:690px;
+  margin-top:31px;
+  color:#a1aaa3;
+  font-size:18px;
+  line-height:1.68;
+}
+.sky-vision-signals{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  margin-top:44px;
+  border-top:1px solid rgba(255,255,255,.11);
+  border-bottom:1px solid rgba(255,255,255,.11);
+}
+.sky-vision-signals span{
+  min-width:0;
+  padding:18px 13px;
+  border-left:1px solid rgba(255,255,255,.09);
+  color:#a0aaa4;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.sky-vision-signals span:first-child{border-left:0;padding-left:0}
+.sky-vision-signals b{
+  display:block;
+  margin-bottom:7px;
+  color:#7ad9ff;
+  font-size:9px;
+  font-weight:500;
+}
+.sky-vision-signals span:last-child b{color:var(--sky-lime)}
+
+.sky-states{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 17% 30%,rgba(80,188,255,.075),transparent 31%),
+    linear-gradient(180deg,#050705,#090c09);
+}
+.sky-states::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.4;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:linear-gradient(90deg,#000,transparent 62%);
+  mask-image:linear-gradient(90deg,#000,transparent 62%);
+  pointer-events:none;
+}
+.sky-states-grid{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(420px,.9fr) minmax(480px,1.1fr);
+  gap:clamp(60px,8vw,126px);
+  align-items:center;
+}
+.sky-states-portrait{
+  position:relative;
+  margin:0;
+  width:min(100%,650px);
+  overflow:hidden;
+  border:1px solid rgba(136,220,255,.2);
+  border-radius:32px;
+  background:#030503;
+  box-shadow:0 48px 130px rgba(0,0,0,.58),0 0 80px rgba(85,194,255,.05);
+}
+.sky-states-portrait::before,
+.sky-states-portrait::after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  pointer-events:none;
+}
+.sky-states-portrait::before{
+  inset:0;
+  background:linear-gradient(180deg,rgba(2,4,3,.05),transparent 58%,rgba(2,4,3,.72));
+}
+.sky-states-portrait::after{
+  left:50%;
+  top:0;
+  bottom:0;
+  width:1px;
+  opacity:.38;
+  background:linear-gradient(transparent,rgba(122,217,255,.72),transparent);
+  box-shadow:0 0 18px rgba(122,217,255,.35);
+}
+.sky-states-portrait picture,
+.sky-states-portrait img{display:block;width:100%}
+.sky-states-portrait img{height:auto;filter:saturate(.88) contrast(1.08) brightness(.9)}
+.sky-states-portrait figcaption{
+  position:absolute;
+  z-index:3;
+  left:20px;
+  right:20px;
+  bottom:18px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.18);
+  color:#aec1c6;
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+.sky-states-copy h2{
+  margin-top:22px;
+  font-size:clamp(60px,6.3vw,94px);
+  line-height:.9;
+  letter-spacing:-.06em;
+}
+.sky-states-copy h2 em{color:#83ddff;text-shadow:0 0 30px rgba(91,203,255,.15)}
+.sky-states-copy .lead{max-width:720px;color:#9aa49d}
+.sky-state-list{
+  display:grid;
+  margin-top:40px;
+  border-top:1px solid rgba(255,255,255,.11);
+}
+.sky-state-list li{
+  display:grid;
+  grid-template-columns:44px 1fr;
+  gap:18px;
+  padding:19px 4px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.sky-state-list>li>span{
+  padding-top:4px;
+  color:#82dcff;
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:.16em;
+}
+.sky-state-list li:last-child>span{color:var(--sky-lime)}
+.sky-state-list h3{margin:0 0 5px;color:#e8ece6;font-size:21px}
+.sky-state-list p{color:#96a099;font-size:15px;line-height:1.55}
 
 /* Motion-safe dimensional arrivals */
 @media (prefers-reduced-motion:no-preference){
@@ -519,10 +768,54 @@
   .sky-founder-portrait{min-height:370px}
 }
 
+@media(max-width:1080px){
+  .sky-vision,.sky-vision-shell{min-height:820px}
+  .sky-vision-media{width:72vw}
+  .sky-vision-copy{width:min(66%,720px)}
+  .sky-vision-copy h2{font-size:clamp(66px,9vw,96px)}
+  .sky-states-grid{grid-template-columns:minmax(340px,.86fr) minmax(400px,1.14fr);gap:54px}
+}
+@media(max-width:900px){
+  .sky-states-grid{grid-template-columns:1fr;gap:54px}
+  .sky-states-portrait{width:min(100%,620px)}
+  .sky-states-copy{max-width:780px}
+}
+@media(max-width:760px){
+  .sky-vision{min-height:auto}
+  .sky-vision::before{
+    background:
+      linear-gradient(180deg,rgba(3,5,3,.08) 0%,rgba(3,5,3,.16) 48%,#030503 100%),
+      linear-gradient(90deg,rgba(3,5,3,.24),transparent 68%);
+  }
+  .sky-vision::after{display:none}
+  .sky-vision-media{position:relative;width:100%;height:570px}
+  .sky-vision-media img{object-position:51% 36%;transform:scale(1.02)}
+  .sky-vision-shell{min-height:auto;display:block}
+  .sky-vision-copy{width:100%;padding:46px 0 76px}
+  .sky-vision-copy h2{font-size:clamp(49px,13vw,67px);line-height:.91}
+  .sky-vision-copy>p{font-size:15.5px;line-height:1.62}
+  .sky-vision-signals{grid-template-columns:1fr 1fr;margin-top:32px}
+  .sky-vision-signals span{border-bottom:1px solid rgba(255,255,255,.08)}
+  .sky-vision-signals span:nth-child(3){border-left:0;padding-left:0}
+  .sky-vision-signals span:nth-last-child(-n+2){border-bottom:0}
+  .sky-states-grid{gap:42px}
+  .sky-states-portrait{border-radius:24px}
+  .sky-states-copy h2{font-size:clamp(47px,12.8vw,64px)}
+  .sky-state-list{margin-top:31px}
+  .sky-state-list li{grid-template-columns:34px 1fr;gap:12px;padding:17px 2px}
+  .sky-state-list h3{font-size:19px}
+  .sky-state-list p{font-size:13.5px}
+}
+@media(max-width:390px){
+  .sky-vision-media{height:510px}
+  .sky-vision-copy h2{font-size:46px}
+  .sky-states-copy h2{font-size:45px}
+}
+
 /* Motion accessibility: poster and complete information remain first-class. */
 @media(prefers-reduced-motion:reduce){
   .sky-command-video{display:none!important}
-  .sky-command-stage::before{display:none}
+  .sky-command-stage::before,.sky-vision-scan{display:none}
   .sky-route-readout i,.sky-context-bars i,.sky-cap-line .line,.sky-command-log span,.sky-signal-field i,.sky-research-feed span::after,.sky-waveform i,.sky-instrument-main .line,.sky-trace-line,.sky-live i{animation:none!important}
   .sky-trace-line,.sky-cap-line .line,.sky-instrument-main .line{stroke-dashoffset:0!important}
   .sky-pause{display:none}
