@@ -318,17 +318,31 @@
   /* pre-build the modal during idle so the first open is instant */
   if('requestIdleCallback' in window) requestIdleCallback(()=>ensureModal(),{timeout:4000}); else setTimeout(ensureModal,2500);
 
-  /* ---------- header: shrink on scroll ---------- */
+  /* ---------- header: one AIKING shell on every public route ---------- */
   const header=document.querySelector('.site-header');
+  const navLinks=document.querySelector('.nav-links');
+  const navActions=document.querySelector('.nav-actions');
   if(header){
+    header.classList.add('k-header');
+    if(navLinks&&!document.body.classList.contains('home-knotch')){
+      const path=location.pathname;
+      navLinks.innerHTML=
+        '<a href="/">Home</a>'+
+        '<a href="/#method">Method</a>'+
+        '<a href="/#solutions">Solutions</a>'+
+        '<a class="nav-sky-intelligence" href="/executive-intelligence.html"'+(path.endsWith('/executive-intelligence.html')?' aria-current="page"':'')+'>Sky</a>'+
+        '<a href="/#engagements">Engagements</a>'+
+        '<a href="/#faq">FAQ</a>'+
+        '<a href="/founder.html"'+(path.endsWith('/founder.html')?' aria-current="page"':'')+'>Founder</a>';
+      const brief=navActions&&navActions.querySelector('[data-open-briefing]');
+      if(brief) brief.innerHTML='<span class="k-label-long">Private briefing</span><span class="k-label-short">Briefing</span> <span class="arrow">→</span>';
+    }
     let ticking=false;
     const onScroll=()=>{ if(ticking) return; ticking=true; requestAnimationFrame(()=>{ header.classList.toggle('scrolled',window.scrollY>10); ticking=false; }); };
     window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   }
 
   /* ---------- mobile nav: burger + body-level overlay ---------- */
-  const navLinks=document.querySelector('.nav-links');
-  const navActions=document.querySelector('.nav-actions');
   let burger=null,menu=null;
   function closeNav(){ if(menu&&menu.classList.contains('open')){ menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); document.body.classList.remove('nav-lock'); if(burger){burger.setAttribute('aria-expanded','false');burger.focus();} } }
   if(header&&navLinks&&navActions){
@@ -380,6 +394,84 @@
     /* failsafe: whatever happens, nothing stays hidden forever
        (protects print, full-page renders, previews and JS hiccups) */
     setTimeout(()=>{ document.querySelectorAll('.rv:not(.in)').forEach(el=>el.classList.add('in')); },4500);
+  }
+
+  /* ---------- homepage cinematic scroll conductor ----------
+     One continuous motion system: chapter progress, dimensional arrivals,
+     semantic console movement and a compact active-scene rail. */
+  if(document.body.classList.contains('home-knotch')&&motionOK){
+    const clamp=(n,a=0,b=1)=>Math.min(b,Math.max(a,n));
+    const sceneDefs=[
+      ['.k-hero','Opening'],['.k-metric','Advantage'],['#method','Method'],['#solutions','Systems'],
+      ['#sky','Sky'],['#benefits','Outcomes'],['#founder','Founder'],['#engagements','Engage'],
+      ['#comparison','Standard'],['#faq','Questions'],['.k-final','Decision']
+    ];
+    const scenes=sceneDefs.map((d,i)=>{
+      const el=document.querySelector(d[0]);
+      if(!el) return null;
+      el.classList.add('k-cinema-section');
+      el.style.setProperty('--scene-index',i);
+      return {el,label:d[1],index:i};
+    }).filter(Boolean);
+
+    const rail=document.createElement('aside');
+    rail.className='k-scroll-progress';
+    rail.setAttribute('aria-hidden','true');
+    rail.innerHTML='<span>AIKING signal</span><i><b></b></i><strong>01</strong><div class="k-scroll-progress-dots">'+scenes.map(()=>'<b></b>').join('')+'</div><em>Opening</em>';
+    document.body.appendChild(rail);
+    const railNum=rail.querySelector('strong');
+    const railLabel=rail.querySelector('em');
+    const railDots=Array.from(rail.querySelectorAll('.k-scroll-progress-dots b'));
+
+    const motionItems=Array.from(document.querySelectorAll([
+      '.k-process-card','.k-solution-card','.k-proof-console','.k-benefit-card',
+      '.k-founder-photo','.k-founder-copy','.k-engagement-card','.k-compare-col',
+      '.k-faq-list details','.k-final-shell'
+    ].join(',')));
+    motionItems.forEach((el,i)=>{
+      el.classList.add('k-motion-item');
+      const dir=i%3===0?-58:i%3===2?58:0;
+      el.style.setProperty('--item-x',dir);
+    });
+
+    let frame=0;
+    function updateCinema(){
+      frame=0;
+      const vh=Math.max(1,innerHeight);
+      const max=Math.max(1,document.documentElement.scrollHeight-vh);
+      const pageP=clamp(scrollY/max);
+      rail.style.setProperty('--page-p',pageP.toFixed(4));
+      let active=0;
+      const focusY=vh*.48;
+
+      scenes.forEach((scene,i)=>{
+        const r=scene.el.getBoundingClientRect();
+        const p=clamp((vh-r.top)/(vh+r.height));
+        const enter=clamp((vh-r.top)/(vh*.72));
+        scene.el.style.setProperty('--scene-p',p.toFixed(4));
+        scene.el.style.setProperty('--scene-enter',enter.toFixed(4));
+        if(r.top<=focusY&&r.bottom>focusY) active=i;
+      });
+
+      motionItems.forEach(el=>{
+        const r=el.getBoundingClientRect();
+        const p=clamp((vh-r.top)/(vh*.7));
+        el.style.setProperty('--item-p',p.toFixed(4));
+      });
+
+      const scene=scenes[active]||scenes[0];
+      if(scene){
+        railNum.textContent=String(active+1).padStart(2,'0');
+        railLabel.textContent=scene.label;
+        railDots.forEach((dot,i)=>dot.classList.toggle('active',i===active));
+      }
+    }
+    function scheduleCinema(){if(!frame) frame=requestAnimationFrame(updateCinema);}
+    document.body.classList.add('motion-rich');
+    window.addEventListener('scroll',scheduleCinema,{passive:true});
+    window.addEventListener('resize',scheduleCinema,{passive:true});
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(scheduleCinema);
+    updateCinema();
   }
 
   /* ---------- hero backdrop: ambient particle field + video slot ---------- */

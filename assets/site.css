@@ -61,6 +61,36 @@ section[id],main[id]{scroll-margin-top:96px}
 .nav-links a.nav-sky-intelligence{color:var(--lime);font-weight:600;text-shadow:0 0 10px rgba(209,254,23,.6),0 0 24px rgba(209,254,23,.35)}
 .nav-links a.nav-sky-intelligence:hover,.nav-links a.nav-sky-intelligence[aria-current="page"]{color:var(--lime);border-color:var(--lime);text-shadow:0 0 12px rgba(209,254,23,.9),0 0 30px rgba(209,254,23,.55)}
 .nav-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+
+/* unified premium shell for every internal route; homepage adds the fixed overlay variant */
+body:not(.home-knotch) .site-header.k-header{
+  background:rgba(5,6,5,.88);
+  border-bottom:1px solid rgba(247,248,243,.09);
+  backdrop-filter:blur(20px) saturate(135%);
+  box-shadow:0 18px 55px rgba(0,0,0,.18);
+}
+body:not(.home-knotch) .k-header .nav{min-height:82px;position:relative}
+body:not(.home-knotch) .k-header.scrolled .nav{min-height:68px}
+body:not(.home-knotch) .k-header .brand-logo{width:146px}
+body:not(.home-knotch) .k-header .nav-links{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  flex-wrap:nowrap;
+  gap:24px;
+  justify-content:center;
+  color:rgba(247,248,243,.6);
+  font-family:var(--sans);
+  font-size:12px;
+  letter-spacing:0;
+  text-transform:none;
+}
+body:not(.home-knotch) .k-header .nav-links a{padding:8px 0}
+body:not(.home-knotch) .k-header .nav-links a:hover{color:#fff;border-color:transparent}
+body:not(.home-knotch) .k-header .nav-links a.nav-sky-intelligence{color:var(--lime);font-weight:650;text-shadow:0 0 12px rgba(209,254,23,.52),0 0 30px rgba(209,254,23,.22)}
+body:not(.home-knotch) .k-header .btn.small{min-height:42px;padding:10px 17px;font-size:12.5px;background:#f7f8f3;color:#090a09;box-shadow:0 16px 42px rgba(255,255,255,.08)}
+body:not(.home-knotch) .k-header .btn.small:hover{background:var(--lime);box-shadow:0 20px 54px rgba(209,254,23,.2)}
+.k-label-short{display:none}
 .burger{display:none;position:relative;z-index:95;width:46px;height:46px;border-radius:12px;border:1px solid var(--line-strong);background:rgba(255,255,255,.04);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:0}
 .burger i{display:block;width:19px;height:1.5px;border-radius:2px;background:#f2eee4;transition:transform .3s var(--ease),opacity .3s}
 
@@ -376,6 +406,12 @@ h2{font-size:clamp(30px,8.6vw,42px)}
 html.js .nav-actions .btn.small{padding:10px 12px;font-size:12px}
 .brand-logo{width:124px}
 .stat-strip .wrap{grid-template-columns:1fr 1fr}
+}
+@media(max-width:360px){
+body:not(.home-knotch) .k-header .brand-logo{width:108px}
+body:not(.home-knotch) .k-header .nav-actions>.btn.small{padding-inline:9px}
+body:not(.home-knotch) .k-header .k-label-long{display:none}
+body:not(.home-knotch) .k-header .k-label-short{display:inline}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 
