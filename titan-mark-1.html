@@ -54,6 +54,8 @@
 
     <main id="main" class="titan-coming-soon">
       <section class="titan-stage" aria-labelledby="titan-title">
+        <canvas class="titan-particle-field" data-titan-particles aria-hidden="true"></canvas>
+        <div class="titan-cinema-bars" aria-hidden="true"><i></i><i></i></div>
         <div class="titan-atmosphere" aria-hidden="true">
           <span class="titan-halo titan-halo-one"></span>
           <span class="titan-halo titan-halo-two"></span>
@@ -115,20 +117,32 @@
             <span class="titan-sigil-core">⚡</span>
           </div>
 
-          <p class="titan-overline"><span></span> Mark 1 · In development</p>
-          <h1 id="titan-title">TITAN</h1>
-          <p class="titan-edition">MARK <b>1</b></p>
-          <p class="titan-promise">Built to go deeper.<br /><em>Engineered to return proof.</em></p>
+          <p class="titan-overline"><span></span> AIKING presents · Mark 1 <span></span></p>
+          <h1 id="titan-title" aria-label="Titan">
+            <span class="titan-title-left">TI</span><span class="titan-title-right">TAN</span>
+          </h1>
+          <div class="titan-title-strike" aria-hidden="true"></div>
+          <p class="titan-edition">MARK <b>1</b> <small>PROTOCOL</small></p>
+          <p class="titan-promise"><span>Built to go deeper.</span><br /><em>Engineered to return proof.</em></p>
 
           <div class="titan-arrival" aria-label="Titan Mark 1 coming soon">
-            <span>Coming soon</span>
+            <span>System awakening</span>
             <i></i>
+            <b>Coming soon</b>
           </div>
 
           <a class="titan-interest" href="mailto:ash@aiking.info?subject=Titan%20Mark%201%20interest">
-            Register interest <span aria-hidden="true">↗</span>
+            Enter the first circle <span aria-hidden="true">↗</span>
           </a>
         </div>
+
+        <div class="titan-biometric" aria-hidden="true">
+          <span>BIOMETRIC LOCK</span><b>FIJI / 001</b><i></i><small>IDENTITY SEALED</small>
+        </div>
+        <div class="titan-power-readout" aria-hidden="true">
+          <span>CORE</span><b>97.4</b><em>%</em><i></i>
+        </div>
+        <a class="titan-scroll-cue" href="#dossier"><span>Descend</span><i></i></a>
 
         <div class="titan-stage-footer" aria-label="Titan development principles">
           <span>Build</span><i></i><span>Challenge</span><i></i><span>Harden</span><i></i><span>Verify</span>
@@ -225,5 +239,38 @@
     </footer>
 
     <script src="/assets/site.js?v=20260813-titan1" defer></script>
+    <script>
+      (() => {
+        const canvas = document.querySelector('[data-titan-particles]');
+        if (!canvas || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const ctx = canvas.getContext('2d', { alpha: true });
+        let particles = [], raf = 0, width = 0, height = 0, dpr = 1;
+        const reset = () => {
+          dpr = Math.min(devicePixelRatio || 1, 2);
+          width = canvas.clientWidth; height = canvas.clientHeight;
+          canvas.width = width * dpr; canvas.height = height * dpr;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          particles = Array.from({ length: Math.min(110, Math.floor(width / 9)) }, () => ({
+            x: Math.random() * width, y: Math.random() * height,
+            z: .2 + Math.random() * .8, vx: (-.15 + Math.random() * .3),
+            vy: -.12 - Math.random() * .46, size: .25 + Math.random() * 1.15,
+            life: Math.random() * Math.PI * 2
+          }));
+        };
+        const draw = () => {
+          ctx.clearRect(0, 0, width, height);
+          for (const p of particles) {
+            p.x += p.vx * p.z; p.y += p.vy * p.z; p.life += .012;
+            if (p.y < -8) { p.y = height + 8; p.x = Math.random() * width; }
+            const alpha = (.08 + .24 * (Math.sin(p.life) * .5 + .5)) * p.z;
+            ctx.fillStyle = Math.random() > .94 ? `rgba(209,254,23,${alpha * 1.8})` : `rgba(235,238,228,${alpha})`;
+            ctx.fillRect(p.x, p.y, p.size * p.z, p.size * p.z * 4);
+          }
+          raf = requestAnimationFrame(draw);
+        };
+        addEventListener('resize', reset, { passive: true }); reset(); draw();
+        document.addEventListener('visibilitychange', () => { if (document.hidden) cancelAnimationFrame(raf); else draw(); });
+      })();
+    </script>
   </body>
 </html>
