@@ -61,6 +61,45 @@
           <span class="titan-grain"></span>
         </div>
 
+        <div class="titan-presence" role="img" aria-label="Subtle shadow portrait of Titan, a strongly built Fijian man">
+          <svg viewBox="0 0 760 1080" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="titanBody" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#11130f" />
+                <stop offset=".54" stop-color="#070807" />
+                <stop offset="1" stop-color="#000" />
+              </linearGradient>
+              <linearGradient id="titanEdge" x1="0" y1="0" x2="1" y2=".4">
+                <stop offset="0" stop-color="#d1fe17" stop-opacity="0" />
+                <stop offset=".56" stop-color="#d1fe17" stop-opacity=".16" />
+                <stop offset="1" stop-color="#f4f4ef" stop-opacity=".04" />
+              </linearGradient>
+              <radialGradient id="titanFace" cx="41%" cy="34%" r="72%">
+                <stop offset="0" stop-color="#23261e" />
+                <stop offset=".42" stop-color="#11130f" />
+                <stop offset="1" stop-color="#030403" />
+              </radialGradient>
+              <filter id="titanSoft"><feGaussianBlur stdDeviation="1.2" /></filter>
+              <filter id="titanGlow"><feGaussianBlur stdDeviation="8" /></filter>
+            </defs>
+            <path class="titan-shoulders" d="M52 1080C62 927 110 836 222 798c43-15 78-41 94-79h128c17 38 51 64 95 79 111 38 160 129 169 282Z" fill="url(#titanBody)" />
+            <path class="titan-neck" d="M282 716c18-42 24-91 21-146h154c-3 55 4 104 22 146-20 48-54 72-99 72s-79-24-98-72Z" fill="#0b0d0a" />
+            <path class="titan-head" d="M248 279c14-108 71-169 132-169 77 0 130 70 136 175 5 91-17 219-63 286-23 34-48 53-73 53-26 0-52-19-76-55-43-66-69-197-56-290Z" fill="url(#titanFace)" />
+            <path class="titan-hair" d="M251 301c-8-106 42-197 129-201 87 3 140 87 134 197-22-35-52-65-90-80-54-21-105-3-173 84Z" fill="#030403" />
+            <path class="titan-ear titan-ear-left" d="M255 340c-32-10-39 36-22 78 9 22 21 34 38 34Z" fill="#10120e" />
+            <path class="titan-ear titan-ear-right" d="M506 339c32-9 38 38 21 79-9 22-21 34-37 33Z" fill="#090a08" />
+            <path class="titan-brow" d="M287 347c27-16 57-18 87-5m14 0c33-13 64-9 88 7" fill="none" stroke="#30342a" stroke-width="9" stroke-linecap="round" opacity=".52" />
+            <path class="titan-eyes" d="M300 374c23 9 43 9 63-1m38 1c21 10 42 10 63 0" fill="none" stroke="#9ca48b" stroke-width="3" stroke-linecap="round" opacity=".22" />
+            <path class="titan-nose" d="M380 369c-8 52-12 90-3 116 8 8 20 8 31 1" fill="none" stroke="#4a4f40" stroke-width="5" stroke-linecap="round" opacity=".31" />
+            <path class="titan-mouth" d="M328 523c34 13 70 14 106 0-31 34-76 35-106 0Z" fill="#070807" stroke="#424639" stroke-width="2" opacity=".68" />
+            <path class="titan-jaw" d="M273 419c12 78 34 137 72 170 24 21 47 27 69 18 52-22 78-94 92-184" fill="none" stroke="#34382d" stroke-width="5" opacity=".25" />
+            <path class="titan-scar" d="M454 299l-27 112" stroke="url(#titanEdge)" stroke-width="2" opacity=".52" />
+            <path class="titan-rim" d="M508 252c26 88 13 209-33 300-22 44-51 72-87 84" fill="none" stroke="url(#titanEdge)" stroke-width="3" opacity=".56" filter="url(#titanSoft)" />
+            <path class="titan-shoulder-line" d="M89 1035c33-119 113-189 241-210m341 210c-34-119-113-189-241-210" fill="none" stroke="#d1fe17" stroke-width="1" opacity=".065" />
+            <ellipse cx="445" cy="384" rx="6" ry="2" fill="#d1fe17" opacity=".13" filter="url(#titanGlow)" />
+          </svg>
+        </div>
+
         <div class="titan-corner titan-corner-left" aria-hidden="true">
           <span>T / 01</span>
           <i></i>
@@ -93,6 +132,88 @@
 
         <div class="titan-stage-footer" aria-label="Titan development principles">
           <span>Build</span><i></i><span>Challenge</span><i></i><span>Harden</span><i></i><span>Verify</span>
+        </div>
+      </section>
+
+      <section class="titan-dossier" id="dossier" aria-labelledby="titan-dossier-title">
+        <div class="wrap titan-dossier-intro">
+          <p class="titan-section-index">01 / The agent</p>
+          <div>
+            <p class="titan-kicker">AI engineering · Security intelligence</p>
+            <h2 id="titan-dossier-title">Not another assistant.<br /><em>A technical force multiplier.</em></h2>
+            <p class="titan-dossier-lead">Titan Mark 1 is being shaped as a persistent engineering agent for difficult software: the systems that need to be understood deeply, challenged deliberately and improved with evidence.</p>
+          </div>
+        </div>
+
+        <div class="wrap titan-principles" aria-label="Titan Mark 1 core disciplines">
+          <article>
+            <span>01</span>
+            <p class="titan-code">BUILD</p>
+            <h3>Engineering without the hand-off.</h3>
+            <p>Titan reads the system before touching it, works inside the existing architecture and stays through implementation, testing and proof.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <p class="titan-code">BREAK</p>
+            <h3>Adversarial by design.</h3>
+            <p>Assumptions, edge cases and trust boundaries are tested inside owned systems, controlled labs and explicitly authorised scopes.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <p class="titan-code">HARDEN</p>
+            <h3>Repair the cause, not the symptom.</h3>
+            <p>Findings lead to precise fixes, regression protection and a clearer understanding of the risk that remains.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <p class="titan-code">VERIFY</p>
+            <h3>Proof before proclamation.</h3>
+            <p>Build output, tests, diffs and live read-back separate what looks finished from what has actually been demonstrated.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="titan-architecture" aria-labelledby="titan-architecture-title">
+        <div class="wrap titan-architecture-grid">
+          <div class="titan-architecture-copy">
+            <p class="titan-section-index">02 / Operating architecture</p>
+            <p class="titan-kicker">One agent · Multiple technical modes</p>
+            <h2 id="titan-architecture-title">Deep context.<br /><em>Controlled execution.</em></h2>
+            <p>Titan is designed to move between repository intelligence, implementation, adversarial review and quality engineering without losing the thread connecting them.</p>
+          </div>
+          <div class="titan-system" aria-label="Illustrative Titan operating architecture">
+            <div class="titan-system-head"><span>TITAN / MK1</span><b>ARCHITECTURE PREVIEW</b></div>
+            <div class="titan-system-core"><i></i><strong>⚡</strong><i></i></div>
+            <ol>
+              <li><span>01</span><b>Context</b><em>Repository + objective</em></li>
+              <li><span>02</span><b>Reasoning</b><em>Threat + design model</em></li>
+              <li><span>03</span><b>Action</b><em>Bounded implementation</em></li>
+              <li><span>04</span><b>Evidence</b><em>Tests + live proof</em></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="titan-authority" aria-labelledby="titan-authority-title">
+        <div class="wrap titan-authority-grid">
+          <p class="titan-section-index">03 / Authority</p>
+          <div>
+            <h2 id="titan-authority-title">Built to be formidable.<br /><em>Never uncontrolled.</em></h2>
+            <p>Titan’s strength comes from disciplined depth—not unlimited access. Security work is authorised, scope is explicit, consequential action remains human-directed and every result is reported with its limits intact.</p>
+            <div class="titan-authority-line">
+              <span>Named scope</span><i></i><span>Least privilege</span><i></i><span>Human authority</span><i></i><span>Auditable evidence</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="titan-final" aria-labelledby="titan-final-title">
+        <div class="titan-final-glow" aria-hidden="true"></div>
+        <div class="wrap titan-final-content">
+          <p class="titan-kicker">Titan Mark 1 · In development</p>
+          <h2 id="titan-final-title">The first mark<br /><em>is taking shape.</em></h2>
+          <p>Register interest for an early look at the agent, operating model and first verified capability demonstrations.</p>
+          <a class="titan-interest titan-interest-final" href="mailto:ash@aiking.info?subject=Titan%20Mark%201%20interest">Register interest <span aria-hidden="true">↗</span></a>
         </div>
       </section>
     </main>
