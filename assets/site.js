@@ -331,6 +331,7 @@
         '<a href="/#method">Method</a>'+
         '<a href="/#solutions">Solutions</a>'+
         '<a class="nav-sky-intelligence" href="/executive-intelligence.html"'+(path.endsWith('/executive-intelligence.html')?' aria-current="page"':'')+'>SKY Intelligence</a>'+
+        '<a href="/titan-mark-1.html"'+(path.endsWith('/titan-mark-1.html')?' aria-current="page"':'')+'>Titan Mark 1</a>'+
         '<a href="/#engagements">Engagements</a>'+
         '<a href="/#faq">FAQ</a>'+
         '<a href="/founder.html"'+(path.endsWith('/founder.html')?' aria-current="page"':'')+'>Founder</a>';
