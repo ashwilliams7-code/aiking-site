@@ -29,6 +29,9 @@
   <body class="titan-page">
     <a class="skip-link" href="#main">Skip to content</a>
 
+    <!-- Cinematic 3D depth behind the ENTIRE page (fixed, scroll-reactive) -->
+    <canvas class="titan-webgl" data-titan-3d aria-hidden="true"></canvas>
+
     <header class="site-header k-header titan-header">
       <div class="wrap nav">
         <a class="brand" href="/" aria-label="AIKING home">
@@ -239,6 +242,24 @@
     </footer>
 
     <script src="/assets/site.js?v=20260813-titan1" defer></script>
+
+    <!-- Cinematic 3D hero (three.js via import map; graceful fallback) -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js"
+        }
+      }
+    </script>
+    <script type="module">
+      const c = document.querySelector('[data-titan-3d]');
+      if (c && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        import('/assets/titan-3d.js?v=20260814-3d9')
+          .then(() => requestAnimationFrame(() => c.classList.add('is-live')))
+          .catch(() => {});
+      }
+    </script>
+
     <script>
       (() => {
         const canvas = document.querySelector('[data-titan-particles]');
