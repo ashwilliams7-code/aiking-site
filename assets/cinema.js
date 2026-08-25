@@ -108,7 +108,7 @@
         }
       });
     }, { threshold: 0.25 });
-    videos = [].slice.call(doc.querySelectorAll('.act-video[data-src]'));
+    videos = [].slice.call(doc.querySelectorAll('.act-video[data-src], .panel-video[data-src]'));
     videos.forEach(function (v) { videoIO.observe(v); });
   }
 
@@ -148,7 +148,7 @@
     toggle.setAttribute('aria-pressed', String(motionPausedByUser));
     if (label) label.textContent = motionPausedByUser ? 'Resume motion' : 'Pause motion';
     root.classList.toggle('motion-off', paused);
-    doc.querySelectorAll('.act-video').forEach(function (v) {
+    doc.querySelectorAll('.act-video, .panel-video').forEach(function (v) {
       if (paused) { if (!v.paused) v.pause(); }
     });
     if (!paused) playVisible();
