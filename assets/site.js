@@ -329,7 +329,7 @@
       navLinks.innerHTML=
         '<a href="/">Home</a>'+
         '<a href="/#method">Method</a>'+
-        '<a href="/#solutions">Solutions</a>'+
+        '<a href="/#product-family">Products</a>'+
         '<a class="nav-sky-intelligence" href="/executive-intelligence.html"'+(path.endsWith('/executive-intelligence.html')?' aria-current="page"':'')+'>SKY Intelligence</a>'+
         '<a href="/titan-mark-1.html"'+(path.endsWith('/titan-mark-1.html')?' aria-current="page"':'')+'>Titan Mark 1</a>'+
         '<a class="nav-product" href="/spark.html"'+(path.endsWith('/spark.html')?' aria-current="page"':'')+'>Spark</a>'+
@@ -407,7 +407,7 @@
   if(document.body.classList.contains('home-knotch')&&motionOK){
     const clamp=(n,a=0,b=1)=>Math.min(b,Math.max(a,n));
     const sceneDefs=[
-      ['.k-hero','Opening'],['.k-metric','Advantage'],['#method','Method'],['#solutions','Systems'],
+      ['.k-hero','Opening'],['.k-metric','Advantage'],['#product-family','Products'],['#method','Method'],['#solutions','Systems'],
       ['#sky','Sky'],['#benefits','Outcomes'],['#founder','Founder'],['#engagements','Engage'],
       ['#comparison','Standard'],['#faq','Questions'],['.k-final','Decision']
     ];

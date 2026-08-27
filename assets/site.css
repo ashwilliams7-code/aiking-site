@@ -87,7 +87,7 @@ body:not(.home-knotch) .k-header .nav-links{
   letter-spacing:0;
   text-transform:none;
 }
-body:not(.home-knotch) .k-header .nav-links a{padding:8px 0}
+body:not(.home-knotch) .k-header .nav-links a{padding:8px 0;white-space:nowrap}
 body:not(.home-knotch) .k-header .nav-links a:hover{color:#fff;border-color:transparent}
 body:not(.home-knotch) .k-header .nav-links a.nav-sky-intelligence{color:var(--lime);font-weight:650;text-shadow:0 0 12px rgba(209,254,23,.52),0 0 30px rgba(209,254,23,.22)}
 body:not(.home-knotch) .k-header .btn.small{min-height:42px;padding:10px 17px;font-size:12.5px;background:#f7f8f3;color:#090a09;box-shadow:0 16px 42px rgba(255,255,255,.08)}

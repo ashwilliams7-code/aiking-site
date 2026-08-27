@@ -165,6 +165,21 @@
 .omen-page .product-statement p{color:#e8dedb}
 .omen-page .product-statement small{color:#a99896}
 
+/* Omen atmosphere: private-console tension, scanlines and restrained signal fracture */
+.omen-page .product-hero::before{content:attr(data-glitch);position:absolute;z-index:2;right:clamp(18px,4vw,68px);top:clamp(92px,9vw,138px);padding:8px 12px;border:1px solid rgba(225,91,113,.24);background:rgba(8,3,5,.72);color:#d88490;font:8px var(--mono);letter-spacing:.2em;text-transform:uppercase;box-shadow:10px 0 0 rgba(60,207,209,.035),-8px 0 0 rgba(224,70,92,.05);pointer-events:none}
+.omen-page .product-hero::after{color:rgba(223,70,91,.035);text-shadow:-7px 0 rgba(55,205,207,.025),8px 0 rgba(224,46,77,.035)}
+.omen-page .product-console::after{content:"";position:absolute;z-index:4;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(255,255,255,.014) 4px),linear-gradient(90deg,transparent 0 47%,rgba(69,211,214,.026) 48%,transparent 49% 100%);mix-blend-mode:screen}
+.omen-page .product-console-head::after{content:"ENCRYPTED LOCAL SESSION";position:absolute;right:24px;bottom:-23px;color:rgba(92,220,218,.42);font:7px var(--mono);letter-spacing:.16em}
+.omen-page .product-orb{border-radius:18%;transform:rotate(45deg);box-shadow:0 0 0 34px rgba(200,93,93,.018),0 0 0 68px rgba(49,199,203,.009),inset 0 0 60px rgba(200,93,93,.08)}
+.omen-page .product-orb strong,.omen-page .product-orb span{transform:rotate(-45deg)}
+.omen-page .product-orb::before,.omen-page .product-orb::after{border-radius:22%}
+@media(prefers-reduced-motion:no-preference){
+  .omen-page .product-hero::before{animation:omenSignal 7s steps(1,end) infinite}
+  .omen-page .product-hero::after{animation:omenWord 9s steps(1,end) infinite}
+}
+@keyframes omenSignal{0%,91%,100%{transform:translate(0);clip-path:inset(0)}92%{transform:translate(-7px,2px);clip-path:inset(0 0 48% 0)}93%{transform:translate(5px,-1px);clip-path:inset(52% 0 0 0)}94%{transform:translate(0);clip-path:inset(0)}}
+@keyframes omenWord{0%,94%,100%{transform:translate(0)}95%{transform:translateX(-9px)}96%{transform:translateX(7px)}97%{transform:translate(0)}}
+
 @media(max-width:1120px){
   .product-hero-grid{grid-template-columns:1fr;gap:0}
   .product-hero-copy{padding-bottom:58px}
