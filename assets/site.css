@@ -60,6 +60,8 @@ section[id],main[id]{scroll-margin-top:96px}
 .nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--ink);border-color:var(--lime)}
 .nav-links a.nav-sky-intelligence{color:var(--lime);font-weight:600;text-shadow:0 0 10px rgba(209,254,23,.6),0 0 24px rgba(209,254,23,.35)}
 .nav-links a.nav-sky-intelligence:hover,.nav-links a.nav-sky-intelligence[aria-current="page"]{color:var(--lime);border-color:var(--lime);text-shadow:0 0 12px rgba(209,254,23,.9),0 0 30px rgba(209,254,23,.55)}
+.nav-links a.nav-product{color:rgba(242,239,227,.82)}
+.nav-links a.nav-product:hover,.nav-links a.nav-product[aria-current="page"]{color:var(--ink);border-color:var(--lime)}
 .nav-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
 
 /* unified premium shell for every internal route; homepage adds the fixed overlay variant */

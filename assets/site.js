@@ -332,6 +332,8 @@
         '<a href="/#solutions">Solutions</a>'+
         '<a class="nav-sky-intelligence" href="/executive-intelligence.html"'+(path.endsWith('/executive-intelligence.html')?' aria-current="page"':'')+'>SKY Intelligence</a>'+
         '<a href="/titan-mark-1.html"'+(path.endsWith('/titan-mark-1.html')?' aria-current="page"':'')+'>Titan Mark 1</a>'+
+        '<a class="nav-product" href="/spark.html"'+(path.endsWith('/spark.html')?' aria-current="page"':'')+'>Spark</a>'+
+        '<a class="nav-product" href="/omen.html"'+(path.endsWith('/omen.html')?' aria-current="page"':'')+'>Omen</a>'+
         '<a href="/#engagements">Engagements</a>'+
         '<a href="/#faq">FAQ</a>'+
         '<a href="/founder.html"'+(path.endsWith('/founder.html')?' aria-current="page"':'')+'>Founder</a>';
