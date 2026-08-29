@@ -396,7 +396,7 @@
 /* product family — SKY leads; the full family remains immediately legible */
 .k-product-family{position:relative;overflow:hidden;background:linear-gradient(180deg,#050605,#080b07 56%,#050605)}
 .k-product-family::before{content:"";position:absolute;width:760px;height:760px;right:-280px;top:-300px;border-radius:50%;background:radial-gradient(circle,rgba(209,254,23,.095),transparent 66%);filter:blur(8px);pointer-events:none}
-.k-family-grid{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.k-family-grid{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .k-family-card{position:relative;min-height:360px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;padding:34px;border:1px solid rgba(255,255,255,.085);border-radius:28px;background:linear-gradient(150deg,rgba(255,255,255,.045),rgba(255,255,255,.015));color:#eef1eb;box-shadow:0 24px 70px rgba(0,0,0,.18);transition:transform .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease)}
 .k-family-card::before{content:"";position:absolute;inset:auto -80px -110px auto;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.055),transparent 68%);pointer-events:none}
 .k-family-card:hover{transform:translateY(-6px);border-color:rgba(209,254,23,.28);background:linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.022))}
@@ -419,6 +419,8 @@
 .k-family-spark{background:radial-gradient(circle at 82% 20%,rgba(209,254,23,.09),transparent 28%),linear-gradient(145deg,#10140d,#070807)}
 .k-family-omen{background:repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0,rgba(255,255,255,.012) 1px,transparent 1px,transparent 5px),radial-gradient(circle at 82% 20%,rgba(177,45,62,.14),transparent 31%),linear-gradient(145deg,#13070a,#060405)}
 .k-family-omen .k-family-rank,.k-family-omen>strong i{color:#df7782}
+.k-family-ara{background:radial-gradient(circle at 82% 20%,rgba(79,198,232,.15),transparent 31%),linear-gradient(145deg,#071317,#050809)}
+.k-family-ara .k-family-rank,.k-family-ara>strong i{color:#69d8f3}
 
 /* process cards */
 .k-process-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
@@ -643,7 +645,7 @@
   .k-hero-content h1{font-size:clamp(54px,9vw,76px)}
   .k-hero-notch-bottom{width:min(88%,680px)}
   .k-metric-inner{grid-template-columns:1fr;text-align:center}.k-metric-inner>div>p{margin-left:auto;margin-right:auto}.k-metric-number{justify-self:center}
-  .k-family-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.k-family-card{min-height:330px}.k-family-sky,.k-family-omen{grid-column:1/-1}.k-family-sky{min-height:400px}
+  .k-family-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.k-family-card{min-height:330px}.k-family-sky{grid-column:1/-1;min-height:400px}
   .k-process-grid{grid-template-columns:1fr 1fr}.k-process-card:last-child{grid-column:1/-1;min-height:440px}.k-process-card:last-child .k-card-visual{height:220px}
   .k-solution-card,.k-solution-third{grid-column:span 6;min-height:560px}
   .k-solution-wide{grid-column:1/-1;grid-template-columns:1fr;min-height:auto}

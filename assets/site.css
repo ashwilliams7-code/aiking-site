@@ -328,16 +328,16 @@ body.modal-open{overflow:hidden}
 .footer-note a:hover{color:var(--lime)}
 
 /* ---------- mobile menu overlay (built by JS at body level) ---------- */
-.mobile-menu{position:fixed;inset:0;z-index:120;display:flex;flex-direction:column;justify-content:center;padding:90px 36px 60px;background:rgba(8,10,8,.98);backdrop-filter:blur(20px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s var(--ease),visibility 0s linear .35s}
+.mobile-menu{position:fixed;inset:0;z-index:120;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;overscroll-behavior:contain;padding:90px 36px 60px;background:rgba(8,10,8,.98);backdrop-filter:blur(20px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s var(--ease),visibility 0s linear .35s}
 .mobile-menu.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .35s var(--ease)}
-@media(min-width:981px){.mobile-menu{display:none}}
-.mm-links{display:flex;flex-direction:column;gap:4px;counter-reset:mm}
+@media(min-width:1181px){.mobile-menu{display:none}}
+.mm-links{display:flex;flex-direction:column;gap:4px;margin:auto 0;counter-reset:mm}
 .mm-links a{counter-increment:mm;display:flex;align-items:baseline;gap:16px;padding:13px 0;font-family:var(--serif);font-weight:440;font-size:clamp(28px,7.4vw,34px);letter-spacing:-.015em;color:rgba(242,239,227,.9);border-bottom:1px solid var(--line);opacity:0;transform:translateY(16px);transition:opacity .45s var(--ease) var(--nd,0ms),transform .45s var(--ease) var(--nd,0ms),color .25s}
 .mm-links a::before{content:counter(mm,decimal-leading-zero);font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--soft)}
 .mobile-menu.open .mm-links a{opacity:1;transform:none}
 .mm-links a:hover,.mm-links a[aria-current="page"]{color:var(--lime)}
 .mm-links a.nav-sky-intelligence{color:var(--lime);text-shadow:0 0 12px rgba(209,254,23,.6),0 0 28px rgba(209,254,23,.35)}
-.mm-close{position:absolute;top:15px;right:20px;width:46px;height:46px;border-radius:12px;border:1px solid var(--line-strong);background:rgba(255,255,255,.05);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:0}
+.mm-close{position:fixed;top:15px;right:20px;width:46px;height:46px;border-radius:12px;border:1px solid var(--line-strong);background:rgba(255,255,255,.05);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:0}
 .mm-close i{display:block;width:19px;height:1.5px;border-radius:2px;background:#f2eee4}
 .mm-close i:first-child{transform:translateY(1px) rotate(45deg)}
 .mm-close i:last-child{transform:translateY(-1px) rotate(-45deg)}
@@ -349,6 +349,19 @@ html.js .rv.in{opacity:1;transform:none}
 }
 
 /* ---------- responsive ---------- */
+@media(max-width:1180px){
+html:not(.js) .nav{align-items:flex-start;flex-direction:column;padding:14px 0}
+html:not(.js) .nav-links{position:static!important;transform:none!important;justify-content:flex-start;flex-wrap:wrap!important}
+html:not(.js) .nav-actions{width:100%;justify-content:flex-start}
+html.js .burger{display:flex}
+html.js .nav-links{display:none}
+body.nav-lock{overflow:hidden}
+}
+@media(min-width:681px) and (max-width:1180px){
+.mobile-menu{padding:76px 36px 36px}
+.mm-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 36px}
+.mm-links a{padding:11px 0;font-size:clamp(25px,3vw,30px)}
+}
 @media(max-width:980px){
 .hero-grid,.problem-block,.proof-layout,.founder-panel,.split,.cta-band{grid-template-columns:1fr}
 .four{grid-template-columns:1fr 1fr}
@@ -366,15 +379,11 @@ html.js .rv.in{opacity:1;transform:none}
 .flow-node+.flow-node{margin-left:0;margin-top:30px}
 .flow-node+.flow-node::before{left:26px;top:-31px;width:1px;height:30px;background-image:linear-gradient(180deg,rgba(209,254,23,.75) 55%,transparent 55%);background-size:1px 8px;background-repeat:repeat-y;animation:flowDashV 1.1s linear infinite}
 .flow-node+.flow-node::after{left:24px;top:-10px;transform:rotate(135deg)}
-html:not(.js) .nav{align-items:flex-start;flex-direction:column;padding:14px 0}
-html:not(.js) .nav-links{justify-content:flex-start}
-html:not(.js) .nav-actions{width:100%;justify-content:flex-start}
-html.js .burger{display:flex}
-html.js .nav-links{display:none}
-body.nav-lock{overflow:hidden}
 .section-head[data-ghost]::before{right:-8px;top:-40px;font-size:clamp(110px,22vw,170px)}
 }
 @media(max-width:680px){
+.mobile-menu{padding:78px 24px 36px}
+.mm-links a{padding:10px 0;font-size:clamp(25px,7.4vw,31px)}
 .wrap{width:min(100% - 32px,var(--max))}
 .brand-logo{width:142px}
 html:not(.js) .nav-links{gap:10px;font-size:10.5px}

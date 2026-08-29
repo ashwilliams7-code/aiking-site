@@ -1,4 +1,4 @@
-/* AIKING — public product pages: Spark and Omen */
+/* AIKING — public product pages: Spark, Omen and ARA */
 .product-page{
   --product-accent:var(--lime);
   --product-accent-rgb:209,254,23;
@@ -146,6 +146,23 @@
 .product-final-index{font:430 clamp(110px,14vw,210px)/.8 var(--serif);letter-spacing:-.08em;color:transparent;-webkit-text-stroke:1px rgba(var(--product-accent-rgb),.34)}
 .product-final-copy h2{font-size:clamp(42px,5vw,70px)}
 .product-final-copy p{margin-top:20px;max-width:650px}
+
+.ara-page{--product-accent:#69d8f3;--product-accent-rgb:105,216,243;background:#050b0d}
+.ara-page::before{background:radial-gradient(circle at 84% 8%,rgba(32,151,182,.18),transparent 29%),radial-gradient(circle at 8% 62%,rgba(45,124,145,.13),transparent 32%),linear-gradient(180deg,#050b0d,#071216 52%,#040809)}
+.ara-page .product-hero{background-color:#050b0d;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px)}
+.ara-page .product-console{background:linear-gradient(145deg,#0a2026,#040809 72%)}
+.ara-page .btn.primary{background:#83def2;box-shadow:0 18px 44px rgba(45,166,194,.2)}
+.ara-page .btn.primary:hover{box-shadow:0 24px 56px rgba(45,166,194,.32)}
+.ara-page .eyebrow::before,.ara-page .section-kicker::before{background:var(--product-accent);box-shadow:0 0 0 5px rgba(105,216,243,.11)}
+.ara-page h1 em,.ara-page h2 em{color:var(--product-accent);text-shadow:0 0 34px rgba(105,216,243,.16)}
+.ara-page .product-position{background:linear-gradient(145deg,#edf4f4,#dfeceb);color:#10191b}
+.ara-page .product-position .section-head h2,.ara-page .product-position h3{color:#10191b}
+.ara-page .product-position .section-head h2 em{color:#126579;text-shadow:none}
+.ara-page .product-position .section-kicker{color:#496a70}
+.ara-page .product-position .lead,.ara-page .product-position p{color:#465b5f}
+.ara-page .product-statement{border-color:#278da3;background:linear-gradient(90deg,rgba(39,141,163,.1),transparent)}
+.ara-page .product-statement p{color:#17383f}
+.ara-page .product-statement small{color:#567176}
 
 .omen-page{--product-accent:#c85d5d;--product-accent-rgb:200,93,93;background:#070506}
 .omen-page::before{background:radial-gradient(circle at 84% 8%,rgba(136,24,32,.18),transparent 29%),radial-gradient(circle at 10% 66%,rgba(75,16,29,.16),transparent 32%),linear-gradient(180deg,#080506,#0c0608 52%,#050304)}
