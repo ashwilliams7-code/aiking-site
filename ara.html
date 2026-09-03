@@ -23,13 +23,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&amp;family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/assets/site.css?v=20260829-ara1" />
     <link rel="stylesheet" href="/assets/ara.css?v=20260901-ara2" />
+    <link rel="stylesheet" href="/assets/ara-motion.css?v=20260903-ara3" />
     <link rel="icon" href="/assets/aiking-king-icon.svg" type="image/svg+xml" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Service",
         "name": "ARA by AIKING",
-        "alternateName": "ARA (working name)",
         "serviceType": "Agent-ready website, AI-search visibility and governed business agent implementation",
         "provider": {
           "@type": "ProfessionalService",
@@ -75,7 +75,7 @@
       }
     </script>
   </head>
-  <body class="ara-page">
+  <body class="ara-page" data-ara-motion>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header k-header">
       <div class="wrap nav">
@@ -88,31 +88,48 @@
     </header>
 
     <main id="main">
-      <section class="ara-hero" aria-labelledby="ara-title">
+      <section class="ara-hero" aria-labelledby="ara-title" data-ara-hero>
         <div class="ara-hero-wash" aria-hidden="true"></div>
+        <div class="ara-signal-field" aria-hidden="true">
+          <i style="--x:8%;--y:18%;--d:0s"></i><i style="--x:22%;--y:76%;--d:-2.1s"></i><i style="--x:46%;--y:12%;--d:-4.7s"></i>
+          <i style="--x:63%;--y:68%;--d:-1.3s"></i><i style="--x:79%;--y:28%;--d:-5.8s"></i><i style="--x:92%;--y:82%;--d:-3.4s"></i>
+          <span></span><span></span><span></span>
+        </div>
         <div class="wrap ara-hero-grid">
-          <div class="ara-hero-copy">
+          <div class="ara-hero-copy" data-ara-reveal>
             <div class="ara-breadcrumb"><a href="/">AIKING</a><span>/</span><span>ARA</span></div>
-            <p class="ara-eyebrow"><span>ARA by AIKING</span><b>Working name</b></p>
-            <h1 id="ara-title">Get understood.<br />Get discovered.<br /><em>Get work done.</em></h1>
+            <p class="ara-eyebrow"><span>ARA by AIKING</span><b>Pilot foundation</b></p>
+            <h1 id="ara-title"><span>Get understood.</span><span>Get discovered.</span><em>Get work done.</em></h1>
             <p class="ara-lead">ARA helps your business become clearer to AI, easier to discover through AI, and ready to put governed agents to work—using facts and actions you approve.</p>
             <div class="ara-actions">
               <a class="btn primary" href="/contact.html#briefing">Check my AI readiness <span class="arrow">→</span></a>
               <a class="btn secondary" href="#how-ara-works">See how ARA works</a>
             </div>
+            <div class="ara-proof-chips" role="list" aria-label="ARA trust principles">
+              <span role="listitem"><i aria-hidden="true"></i>Business-owned truth</span>
+              <span role="listitem"><i aria-hidden="true"></i>Visible sources</span>
+              <span role="listitem"><i aria-hidden="true"></i>Human-approved actions</span>
+            </div>
             <p class="ara-hero-note">Be found and booked by AI—where the assistant, your systems and your permissions support the handoff.</p>
           </div>
 
-          <figure class="ara-pathway" aria-labelledby="ara-pathway-caption">
-            <figcaption id="ara-pathway-caption"><span>Illustrative ARA pathway</span><b>Example only · not a live system</b></figcaption>
+          <figure class="ara-pathway" aria-labelledby="ara-pathway-caption" data-ara-pathway data-ara-reveal>
+            <figcaption id="ara-pathway-caption"><span>Illustrative ARA pathway</span><b>Interactive synthetic example</b></figcaption>
+            <div class="ara-pathway-controls" role="group" aria-label="Illustrative pathway stages">
+              <button type="button" data-ara-stage-button="0" aria-pressed="true"><span>01</span>Ask</button>
+              <button type="button" data-ara-stage-button="1" aria-pressed="false"><span>02</span>Verify</button>
+              <button type="button" data-ara-stage-button="2" aria-pressed="false"><span>03</span>Answer</button>
+              <button type="button" data-ara-stage-button="3" aria-pressed="false"><span>04</span>Act</button>
+              <button class="ara-pathway-toggle" type="button" data-ara-pathway-toggle aria-pressed="false"><span data-ara-toggle-label>Pause</span><i aria-hidden="true"></i></button>
+            </div>
             <div class="ara-pathway-stage">
-              <article class="ara-query ara-flow-panel">
+              <article class="ara-query ara-flow-panel is-active" data-ara-stage="0">
                 <span class="ara-panel-label">01 / Customer asks</span>
                 <p>“Can someone service my air conditioner this Friday?”</p>
                 <small>High-intent local question</small>
               </article>
 
-              <div class="ara-source-cluster" role="group" aria-label="Approved information sources">
+              <div class="ara-source-cluster" role="group" aria-label="Approved information sources" data-ara-stage="1">
                 <article class="ara-source-card">
                   <span>Existing website</span>
                   <strong>Service + area</strong>
@@ -130,14 +147,14 @@
                 </article>
               </div>
 
-              <article class="ara-answer ara-flow-panel">
-                <div class="ara-answer-head"><span class="ara-panel-label">02 / AI can answer clearly</span><i>Sources checked</i></div>
+              <article class="ara-answer ara-flow-panel" data-ara-stage="2">
+                <div class="ara-answer-head"><span class="ara-panel-label">03 / AI can answer clearly</span><i>Sources checked</i></div>
                 <p>The business services your area. Friday times must be confirmed from its live booking system. You can request a booking or ask for a quote.</p>
                 <ul aria-label="Evidence used"><li>Service area</li><li>Live calendar</li><li>Quote policy</li></ul>
               </article>
 
-              <article class="ara-action ara-flow-panel">
-                <span class="ara-panel-label">03 / Approved next step</span>
+              <article class="ara-action ara-flow-panel" data-ara-stage="3">
+                <span class="ara-panel-label">04 / Approved next step</span>
                 <div><strong>Request a booking</strong><b>→</b></div>
                 <small><i></i>Customer confirms before anything is committed</small>
               </article>
@@ -153,6 +170,8 @@
         </div>
       </section>
 
+      <div class="ara-kinetic-divider" aria-hidden="true"><span></span><span></span><span></span></div>
+
       <section class="ara-question-path" id="how-ara-works" aria-labelledby="ara-path-title">
         <div class="wrap">
           <div class="ara-section-intro ara-section-intro--split">
@@ -165,6 +184,38 @@
             <li><span>03 / Choose</span><strong>The customer sees a useful next step.</strong><p>Enquire, request a quote, check availability or speak to a person.</p></li>
             <li><span>04 / Act</span><strong>The business moves inside its rules.</strong><p>Permissions, confirmation and human handoff govern the outcome.</p></li>
           </ol>
+        </div>
+      </section>
+
+      <section class="ara-proof-field" aria-labelledby="ara-proof-title" data-ara-proof-field>
+        <div class="ara-proof-orbit" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="wrap">
+          <div class="ara-section-intro ara-section-intro--split">
+            <div><span class="ara-kicker">Diagnostic architecture</span><h2 id="ara-proof-title">Proof before<br /><em>promises.</em></h2></div>
+            <p>ARA separates observed evidence from commercial claims. The free diagnostic is designed to show where a business is visible, factually accurate and ready for a customer to take the next step.</p>
+          </div>
+          <dl class="ara-proof-metrics" aria-label="ARA diagnostic specification">
+            <div><dt><strong data-ara-count="8">8</strong><span>surfaces</span></dt><dd>AI and search experiences reviewed</dd></div>
+            <div><dt><strong data-ara-count="2">2</strong><span>checks</span></dt><dd>Separate observations to reveal obvious result variation</dd></div>
+            <div><dt><strong data-ara-count="5">5</strong><span>localities</span></dt><dd>Business-approved locations in a free diagnostic</dd></div>
+            <div><dt><strong data-ara-count="3">3</strong><span>measures</span></dt><dd>Visibility, factual accuracy and enquiry-path completion</dd></div>
+          </dl>
+          <p class="ara-proof-disclaimer">Diagnostic specification—not customer results, rankings or guaranteed outcomes.</p>
+          <details class="ara-methodology">
+            <summary>How the diagnostic is designed to work</summary>
+            <ul>
+              <li>Each named surface is checked across five business-approved, equal-weight localities.</li>
+              <li>Two separately initiated checks expose obvious answer variation; a single observation is never treated as stable.</li>
+              <li>Visibility, factual accuracy and enquiry-path completion remain separate measures rather than a blended confidence score.</li>
+              <li>Evidence windows, timestamps, query families and explicit limitations accompany the diagnostic output.</li>
+            </ul>
+          </details>
+        </div>
+        <div class="ara-platform-marquee" aria-label="Representative AI and search surfaces">
+          <div class="ara-platform-track">
+            <span>ChatGPT</span><span>Google AI</span><span>Google Maps</span><span>Gemini</span><span>Claude</span><span>Copilot</span><span>Perplexity</span><span>Grok</span>
+            <span aria-hidden="true">ChatGPT</span><span aria-hidden="true">Google AI</span><span aria-hidden="true">Google Maps</span><span aria-hidden="true">Gemini</span><span aria-hidden="true">Claude</span><span aria-hidden="true">Copilot</span><span aria-hidden="true">Perplexity</span><span aria-hidden="true">Grok</span>
+          </div>
         </div>
       </section>
 
@@ -364,6 +415,10 @@
       </section>
     </main>
 
+    <nav class="ara-mobile-dock" data-ara-mobile-dock aria-label="ARA quick action">
+      <a href="/contact.html#briefing"><span><small>Free diagnostic</small>Check my AI readiness</span><b aria-hidden="true">→</b></a>
+    </nav>
+
     <footer class="site-footer k-footer">
       <div class="wrap footer-grid">
         <div><a class="brand" href="/" aria-label="AIKING home"><img class="brand-logo" src="/assets/aiking-logo-white.png" alt="AIKING" width="190" height="32" /></a><p class="footer-note">Founder-led AI consultancy for strategy, agentic systems, personalized intelligence, model orchestration and human governance. Enquiries: <a href="mailto:ash@aiking.info">ash@aiking.info</a>.</p><p class="footer-note">© <span data-year></span> AIKING. AIKING is operated by KingAi Enterprise.</p></div>
@@ -371,5 +426,6 @@
       </div>
     </footer>
     <script src="/assets/site.js?v=20260829-ara1" defer></script>
+    <script src="/assets/ara-motion.js?v=20260903-ara3" defer></script>
   </body>
 </html>
