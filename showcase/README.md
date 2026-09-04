@@ -15,6 +15,8 @@ This directory contains a complete browser-only product scaffold for review and 
 - `assets/product-base.css` — accessibility and behavioral primitives for the product workspaces.
 - `assets/kinetic-product.css` — independent Kinetic product presentation.
 - `assets/editorial-product.css` — independent Editorial product presentation.
+- `docs/ara-kinetic-product-decision-pack-2026-09-04.pdf` — Kinetic technical build, UX limitations and next-step decision pack.
+- `docs/ara-editorial-product-decision-pack-2026-09-04.pdf` — Editorial technical build, UX limitations and next-step decision pack.
 
 ## Functional display states
 
