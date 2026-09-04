@@ -63,8 +63,8 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
     )
     assertions["correct_suite"] = metrics["suite"] == suite
     assertions["no_horizontal_overflow"] = metrics["scrollWidth"] <= metrics["innerWidth"] + 1
-    assertions["complete_section_set"] = metrics["sections"] >= 7
-    assertions["dialogs_present"] = metrics["dialogs"] == 4
+    assertions["complete_section_set"] = metrics["sections"] >= 9
+    assertions["dialogs_present"] = metrics["dialogs"] == 10
     assertions["motion_mode_correct"] = metrics["reduced"] is reduced
     assertions["single_page_heading"] = page.locator("h1").count() == 1
     assertions["controls_have_names"] = page.evaluate(
@@ -108,10 +108,30 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
     page.locator('[data-tab-button="priorities"]').press("ArrowRight")
     assertions["scorecard_keyboard_tabs"] = visible_count(page, '[data-tab-panel="method"]') == 1
 
+    assertions["five_fixed_roles"] = page.locator('[data-role]').count() == 5
+    page.locator('[data-role="billing"]').click()
+    assertions["billing_role_isolated"] = (
+        page.locator('[data-invite-open]').is_disabled()
+        and page.locator('[data-connector-open]').is_disabled()
+        and not page.locator('li[data-capability="billing"]').evaluate("el => el.classList.contains('is-disabled')")
+    )
+    page.locator('[data-role="admin"]').click()
+    assertions["admin_boundary"] = not page.locator('[data-invite-open]').is_disabled() and page.locator('[data-transfer-open]').is_disabled()
     page.locator('[data-role="reviewer"]').click()
     assertions["reviewer_action_disabled"] = page.locator('[data-action-request]').is_disabled()
     page.locator('[data-role="owner"]').click()
     assertions["owner_action_enabled"] = not page.locator('[data-action-request]').is_disabled()
+
+    page.locator('[data-invite-open]').click()
+    page.locator('[data-invite-confirm]').click()
+    assertions["bounded_invitation_preview"] = visible_count(page, '[data-invite-receipt]') == 1
+    page.locator('[data-transfer-open]').click()
+    page.locator('[data-transfer-confirm]').click()
+    assertions["protected_transfer_preview"] = (
+        visible_count(page, '[data-transfer-receipt]') == 1
+        and "72h" in page.locator('[data-transfer-state]').inner_text()
+    )
+
     page.locator('[data-action-request]').click()
     assertions["action_dialog"] = page.locator('#action-dialog').evaluate("el => el.open")
     page.locator('#action-dialog').press("Escape")
@@ -119,6 +139,43 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
     page.locator('[data-action-request]').click()
     page.locator('[data-action-confirm]').click()
     assertions["governed_action_receipt"] = visible_count(page, '[data-action-receipt]') == 1
+
+    page.locator('[data-connector-state="degraded"]').click()
+    assertions["connector_degrades_closed"] = (
+        page.locator('body').get_attribute('data-connector-state') == "degraded"
+        and "reconciliation" in page.locator('[data-connector-status]').inner_text().lower()
+        and "degraded" in page.locator('[data-proof-coverage]').inner_text().lower()
+    )
+    page.locator('[data-connector-open]').click()
+    page.locator('[data-connector-confirm]').click()
+    assertions["connector_consent_restores_bounded_state"] = page.locator('body').get_attribute('data-connector-state') == "active"
+    page.locator('[data-connector-revoke-open]').click()
+    page.locator('[data-connector-revoke-confirm]').click()
+    assertions["connector_revokes_immediately"] = (
+        page.locator('body').get_attribute('data-connector-state') == "revoked"
+        and "blocked" in page.locator('[data-connector-freshness]').inner_text().lower()
+    )
+    page.locator('[data-connector-state="active"]').click()
+
+    page.locator('[data-outcome-filter="assisted"]').click()
+    assertions["attribution_filter"] = visible_count(page, '[data-outcome-row]') == 1
+    page.locator('[data-outcome-open="assisted"]').click()
+    assertions["attribution_evidence_drawer"] = (
+        page.locator('#outcome-dialog').evaluate("el => el.open")
+        and "separately" in page.locator('[data-outcome-treatment]').inner_text().lower()
+        and page.locator('[data-outcome-confidence]').inner_text() == "Medium"
+        and "phone" in page.locator('[data-outcome-provenance]').inner_text().lower()
+    )
+    page.locator('#outcome-dialog [data-dialog-close]').first.click()
+    page.locator('[data-outcome-filter="all"]').click()
+    assertions["four_attribution_classes"] = visible_count(page, '[data-outcome-row]') == 4
+    page.locator('[data-proof-export]').click()
+    assertions["proof_pack_preview"] = (
+        page.locator('#proof-export-dialog').evaluate("el => el.open")
+        and "Cross-customer comparison disabled" in page.locator('#proof-export-dialog').inner_text()
+        and "Customer-confirmed synthetic invoice value" in page.locator('#proof-export-dialog').inner_text()
+    )
+    page.locator('[data-proof-export-confirm]').click()
 
     assertions["milestone_default"] = visible_count(page, '[data-recovery-point]') == 2
     page.locator('[data-history-filter="all"]').click()
@@ -155,7 +212,7 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
     label = f"{suite}-{width}x{height}{'-reduced' if reduced else ''}"
     page.screenshot(path=str(OUTPUT / f"{label}-hero.png"), full_page=False)
     if width >= 1000 and not reduced:
-        for section in ("diagnostic", "scorecard", "workspace", "recovery", "billing"):
+        for section in ("diagnostic", "scorecard", "workspace", "connectors", "recovery", "outcomes", "billing"):
             page.evaluate("section => window.scrollTo(0, document.getElementById(section).offsetTop - 110)", section)
             page.wait_for_timeout(220)
             assertions[f"nav_{section}"] = page.locator(f'[data-site-nav] a[href$="#{section}"]').evaluate("el => el.classList.contains('is-active')")
@@ -224,7 +281,7 @@ def main() -> None:
                 page.goto(f"{site_root}/ara.html", wait_until="domcontentloaded")
                 page.wait_for_timeout(300)
                 checks = {
-                    "showcase_entry_present": page.locator('a[href="/showcase/"]').count() == 1,
+                    "showcase_entry_present": page.get_by_role("link", name="Open the product showcase").count() == 1,
                     "no_horizontal_overflow": page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"),
                     "page_errors_clean": not errors,
                 }

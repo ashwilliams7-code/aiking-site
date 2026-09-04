@@ -169,14 +169,18 @@
   const capabilityRows = Array.from(document.querySelectorAll('[data-capability]'));
   const roleCopy = document.querySelector('[data-role-copy]');
   const roleMatrix = {
-    owner: ['view', 'edit', 'approve', 'invite', 'restore', 'delete', 'action'],
+    owner: ['view', 'edit', 'approve', 'invite', 'connector', 'restore', 'delete', 'transfer', 'billing', 'action'],
+    admin: ['view', 'edit', 'approve', 'invite', 'restore', 'action'],
     operator: ['view', 'edit', 'action'],
-    reviewer: ['view']
+    reviewer: ['view'],
+    billing: ['billing']
   };
   const roleDescriptions = {
-    owner: 'Verified owner preview · may approve consequential changes.',
-    operator: 'Operator preview · may prepare work but cannot approve ownership actions.',
-    reviewer: 'Reviewer preview · read-only evidence and audit access.'
+    owner: 'Verified owner preview · full organisation authority, still bounded by consent and confirmation.',
+    admin: 'Admin preview · workspace and scoped invitation management without ownership transfer or broad deletion.',
+    operator: 'Operator preview · may prepare approved work inside assigned locations without membership or billing authority.',
+    reviewer: 'Reviewer preview · read-only evidence, comments and audit access.',
+    billing: 'Billing preview · subscription administration only, with no customer evidence or operational workspace access.'
   };
   const setRole = (role) => {
     const allowed = roleMatrix[role] || [];
@@ -217,6 +221,79 @@
     document.querySelectorAll('[data-action-request]').forEach((button) => { button.textContent = 'Review queued request →'; });
     announce('Synthetic request queued for human review. Nothing was booked or sent.');
   });
+
+  const inviteDialog = document.querySelector('#invite-dialog');
+  const inviteReceipt = document.querySelector('[data-invite-receipt]');
+  document.querySelectorAll('[data-invite-open]').forEach((button) => button.addEventListener('click', () => openDialog(inviteDialog)));
+  document.querySelector('[data-invite-confirm]')?.addEventListener('click', () => {
+    closeDialog(inviteDialog);
+    if (inviteReceipt) inviteReceipt.hidden = false;
+    document.querySelectorAll('[data-invite-open]').forEach((button) => { button.textContent = 'Review prepared invitation'; });
+    announce('Synthetic invitation prepared. No identity was provisioned and no message was sent.');
+  });
+
+  const transferDialog = document.querySelector('#transfer-dialog');
+  const transferReceipt = document.querySelector('[data-transfer-receipt]');
+  const transferState = document.querySelector('[data-transfer-state]');
+  document.querySelectorAll('[data-transfer-open]').forEach((button) => button.addEventListener('click', () => openDialog(transferDialog)));
+  document.querySelector('[data-transfer-confirm]')?.addEventListener('click', () => {
+    closeDialog(transferDialog);
+    if (transferReceipt) transferReceipt.hidden = false;
+    if (transferState) transferState.textContent = 'Pending transfer · 72h';
+    document.querySelectorAll('[data-transfer-open]').forEach((button) => { button.textContent = 'Review pending transfer'; });
+    announce('Synthetic 72-hour ownership-transfer hold started. No authority changed.');
+  });
+
+  const connectorDialog = document.querySelector('#connector-dialog');
+  const connectorRevokeDialog = document.querySelector('#connector-revoke-dialog');
+  const connectorStateButtons = Array.from(document.querySelectorAll('[data-connector-state]'));
+  const connectorStatus = document.querySelector('[data-connector-status]');
+  const connectorFreshness = document.querySelector('[data-connector-freshness]');
+  const connectorCoverage = document.querySelector('[data-connector-coverage]');
+  const connectorCopy = document.querySelector('[data-connector-copy]');
+  const proofCoverage = document.querySelector('[data-proof-coverage]');
+  const connectorStates = {
+    active: {
+      label: 'Active', freshness: 'Reconciled 8 min ago', ledger: '2 active · 1 proposed · 8/8 evidence surfaces current',
+      copy: 'Provider and ARA state agree. Read-only collection is available.', proof: '7/8 current · GBP active', className: ''
+    },
+    degraded: {
+      label: 'Reconciliation required', freshness: 'Provider scope drift detected', ledger: '1 active · 1 degraded · 1 proposed · 6/8 surfaces current',
+      copy: 'Provider and ARA scopes disagree. Collection and affected actions are paused without widening access.', proof: '6/8 current · GBP degraded', className: 'volatile'
+    },
+    revoked: {
+      label: 'Revoked', freshness: 'New collection blocked immediately', ledger: '1 active · 1 revoked · 1 proposed · 5/8 surfaces current',
+      copy: 'ARA is internally blocked. Provider revocation retry is simulated; existing evidence was not silently deleted.', proof: '5/8 current · GBP revoked', className: 'unavailable'
+    }
+  };
+  const setConnectorState = (state) => {
+    const selected = connectorStates[state] || connectorStates.active;
+    connectorStateButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.connectorState === state)));
+    if (connectorStatus) {
+      connectorStatus.textContent = selected.label;
+      connectorStatus.classList.remove('volatile', 'unavailable');
+      if (selected.className) connectorStatus.classList.add(selected.className);
+    }
+    if (connectorFreshness) connectorFreshness.textContent = selected.freshness;
+    if (connectorCoverage) connectorCoverage.textContent = selected.ledger;
+    if (connectorCopy) connectorCopy.textContent = selected.copy;
+    if (proofCoverage) proofCoverage.textContent = selected.proof;
+    document.body.dataset.connectorState = state;
+  };
+  connectorStateButtons.forEach((button) => button.addEventListener('click', () => setConnectorState(button.dataset.connectorState)));
+  document.querySelectorAll('[data-connector-open]').forEach((button) => button.addEventListener('click', () => openDialog(connectorDialog)));
+  document.querySelector('[data-connector-confirm]')?.addEventListener('click', () => {
+    closeDialog(connectorDialog);
+    setConnectorState('active');
+    announce('Synthetic connector consent recorded. No OAuth connection or credential was created.');
+  });
+  document.querySelectorAll('[data-connector-revoke-open]').forEach((button) => button.addEventListener('click', () => openDialog(connectorRevokeDialog)));
+  document.querySelector('[data-connector-revoke-confirm]')?.addEventListener('click', () => {
+    closeDialog(connectorRevokeDialog);
+    setConnectorState('revoked');
+    announce('Synthetic connector revoked internally. No provider account was contacted.');
+  });
+  setConnectorState('active');
 
   const historyFilters = Array.from(document.querySelectorAll('[data-history-filter]'));
   const recoveryPoints = Array.from(document.querySelectorAll('[data-recovery-point]'));
@@ -333,6 +410,46 @@
   };
   billingButtons.forEach((button) => button.addEventListener('click', () => setBilling(button.dataset.billingState)));
   setBilling('active');
+
+  const outcomeFilters = Array.from(document.querySelectorAll('[data-outcome-filter]'));
+  const outcomeRows = Array.from(document.querySelectorAll('[data-outcome-row]'));
+  const setOutcomeFilter = (filter) => {
+    outcomeFilters.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.outcomeFilter === filter)));
+    outcomeRows.forEach((row) => { row.hidden = filter !== 'all' && row.dataset.outcomeRow !== filter; });
+  };
+  outcomeFilters.forEach((button) => button.addEventListener('click', () => setOutcomeFilter(button.dataset.outcomeFilter)));
+  setOutcomeFilter('all');
+
+  const outcomeDialog = document.querySelector('#outcome-dialog');
+  const outcomeTitle = document.querySelector('[data-outcome-title]');
+  const outcomeExplanation = document.querySelector('[data-outcome-explanation]');
+  const outcomeClass = document.querySelector('[data-outcome-class]');
+  const outcomeConfidence = document.querySelector('[data-outcome-confidence]');
+  const outcomeProvenance = document.querySelector('[data-outcome-provenance]');
+  const outcomeTreatment = document.querySelector('[data-outcome-treatment]');
+  const outcomeDetails = {
+    direct: ['Direct outcome', 'Direct', 'High', 'ARA route + first-party event', 'Included in direct recorded value', 'A verified ARA-controlled route links the approved answer/action to this reconciled synthetic first-party outcome.'],
+    assisted: ['Assisted outcome', 'Assisted', 'Medium', 'ARA exposure + first-party event + phone step', 'Reported separately from direct value', 'ARA is one verified step, but a phone conversation or another known channel also materially contributed.'],
+    correlated: ['Correlated outcome', 'Correlated', 'Low', 'Temporal comparison only', 'Excluded from attributable value', 'The event followed an ARA change inside the sample window, but the available evidence does not establish contribution or causation.'],
+    unknown: ['Unknown outcome', 'Unknown', 'Unresolved', 'Unmatched first-party event', 'Excluded from attributable value', 'The synthetic event lacks enough consented journey evidence for a stronger attribution class.']
+  };
+  document.querySelectorAll('[data-outcome-open]').forEach((button) => button.addEventListener('click', () => {
+    const [title, label, confidence, provenance, treatment, explanation] = outcomeDetails[button.dataset.outcomeOpen] || outcomeDetails.unknown;
+    if (outcomeTitle) outcomeTitle.textContent = title;
+    if (outcomeClass) outcomeClass.textContent = label;
+    if (outcomeConfidence) outcomeConfidence.textContent = confidence;
+    if (outcomeProvenance) outcomeProvenance.textContent = provenance;
+    if (outcomeTreatment) outcomeTreatment.textContent = treatment;
+    if (outcomeExplanation) outcomeExplanation.textContent = explanation;
+    openDialog(outcomeDialog);
+  }));
+
+  const proofExportDialog = document.querySelector('#proof-export-dialog');
+  document.querySelectorAll('[data-proof-export]').forEach((button) => button.addEventListener('click', () => openDialog(proofExportDialog)));
+  document.querySelector('[data-proof-export-confirm]')?.addEventListener('click', () => {
+    closeDialog(proofExportDialog);
+    announce('Synthetic proof-pack preview closed. No customer file was created.');
+  });
 
   const sectionLinks = Array.from(document.querySelectorAll('[data-site-nav] a')).filter((link) => {
     try { return Boolean(link.hash && document.querySelector(link.hash)); } catch { return false; }
