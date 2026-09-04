@@ -334,8 +334,10 @@
   billingButtons.forEach((button) => button.addEventListener('click', () => setBilling(button.dataset.billingState)));
   setBilling('active');
 
-  const sectionLinks = Array.from(document.querySelectorAll('[data-site-nav] a[href^="#"]'));
-  const sections = sectionLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+  const sectionLinks = Array.from(document.querySelectorAll('[data-site-nav] a')).filter((link) => {
+    try { return Boolean(link.hash && document.querySelector(link.hash)); } catch { return false; }
+  });
+  const sections = sectionLinks.map((link) => document.querySelector(link.hash)).filter(Boolean);
   if (sections.length) {
     let navFrame = 0;
     const syncNavigation = () => {
@@ -345,7 +347,7 @@
       sections.forEach((section) => {
         if (section.offsetTop <= marker) active = section;
       });
-      sectionLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${active.id}`));
+      sectionLinks.forEach((link) => link.classList.toggle('is-active', link.hash === `#${active.id}`));
     };
     const scheduleNavigation = () => {
       if (navFrame) return;
@@ -355,6 +357,17 @@
     window.addEventListener('resize', scheduleNavigation, { passive: true });
     syncNavigation();
   }
+
+  document.querySelectorAll('a').forEach((link) => {
+    let target = null;
+    try { target = link.hash ? document.querySelector(link.hash) : null; } catch { target = null; }
+    if (!target) return;
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+      window.history.replaceState(null, '', link.hash);
+    });
+  });
 
   document.querySelectorAll('[data-current-year]').forEach((element) => { element.textContent = String(new Date().getFullYear()); });
   root.classList.add('js-ready');

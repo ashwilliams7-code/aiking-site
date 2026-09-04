@@ -158,7 +158,7 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
         for section in ("diagnostic", "scorecard", "workspace", "recovery", "billing"):
             page.evaluate("section => window.scrollTo(0, document.getElementById(section).offsetTop - 110)", section)
             page.wait_for_timeout(220)
-            assertions[f"nav_{section}"] = page.locator(f'[data-site-nav] a[href="#{section}"]').evaluate("el => el.classList.contains('is-active')")
+            assertions[f"nav_{section}"] = page.locator(f'[data-site-nav] a[href$="#{section}"]').evaluate("el => el.classList.contains('is-active')")
             page.screenshot(path=str(OUTPUT / f"{label}-{section}.png"), full_page=False)
             page.locator(f"#{section}").screenshot(path=str(OUTPUT / f"{label}-{section}-full.png"))
 
