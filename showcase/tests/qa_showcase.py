@@ -17,10 +17,12 @@ OUTPUT.mkdir(parents=True, exist_ok=True)
 
 CONFIGS = [
     ("kinetic", 1440, 900, False),
+    ("kinetic", 1280, 720, False),
     ("kinetic", 390, 844, False),
     ("kinetic", 320, 568, False),
     ("kinetic", 390, 844, True),
     ("editorial", 1440, 900, False),
+    ("editorial", 1280, 720, False),
     ("editorial", 390, 844, False),
     ("editorial", 320, 568, False),
     ("editorial", 390, 844, True),
@@ -77,6 +79,40 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
     assertions["dialogs_labelled"] = page.locator("dialog[aria-labelledby]").count() == metrics["dialogs"]
     page.keyboard.press("Tab")
     assertions["skip_link_first"] = page.evaluate("document.activeElement.classList.contains('skip-link')")
+    if suite == "kinetic":
+        assertions["kinetic_motion_system_present"] = (
+            page.locator('[data-motion-toggle]').count() == 1
+            and page.locator('[data-motion-zone]').count() == 2
+            and page.locator('.kinetic-ticker').count() == 1
+            and page.locator('.signal-packet').count() == 2
+            and page.locator('[data-journey-progress]').count() == 1
+        )
+        if reduced:
+            assertions["kinetic_reduced_motion_contract"] = (
+                page.locator('[data-motion-toggle]').is_disabled()
+                and page.locator('[data-motion-toggle]').inner_text().lower() == "motion reduced"
+                and page.locator('.ticker-track').evaluate("el => getComputedStyle(el).animationName === 'none'")
+                and page.locator('.ticker-group[aria-hidden="true"]').evaluate("el => getComputedStyle(el).display === 'none'")
+            )
+        else:
+            packet_before = page.locator('.signal-packet.p1').evaluate("el => el.getBoundingClientRect().left")
+            page.wait_for_timeout(180)
+            packet_after = page.locator('.signal-packet.p1').evaluate("el => el.getBoundingClientRect().left")
+            assertions["kinetic_motion_visibly_advances"] = abs(packet_after - packet_before) > 0.5
+            page.locator('[data-motion-toggle]').click()
+            assertions["kinetic_motion_pause"] = (
+                page.locator('body').get_attribute('data-motion-paused') == "true"
+                and page.locator('[data-motion-toggle]').get_attribute('aria-pressed') == "true"
+                and page.locator('.ticker-track').evaluate("el => getComputedStyle(el).animationPlayState === 'paused'")
+            )
+            page.locator('[data-motion-toggle]').click()
+            assertions["kinetic_motion_resume"] = page.locator('body').get_attribute('data-motion-paused') == "false"
+    else:
+        assertions["editorial_motion_identity_separate"] = (
+            page.locator('[data-motion-toggle]').count() == 0
+            and page.locator('.kinetic-ticker').count() == 0
+            and page.locator('[data-journey-progress]').count() == 0
+        )
     if width < 1000:
         page.locator('[data-nav-toggle]').click()
         assertions["mobile_navigation_opens"] = (
@@ -176,6 +212,17 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
         and "Customer-confirmed synthetic invoice value" in page.locator('#proof-export-dialog').inner_text()
     )
     page.locator('[data-proof-export-confirm]').click()
+    if suite == "kinetic" and not reduced:
+        page.locator('#outcomes').scroll_into_view_if_needed()
+        page.wait_for_timeout(220)
+        progress_value = page.locator('[data-journey-progress]').evaluate(
+            "el => parseFloat(el.style.getPropertyValue('--journey-progress'))"
+        )
+        assertions["kinetic_scroll_progress"] = progress_value > 20
+        assertions["kinetic_offscreen_motion_pauses"] = (
+            not page.locator('#overview').evaluate("el => el.classList.contains('is-motion-zone-active')")
+            and page.locator('.hero-frame').evaluate("el => getComputedStyle(el).animationPlayState === 'paused'")
+        )
 
     assertions["milestone_default"] = visible_count(page, '[data-recovery-point]') == 2
     page.locator('[data-history-filter="all"]').click()
@@ -208,7 +255,7 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
 
     page.evaluate("window.scrollTo(0, 0)")
     page.locator('[data-toast]').evaluate("el => el.classList.remove('is-visible')")
-    page.wait_for_timeout(160)
+    page.wait_for_timeout(350)
     label = f"{suite}-{width}x{height}{'-reduced' if reduced else ''}"
     page.screenshot(path=str(OUTPUT / f"{label}-hero.png"), full_page=False)
     if width >= 1000 and not reduced:
@@ -253,6 +300,29 @@ def main() -> None:
                 )
                 page = context.new_page()
                 results.append(check_suite(page, suite, width, height, reduced))
+                context.close()
+
+            for suite in ("kinetic", "editorial"):
+                context = browser.new_context(viewport={"width": 390, "height": 844})
+                page = context.new_page()
+                fallback_errors: list[str] = []
+                page.on("pageerror", lambda error: fallback_errors.append(str(error)))
+                page.goto(f"{BASE_URL}/{suite}.html", wait_until="domcontentloaded")
+                page.add_style_tag(content="html body * { font-family: Arial, sans-serif !important; }")
+                page.wait_for_timeout(300)
+                checks = {
+                    "fallback_font_forced": "Arial" in page.locator("h1").evaluate("el => getComputedStyle(el).fontFamily"),
+                    "no_horizontal_overflow": page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"),
+                    "headline_contained": page.locator("h1").evaluate("el => el.getBoundingClientRect().right <= innerWidth && el.getBoundingClientRect().left >= 0"),
+                    "primary_cta_visible": page.locator('.hero-actions .button').first.is_visible(),
+                    "page_errors_clean": not fallback_errors,
+                }
+                results.append({
+                    "label": f"{suite}-390x844-forced-fallback-font",
+                    "passed": all(checks.values()),
+                    "assertions": checks,
+                })
+                page.screenshot(path=str(OUTPUT / f"{suite}-390x844-forced-fallback-font.png"), full_page=False)
                 context.close()
 
             context = browser.new_context(viewport={"width": 390, "height": 844})

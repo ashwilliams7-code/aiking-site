@@ -24,6 +24,12 @@ Both suites demonstrate the same approved information architecture:
 8. Q72 baseline-versus-current proof, approved-change ledger, outcome funnel, four attribution classes, evidence drawer and export preview.
 9. Proof/Action tier comparison, safe checkout preview and entitlement states.
 
+The Kinetic suite additionally uses an original ARA signal ticker, animated evidence packets, a scan field, journey progress, section sweeps and an explicit Play/Pause control. Animation pauses when its zone leaves the viewport and becomes a complete static composition under reduced motion. The Editorial suite intentionally does not inherit this kinetic treatment.
+
+## Reference boundary
+
+The Kinetic direction transfers only general interface grammar from third-party inspiration: strong mobile hierarchy, layered depth, compact pacing, visible continuation, ambient motion and proof/action cadence. It does not copy or ship any third-party name, logo, slogan, wording, artwork, image, video, icon, source code, proprietary motif, signature choreography, analytics configuration or product claim. Every visible element and state is original ARA content derived from the settled ARA requirements.
+
 ## Hard boundary
 
 These routes are synthetic static frontends. They do not authenticate users, provision memberships, transfer ownership, collect or persist form data, create Stripe sessions, charge cards, connect to or contact providers, send messages, create bookings, access customer data, generate customer exports, restore records or delete records. Production capability remains separately gated in Project ARA.

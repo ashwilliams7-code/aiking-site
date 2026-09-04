@@ -44,6 +44,61 @@
     window.setTimeout(() => reveals.forEach((item) => item.classList.add('is-visible')), 4500);
   }
 
+  const motionToggle = document.querySelector('[data-motion-toggle]');
+  const motionZones = Array.from(document.querySelectorAll('[data-motion-zone]'));
+  const kineticSections = Array.from(document.querySelectorAll('.kinetic .section'));
+  const journeyProgress = document.querySelector('[data-journey-progress]');
+  const setMotionPaused = (paused) => {
+    document.body.dataset.motionPaused = String(paused);
+    if (!motionToggle) return;
+    motionToggle.setAttribute('aria-pressed', String(paused));
+    motionToggle.textContent = paused ? 'Resume motion' : 'Pause motion';
+  };
+  if (motionToggle) {
+    if (reducedMotion) {
+      setMotionPaused(true);
+      motionToggle.textContent = 'Motion reduced';
+      motionToggle.disabled = true;
+    } else {
+      setMotionPaused(false);
+      motionToggle.addEventListener('click', () => setMotionPaused(document.body.dataset.motionPaused !== 'true'));
+    }
+  }
+  if (motionZones.length) {
+    if ('IntersectionObserver' in window) {
+      const motionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => entry.target.classList.toggle('is-motion-zone-active', entry.isIntersecting));
+      }, { threshold: 0.02, rootMargin: '12% 0px 12% 0px' });
+      motionZones.forEach((zone) => motionObserver.observe(zone));
+    } else {
+      motionZones.forEach((zone) => zone.classList.add('is-motion-zone-active'));
+    }
+  }
+  if (kineticSections.length && 'IntersectionObserver' in window) {
+    const sectionMotionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle('is-visible-section', entry.isIntersecting));
+    }, { threshold: 0.01, rootMargin: '8% 0px 8% 0px' });
+    kineticSections.forEach((section) => sectionMotionObserver.observe(section));
+  } else {
+    kineticSections.forEach((section) => section.classList.add('is-visible-section'));
+  }
+  if (journeyProgress) {
+    let progressFrame = 0;
+    const updateJourneyProgress = () => {
+      progressFrame = 0;
+      const available = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const progress = Math.min(100, Math.max(0, (window.scrollY / available) * 100));
+      journeyProgress.style.setProperty('--journey-progress', `${progress.toFixed(2)}%`);
+    };
+    const scheduleJourneyProgress = () => {
+      if (progressFrame) return;
+      progressFrame = window.requestAnimationFrame(updateJourneyProgress);
+    };
+    window.addEventListener('scroll', scheduleJourneyProgress, { passive: true });
+    window.addEventListener('resize', scheduleJourneyProgress, { passive: true });
+    updateJourneyProgress();
+  }
+
   document.querySelectorAll('[data-pathway]').forEach((pathway) => {
     const controls = Array.from(pathway.querySelectorAll('[data-path-stage]'));
     const panels = Array.from(pathway.querySelectorAll('[data-path-panel]'));
