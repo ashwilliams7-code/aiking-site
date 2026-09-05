@@ -104,7 +104,11 @@
     const panels = Array.from(pathway.querySelectorAll('[data-path-panel]'));
     const setStage = (stage) => {
       controls.forEach((control) => control.setAttribute('aria-pressed', String(control.dataset.pathStage === stage)));
-      panels.forEach((panel) => panel.classList.toggle('is-active', panel.dataset.pathPanel === stage));
+      panels.forEach((panel) => {
+        const active = panel.dataset.pathPanel === stage;
+        panel.classList.toggle('is-active', active);
+        panel.hidden = !active;
+      });
       pathway.dataset.activeStage = stage;
     };
     controls.forEach((control) => control.addEventListener('click', () => setStage(control.dataset.pathStage)));
@@ -146,23 +150,43 @@
   const runProgress = document.querySelector('[data-run-progress]');
   const progressCopy = document.querySelector('[data-progress-copy]');
   const scorecard = document.querySelector('[data-scorecard]');
+  const diagnosticConsentInputs = Array.from(document.querySelectorAll('[data-diagnostic] input[type="checkbox"]'));
   let runToken = 0;
+  let runActive = false;
+
+  const hasDiagnosticConsent = () => diagnosticConsentInputs.length > 0 && diagnosticConsentInputs.every((input) => input.checked);
+  const syncRunAvailability = () => {
+    if (!runButton || runActive) return;
+    const approved = hasDiagnosticConsent();
+    runButton.disabled = !approved;
+    runButton.textContent = approved ? 'Run synthetic diagnostic' : 'Confirm manifest and consent';
+  };
 
   const resetRun = () => {
     runToken += 1;
+    runActive = false;
     runStates.forEach((state) => state.classList.remove('is-active', 'is-complete'));
     if (runStates[0]) runStates[0].classList.add('is-active');
     if (runProgress) runProgress.style.setProperty('--progress', '0%');
     if (progressCopy) progressCopy.textContent = 'Ready to run with synthetic fixtures.';
-    if (runButton) {
-      runButton.disabled = false;
-      runButton.textContent = 'Run synthetic diagnostic';
+    if (scorecard) {
+      scorecard.hidden = true;
+      scorecard.dataset.releaseState = 'pending';
+      scorecard.classList.remove('is-fresh');
     }
+    syncRunAvailability();
   };
 
   if (runButton) {
     runButton.addEventListener('click', async () => {
+      if (!hasDiagnosticConsent()) {
+        if (progressCopy) progressCopy.textContent = 'Confirm every displayed manifest and consent choice before running.';
+        announce('Synthetic diagnostic paused until every displayed consent is confirmed.');
+        syncRunAvailability();
+        return;
+      }
       const token = ++runToken;
+      runActive = true;
       runButton.disabled = true;
       runButton.textContent = 'Diagnostic running…';
       const messages = [
@@ -182,16 +206,21 @@
         if (progressCopy) progressCopy.textContent = messages[index] || 'Synthetic state updated.';
         await delay(index === runStates.length - 1 ? 260 : 780);
       }
+      if (token !== runToken) return;
       runStates.forEach((state) => state.classList.add('is-complete'));
       if (runProgress) runProgress.style.setProperty('--progress', '100%');
       runButton.textContent = 'Diagnostic complete';
+      runActive = false;
       if (scorecard) {
+        scorecard.hidden = false;
+        scorecard.dataset.releaseState = 'released';
         scorecard.classList.add('is-fresh');
         window.setTimeout(() => scorecard.classList.remove('is-fresh'), 1600);
       }
       announce('Synthetic scorecard released. No external action occurred.');
     });
   }
+  diagnosticConsentInputs.forEach((input) => input.addEventListener('change', syncRunAvailability));
   if (resetButton) resetButton.addEventListener('click', resetRun);
   resetRun();
 
@@ -221,8 +250,10 @@
   });
 
   const roleButtons = Array.from(document.querySelectorAll('[data-role]'));
-  const capabilityRows = Array.from(document.querySelectorAll('[data-capability]'));
+  const capabilityRows = () => Array.from(document.querySelectorAll('[data-capability]'));
   const roleCopy = document.querySelector('[data-role-copy]');
+  let currentRole = 'owner';
+  let currentBillingState = 'active';
   const roleMatrix = {
     owner: ['view', 'edit', 'approve', 'invite', 'connector', 'restore', 'delete', 'transfer', 'billing', 'action'],
     admin: ['view', 'edit', 'approve', 'invite', 'restore', 'action'],
@@ -237,15 +268,30 @@
     reviewer: 'Reviewer preview · read-only evidence, comments and audit access.',
     billing: 'Billing preview · subscription administration only, with no customer evidence or operational workspace access.'
   };
-  const setRole = (role) => {
-    const allowed = roleMatrix[role] || [];
-    roleButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.role === role)));
-    capabilityRows.forEach((row) => {
-      const enabled = allowed.includes(row.dataset.capability);
+  const billingAllows = (capability) => {
+    if (currentBillingState === 'restricted') return ['view', 'billing'].includes(capability);
+    if (currentBillingState === 'review') return !['action', 'restore', 'delete', 'transfer'].includes(capability);
+    if (currentBillingState === 'former') return ['view', 'billing', 'delete'].includes(capability);
+    return true;
+  };
+  const canUseCapability = (capability) => (roleMatrix[currentRole] || []).includes(capability) && billingAllows(capability);
+  const syncCapabilityControls = () => {
+    capabilityRows().forEach((row) => {
+      const enabled = canUseCapability(row.dataset.capability);
       row.classList.toggle('is-disabled', !enabled);
       row.setAttribute('aria-disabled', String(!enabled));
       if (row instanceof HTMLButtonElement) row.disabled = !enabled;
     });
+  };
+  const guardCapability = (capability) => {
+    if (canUseCapability(capability)) return true;
+    announce('This synthetic role or entitlement does not permit that action.');
+    return false;
+  };
+  const setRole = (role) => {
+    currentRole = role;
+    roleButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.role === role)));
+    syncCapabilityControls();
     if (roleCopy) roleCopy.textContent = roleDescriptions[role] || '';
   };
   roleButtons.forEach((button) => button.addEventListener('click', () => setRole(button.dataset.role)));
@@ -268,9 +314,15 @@
 
   const actionDialog = document.querySelector('#action-dialog');
   const actionReceipt = document.querySelector('[data-action-receipt]');
-  document.querySelectorAll('[data-action-request]').forEach((button) => button.addEventListener('click', () => openDialog(actionDialog)));
+  document.querySelectorAll('[data-action-request]').forEach((button) => button.addEventListener('click', () => {
+    if (guardCapability('action')) openDialog(actionDialog);
+  }));
   const actionConfirm = document.querySelector('[data-action-confirm]');
   if (actionConfirm) actionConfirm.addEventListener('click', () => {
+    if (!guardCapability('action')) {
+      closeDialog(actionDialog);
+      return;
+    }
     closeDialog(actionDialog);
     if (actionReceipt) actionReceipt.hidden = false;
     document.querySelectorAll('[data-action-request]').forEach((button) => { button.textContent = 'Review queued request →'; });
@@ -279,8 +331,14 @@
 
   const inviteDialog = document.querySelector('#invite-dialog');
   const inviteReceipt = document.querySelector('[data-invite-receipt]');
-  document.querySelectorAll('[data-invite-open]').forEach((button) => button.addEventListener('click', () => openDialog(inviteDialog)));
+  document.querySelectorAll('[data-invite-open]').forEach((button) => button.addEventListener('click', () => {
+    if (guardCapability('invite')) openDialog(inviteDialog);
+  }));
   document.querySelector('[data-invite-confirm]')?.addEventListener('click', () => {
+    if (!guardCapability('invite')) {
+      closeDialog(inviteDialog);
+      return;
+    }
     closeDialog(inviteDialog);
     if (inviteReceipt) inviteReceipt.hidden = false;
     document.querySelectorAll('[data-invite-open]').forEach((button) => { button.textContent = 'Review prepared invitation'; });
@@ -290,12 +348,43 @@
   const transferDialog = document.querySelector('#transfer-dialog');
   const transferReceipt = document.querySelector('[data-transfer-receipt]');
   const transferState = document.querySelector('[data-transfer-state]');
-  document.querySelectorAll('[data-transfer-open]').forEach((button) => button.addEventListener('click', () => openDialog(transferDialog)));
+  const transferButtons = Array.from(document.querySelectorAll('[data-transfer-open]'));
+  let transferPending = false;
+  const setTransferPending = (pending) => {
+    transferPending = pending;
+    if (transferState) transferState.textContent = pending ? 'Pending transfer · 72h' : 'Stable';
+    transferButtons.forEach((button) => {
+      button.textContent = pending ? 'Review or cancel pending transfer' : 'Preview owner transfer';
+    });
+    if (!transferReceipt) return;
+    transferReceipt.hidden = !pending;
+    if (pending) {
+      transferReceipt.innerHTML = '<span>pending_transfer · 72-hour hold · both parties required · synthetic only</span><button class="button ghost" type="button" data-transfer-cancel data-capability="transfer">Cancel synthetic transfer</button>';
+      syncCapabilityControls();
+      transferReceipt.querySelector('[data-transfer-cancel]')?.addEventListener('click', () => {
+        if (!guardCapability('transfer')) return;
+        setTransferPending(false);
+        announce('Synthetic ownership transfer cancelled. No authority changed.');
+      });
+    }
+  };
+  transferButtons.forEach((button) => button.addEventListener('click', () => {
+    if (!guardCapability('transfer')) return;
+    if (transferPending) {
+      transferReceipt?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
+      transferReceipt?.querySelector('[data-transfer-cancel]')?.focus();
+      announce('Pending synthetic transfer is ready to review or cancel.');
+      return;
+    }
+    openDialog(transferDialog);
+  }));
   document.querySelector('[data-transfer-confirm]')?.addEventListener('click', () => {
+    if (!guardCapability('transfer')) {
+      closeDialog(transferDialog);
+      return;
+    }
     closeDialog(transferDialog);
-    if (transferReceipt) transferReceipt.hidden = false;
-    if (transferState) transferState.textContent = 'Pending transfer · 72h';
-    document.querySelectorAll('[data-transfer-open]').forEach((button) => { button.textContent = 'Review pending transfer'; });
+    setTransferPending(true);
     announce('Synthetic 72-hour ownership-transfer hold started. No authority changed.');
   });
 
@@ -336,14 +425,26 @@
     document.body.dataset.connectorState = state;
   };
   connectorStateButtons.forEach((button) => button.addEventListener('click', () => setConnectorState(button.dataset.connectorState)));
-  document.querySelectorAll('[data-connector-open]').forEach((button) => button.addEventListener('click', () => openDialog(connectorDialog)));
+  document.querySelectorAll('[data-connector-open]').forEach((button) => button.addEventListener('click', () => {
+    if (guardCapability('connector')) openDialog(connectorDialog);
+  }));
   document.querySelector('[data-connector-confirm]')?.addEventListener('click', () => {
+    if (!guardCapability('connector')) {
+      closeDialog(connectorDialog);
+      return;
+    }
     closeDialog(connectorDialog);
     setConnectorState('active');
     announce('Synthetic connector consent recorded. No OAuth connection or credential was created.');
   });
-  document.querySelectorAll('[data-connector-revoke-open]').forEach((button) => button.addEventListener('click', () => openDialog(connectorRevokeDialog)));
+  document.querySelectorAll('[data-connector-revoke-open]').forEach((button) => button.addEventListener('click', () => {
+    if (guardCapability('connector')) openDialog(connectorRevokeDialog);
+  }));
   document.querySelector('[data-connector-revoke-confirm]')?.addEventListener('click', () => {
+    if (!guardCapability('connector')) {
+      closeDialog(connectorRevokeDialog);
+      return;
+    }
     closeDialog(connectorRevokeDialog);
     setConnectorState('revoked');
     announce('Synthetic connector revoked internally. No provider account was contacted.');
@@ -355,40 +456,89 @@
   const setHistoryFilter = (filter) => {
     historyFilters.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.historyFilter === filter)));
     recoveryPoints.forEach((point) => {
-      point.hidden = filter === 'milestones' && point.dataset.milestone !== 'true';
+      const hidden = filter === 'milestones' && point.dataset.milestone !== 'true';
+      point.hidden = hidden;
+      if (hidden) {
+        const checkbox = point.querySelector('[data-compare-check]');
+        if (checkbox) checkbox.checked = false;
+      }
     });
+    updateCompare();
   };
   historyFilters.forEach((button) => button.addEventListener('click', () => setHistoryFilter(button.dataset.historyFilter)));
-  if (historyFilters[0]) setHistoryFilter(historyFilters[0].dataset.historyFilter);
 
   const compareChecks = Array.from(document.querySelectorAll('[data-compare-check]'));
   const compareCount = document.querySelector('[data-compare-count]');
   const compareButton = document.querySelector('[data-compare-button]');
-  const updateCompare = () => {
-    const count = compareChecks.filter((check) => check.checked && !check.closest('[data-recovery-point]')?.hidden).length;
+  const compareResult = document.createElement('section');
+  compareResult.className = 'recovery-comparison';
+  compareResult.dataset.compareResult = '';
+  compareResult.hidden = true;
+  compareResult.setAttribute('aria-live', 'polite');
+  document.querySelector('.recovery-toolbar')?.insertAdjacentElement('afterend', compareResult);
+  function updateCompare() {
+    const visibleSelected = compareChecks.filter((check) => check.checked && !check.closest('[data-recovery-point]')?.hidden);
+    const count = visibleSelected.length;
     if (compareCount) compareCount.textContent = String(count);
     if (compareButton) compareButton.disabled = count !== 2;
-  };
+    if (count !== 2) compareResult.hidden = true;
+  }
   compareChecks.forEach((check) => check.addEventListener('change', updateCompare));
-  if (compareButton) compareButton.addEventListener('click', () => announce('Synthetic comparison prepared for the two selected recovery points.'));
-  updateCompare();
+  if (compareButton) compareButton.addEventListener('click', () => {
+    const selected = compareChecks
+      .filter((check) => check.checked && !check.closest('[data-recovery-point]')?.hidden)
+      .map((check) => check.closest('[data-recovery-point]'))
+      .filter(Boolean);
+    if (selected.length !== 2) return;
+    compareResult.replaceChildren();
+    const heading = document.createElement('h3');
+    heading.textContent = 'Synthetic recovery comparison';
+    compareResult.append(heading);
+    const grid = document.createElement('div');
+    selected.forEach((point) => {
+      const card = document.createElement('article');
+      const title = document.createElement('strong');
+      const timestamp = document.createElement('span');
+      const change = document.createElement('p');
+      const state = document.createElement('small');
+      title.textContent = point.querySelector('.point-title strong')?.textContent || 'Recovery point';
+      timestamp.textContent = point.querySelector('.point-title span')?.textContent || '';
+      change.textContent = point.querySelector('.point-change')?.textContent || 'No change summary available.';
+      state.textContent = point.querySelector('[data-point-state]')?.textContent || 'Available';
+      card.append(title, timestamp, change, state);
+      grid.append(card);
+    });
+    compareResult.append(grid);
+    compareResult.hidden = false;
+    compareResult.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
+    announce('Synthetic comparison rendered for the two selected recovery points.');
+  });
+  if (historyFilters[0]) setHistoryFilter(historyFilters[0].dataset.historyFilter);
 
   const restoreDialog = document.querySelector('#restore-dialog');
   const restoreLabel = document.querySelector('[data-restore-label]');
   const restoreStatus = document.querySelector('[data-restore-status]');
   let restorePoint = '';
   document.querySelectorAll('[data-restore-open]').forEach((button) => button.addEventListener('click', () => {
+    if (!guardCapability('restore')) return;
     restorePoint = button.dataset.restoreOpen || 'Selected recovery point';
     if (restoreLabel) restoreLabel.textContent = restorePoint;
     openDialog(restoreDialog);
   }));
   const restoreConfirm = document.querySelector('[data-restore-confirm]');
   if (restoreConfirm) restoreConfirm.addEventListener('click', () => {
+    if (!guardCapability('restore')) {
+      closeDialog(restoreDialog);
+      return;
+    }
     closeDialog(restoreDialog);
     if (restoreStatus) {
       restoreStatus.hidden = false;
-      restoreStatus.innerHTML = `<strong>Restore preview applied synthetically.</strong><span>${restorePoint} was promoted as a new head. The previous head remains available.</span><button type="button" data-restore-undo>Undo synthetic restore</button>`;
-      restoreStatus.querySelector('[data-restore-undo]')?.addEventListener('click', () => {
+      restoreStatus.innerHTML = `<strong>Restore preview applied synthetically.</strong><span>${restorePoint} was promoted as a new head. The previous head remains available.</span><button type="button" data-restore-undo data-capability="restore">Undo synthetic restore</button>`;
+      const undo = restoreStatus.querySelector('[data-restore-undo]');
+      syncCapabilityControls();
+      undo?.addEventListener('click', () => {
+        if (!guardCapability('restore')) return;
         restoreStatus.hidden = true;
         announce('Synthetic restore undone.');
       });
@@ -400,12 +550,17 @@
   const deleteLabel = document.querySelector('[data-delete-label]');
   let deletePoint = null;
   document.querySelectorAll('[data-delete-open]').forEach((button) => button.addEventListener('click', () => {
+    if (!guardCapability('delete')) return;
     deletePoint = button.closest('[data-recovery-point]');
     if (deleteLabel) deleteLabel.textContent = button.dataset.deleteOpen || 'Selected recovery point';
     openDialog(deleteDialog);
   }));
   const deleteConfirm = document.querySelector('[data-delete-confirm]');
   if (deleteConfirm) deleteConfirm.addEventListener('click', () => {
+    if (!guardCapability('delete')) {
+      closeDialog(deleteDialog);
+      return;
+    }
     closeDialog(deleteDialog);
     if (!deletePoint) return;
     deletePoint.classList.add('is-pending-deletion');
@@ -416,6 +571,7 @@
     announce('Recovery point moved to synthetic pending deletion.');
   });
   document.querySelectorAll('[data-delete-undo]').forEach((button) => button.addEventListener('click', () => {
+    if (!guardCapability('delete')) return;
     const point = button.closest('[data-recovery-point]');
     point?.classList.remove('is-pending-deletion');
     const state = point?.querySelector('[data-point-state]');
@@ -434,9 +590,12 @@
     planButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
     if (planSummary) planSummary.textContent = `${selectedPlan} selected for preview · no checkout created`;
   };
-  planButtons.forEach((button) => button.addEventListener('click', () => setPlan(button)));
+  planButtons.forEach((button) => button.addEventListener('click', () => {
+    if (guardCapability('billing')) setPlan(button);
+  }));
   if (planButtons[0]) setPlan(planButtons[0]);
   document.querySelectorAll('[data-checkout-preview]').forEach((button) => button.addEventListener('click', () => {
+    if (!guardCapability('billing')) return;
     if (checkoutPlan) checkoutPlan.textContent = selectedPlan;
     openDialog(checkoutDialog);
   }));
@@ -456,14 +615,18 @@
     former: ['Former paid · read-only', '120-day offboarding preview. Inspect, export, delete or reactivate without data loss.']
   };
   const setBilling = (state) => {
+    currentBillingState = state;
     billingButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.billingState === state)));
+    syncCapabilityControls();
     if (!billingBanner) return;
     const [title, copy] = billingCopy[state] || billingCopy.active;
     billingBanner.dataset.state = state;
     billingBanner.querySelector('strong').textContent = title;
     billingBanner.querySelector('span').textContent = copy;
   };
-  billingButtons.forEach((button) => button.addEventListener('click', () => setBilling(button.dataset.billingState)));
+  billingButtons.forEach((button) => button.addEventListener('click', () => {
+    if (guardCapability('billing')) setBilling(button.dataset.billingState);
+  }));
   setBilling('active');
 
   const outcomeFilters = Array.from(document.querySelectorAll('[data-outcome-filter]'));
@@ -538,6 +701,10 @@
       event.preventDefault();
       target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
       window.history.replaceState(null, '', link.hash);
+      if (link.classList.contains('skip-link')) {
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+      }
     });
   });
 

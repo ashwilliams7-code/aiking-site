@@ -13,6 +13,7 @@
 .consultation-page .site-header{position:relative}
 .consultation-page .breadcrumb{margin-bottom:26px}
 .consultation-page .section-kicker i{min-width:23px}
+#briefing{scroll-margin-top:96px}
 
 /* Hero */
 .consult-hero{
@@ -449,7 +450,8 @@
 .consult-advisor-copy h2 em{color:#5f7800;text-shadow:none}
 .consult-advisor-copy .lead{color:#454b40}
 .consult-advisor-copy>p:not(.lead){margin-top:20px;color:var(--consult-paper-muted);font-size:16.5px;line-height:1.7}
-.consult-advisor-copy .section-kicker{color:#666b60}
+.consult-advisor-copy .section-kicker{color:#5e6258}
+.consult-advisor-copy .section-kicker i{color:#4f6500}
 .consult-advisor-points{
   display:flex;
   flex-wrap:wrap;

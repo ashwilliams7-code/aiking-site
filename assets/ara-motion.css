@@ -58,6 +58,16 @@
 @keyframes araSignalSweep{0%{transform:rotate(-13deg) translate3d(-18%,0,0);opacity:0}16%{opacity:.14}70%{opacity:.1}100%{transform:rotate(-13deg) translate3d(18%,0,0);opacity:0}}
 @keyframes araOrbitDrift{from{transform:translate3d(-2%,0,0) scale(.94)}to{transform:translate3d(4%,3%,0) scale(1.06)}}
 
+/* Save-Data and reduced-motion users keep the layout without continuous animation. */
+.ara-page.ara-motion-disabled .ara-signal-field::before,
+.ara-page.ara-motion-disabled .ara-signal-field::after,
+.ara-page.ara-motion-disabled .ara-signal-field > i,
+.ara-page.ara-motion-disabled .ara-signal-field > span,
+.ara-page.ara-motion-disabled .ara-kinetic-divider span,
+.ara-page.ara-motion-disabled .ara-proof-orbit,
+.ara-page.ara-motion-disabled .ara-platform-track,
+.ara-page.ara-motion-disabled .ara-pathway-toggle i{animation:none!important}
+
 /* First-screen proof is concise, scannable and truthful. */
 .ara-page .ara-proof-chips{
   display:flex;
@@ -343,7 +353,7 @@
 }
 
 @media(max-width:680px){
-  .ara-page .site-header .nav-actions{display:none}
+  .ara-page .site-header .nav-actions > .btn{display:none}
   .ara-page .ara-breadcrumb{display:none}
   .ara-page .ara-hero{padding-top:22px}
   .ara-page .ara-hero-grid{gap:28px}
@@ -444,12 +454,13 @@
   .ara-page [data-ara-stage],
   .ara-page .ara-pathway-controls button,
   .ara-page .ara-methodology summary::after,
-  .ara-page .ara-mobile-dock{
+  .ara-page .ara-methodology summary::after{
     opacity:1;
     visibility:visible;
     transform:none;
     transition:none!important;
     filter:none;
   }
+  .ara-page .ara-mobile-dock{transition:none!important}
   .ara-page .ara-pathway.is-playing [data-ara-stage]:not(.is-active){opacity:1;filter:none;transform:none}
 }

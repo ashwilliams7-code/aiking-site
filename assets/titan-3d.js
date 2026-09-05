@@ -172,7 +172,7 @@
           p.y += cos(uTime*0.10 + aSeed*1.3) * 0.5;
           vec4 mv = modelViewMatrix * vec4(p,1.0);
           float dist = -mv.z;
-          vFade = smoothstep(90.0, 3.0, dist);
+          vFade = 1.0 - smoothstep(3.0, 90.0, dist);
           vBlur = clamp(abs(dist - uFocus) / 34.0, 0.0, 1.0);
           vTw = 0.55 + 0.45 * sin(uTime*1.6 + aSeed*4.0);
           gl_Position = projectionMatrix * mv;
@@ -190,8 +190,8 @@
         void main(){
           vec2 uv = gl_PointCoord - 0.5;
           float d = length(uv);
-          float edge = mix(0.5, 0.02, vBlur);
-          float alpha = smoothstep(0.5, edge, d);
+          float edge = mix(0.49, 0.02, vBlur);
+          float alpha = 1.0 - smoothstep(edge, 0.5, d);
           alpha *= vFade;
           alpha *= mix(1.0, 0.35, vBlur);
           alpha *= mix(0.75, 1.0, vTw);

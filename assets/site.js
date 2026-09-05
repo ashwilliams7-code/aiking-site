@@ -213,10 +213,11 @@
         const h=form.querySelector('[data-bb-done] h3'); if(h) h.textContent='Briefing received.';
         if(msg) msg.textContent='Thank you. Ash reads every briefing personally and will reply to you directly.';
       }
-      else if(dr&&msg){ /* default copy already references the draft */ }
+      /* When the mail client is opened, the default completion copy already
+         explains that the visitor still needs to review and send the draft. */
       if(done){ done.hidden=false; const h=done.querySelector('h3'); if(h){ h.setAttribute('tabindex','-1'); setTimeout(()=>h.focus({preventScroll:true}),0); } }
       try{ localStorage.removeItem(DRAFT_KEY); }catch(_){}
-      if(live) live.textContent='Briefing sent. Ash will reply personally.';
+      if(live) live.textContent=mailOpened?'Email draft prepared. Review it and press send.':'Briefing received. Ash will reply personally.';
       const copy=form.querySelector('[data-bb-copy]');
       if(copy&&!copy.dataset.wired){
         copy.dataset.wired='1';
@@ -279,7 +280,20 @@
   }
 
   /* modal shell — built at body level the first time it's needed */
-  let modal=null,modalTrigger=null;
+  function isolateSiblings(overlay){
+    const state=Array.from(document.body.children)
+      .filter(el=>el!==overlay&&!/^(SCRIPT|STYLE|LINK)$/.test(el.tagName))
+      .map(el=>({el,hadInert:el.hasAttribute('inert'),ariaHidden:el.getAttribute('aria-hidden')}));
+    state.forEach(({el})=>{ el.inert=true; el.setAttribute('aria-hidden','true'); });
+    return state;
+  }
+  function restoreSiblings(state){
+    state.forEach(({el,hadInert,ariaHidden})=>{
+      el.inert=hadInert;
+      if(ariaHidden===null) el.removeAttribute('aria-hidden'); else el.setAttribute('aria-hidden',ariaHidden);
+    });
+  }
+  let modal=null,modalTrigger=null,modalInertState=[];
   function ensureModal(){
     if(modal) return modal;
     modal=document.createElement('div');
@@ -300,11 +314,12 @@
   function openModal(trigger){
     ensureModal();
     modalTrigger=trigger||null; modal.hidden=false; document.body.classList.add('modal-open');
+    if(!modalInertState.length) modalInertState=isolateSiblings(modal);
     const f=modal.querySelector('[data-bb]'); if(f&&f._bbGrow) f._bbGrow(); else if(f&&f._bbResize) f._bbResize();
     const target=finePointer?modal.querySelector('.bb-step.active input,.bb-step.active textarea')||modal.querySelector('#briefing-title'):modal.querySelector('.modal-panel');
     if(target){ if(!target.matches('input,textarea,button,a')) target.setAttribute('tabindex','-1'); setTimeout(()=>target.focus({preventScroll:true}),40); }
   }
-  function closeModal(){ if(!modal||modal.hidden) return; modal.hidden=true; document.body.classList.remove('modal-open'); if(modalTrigger){modalTrigger.focus();modalTrigger=null;} }
+  function closeModal(){ if(!modal||modal.hidden) return; modal.hidden=true; document.body.classList.remove('modal-open'); restoreSiblings(modalInertState); modalInertState=[]; if(modalTrigger){modalTrigger.focus();modalTrigger=null;} }
   document.querySelectorAll('[data-open-briefing]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();openModal(el);}));
   document.addEventListener('keydown',e=>{
     if(e.key==='Escape'){closeModal();closeNav();}
@@ -315,13 +330,25 @@
   });
   /* inline mounts (contact page) */
   document.querySelectorAll('[data-briefing-inline]').forEach(el=>{ el.innerHTML=briefingMarkup(); wireBriefing(el.querySelector('[data-bb]')); });
+  function alignBriefingFragment(){
+    if(location.hash!=='#briefing') return;
+    const target=document.querySelector('#briefing');
+    if(target) requestAnimationFrame(()=>target.scrollIntoView({block:'start'}));
+  }
+  alignBriefingFragment();
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(alignBriefingFragment);
   /* pre-build the modal during idle so the first open is instant */
   if('requestIdleCallback' in window) requestIdleCallback(()=>ensureModal(),{timeout:4000}); else setTimeout(ensureModal,2500);
 
   /* ---------- header: one AIKING shell on every public route ---------- */
   const header=document.querySelector('.site-header');
   const navLinks=document.querySelector('.nav-links');
-  const navActions=document.querySelector('.nav-actions');
+  let navActions=document.querySelector('.nav-actions');
+  if(header&&navLinks&&!navActions){
+    navActions=document.createElement('div');
+    navActions.className='nav-actions';
+    (header.querySelector('.nav')||header).appendChild(navActions);
+  }
   if(header){
     header.classList.add('k-header');
     if(navLinks&&!document.body.classList.contains('home-knotch')){
@@ -349,8 +376,8 @@
   }
 
   /* ---------- mobile nav: burger + body-level overlay ---------- */
-  let burger=null,menu=null;
-  function closeNav(){ if(menu&&menu.classList.contains('open')){ menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); document.body.classList.remove('nav-lock'); if(burger){burger.setAttribute('aria-expanded','false');burger.focus();} } }
+  let burger=null,menu=null,menuInertState=[];
+  function closeNav(){ if(menu&&menu.classList.contains('open')){ restoreSiblings(menuInertState); menuInertState=[]; if(burger){burger.setAttribute('aria-expanded','false');burger.focus();} menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); document.body.classList.remove('nav-lock'); } }
   if(header&&navLinks&&navActions){
     menu=document.createElement('div');
     menu.className='mobile-menu'; menu.setAttribute('aria-hidden','true');
@@ -372,7 +399,8 @@
       menu.classList.add('open'); menu.setAttribute('aria-hidden','false');
       document.body.classList.add('nav-lock');
       burger.setAttribute('aria-expanded','true');
-      const firstLink=menu.querySelector('a,button'); if(firstLink) setTimeout(()=>firstLink.focus(),60);
+      menuInertState=isolateSiblings(menu);
+      const first=menu.querySelector('button,a'); if(first) first.focus();
     });
   }
 
@@ -815,7 +843,11 @@
           const id=a.getAttribute('href');
           if(id.length>1){
             const t=document.querySelector(id);
-            if(t){ e.preventDefault(); lenis.scrollTo(t,{offset:-88}); }
+            if(t){
+              e.preventDefault();
+              if(location.hash!==id) history.pushState(null,'',id);
+              lenis.scrollTo(t,{offset:-88});
+            }
           }
         });
       });

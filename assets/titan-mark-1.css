@@ -167,7 +167,7 @@
 .titan-final-glow{position:absolute;width:min(66vw,860px);aspect-ratio:1;border-radius:50%;border:1px solid rgba(209,254,23,.055);box-shadow:0 0 180px rgba(209,254,23,.025),inset 0 0 180px rgba(209,254,23,.02)}
 .titan-final-content{position:relative;display:flex;flex-direction:column;align-items:center}
 .titan-final h2{font-size:clamp(58px,9vw,130px)}
-.titan-final-content>p:not(.titan-kicker){max-width:600px;margin-top:38px;line-height:1.7;color:rgba(244,244,239,.4)}
+.titan-final-content>p:not(.titan-kicker){max-width:600px;margin-top:38px;line-height:1.7;color:rgba(244,244,239,.58)}
 .titan-interest-final{margin-top:45px}
 @media(max-width:980px){.titan-corner,.titan-biometric,.titan-power-readout{display:none}.titan-stage{padding-inline:24px}.titan-stage h1{font-size:clamp(92px,20vw,174px)}.titan-presence{right:-15vw;width:78vw;opacity:.5}.titan-dossier-intro,.titan-authority-grid,.titan-architecture-grid{grid-template-columns:1fr}.titan-principles{grid-template-columns:1fr 1fr}.titan-principles article:nth-child(3){border-left:0;border-top:1px solid rgba(255,255,255,.075)}.titan-principles article:nth-child(4){border-top:1px solid rgba(255,255,255,.075)}.titan-architecture-copy .titan-kicker{margin-top:38px}}
 @media(max-width:680px){

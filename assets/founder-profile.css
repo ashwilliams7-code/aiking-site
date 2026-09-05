@@ -324,6 +324,10 @@
 .founder-linkedin span{font-size:16px;transition:transform .25s var(--ease)}
 .founder-linkedin:hover span{transform:translate(3px,-3px)}
 
+@media(max-width:360px){
+  .founder-career .section-head h2{font-size:44px}
+}
+
 .career-logo-grid{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -431,5 +435,3 @@
   .founder-capability{padding-block:72px}
   .founder-capability h2{font-size:clamp(42px,12vw,54px)}
 }
-
-

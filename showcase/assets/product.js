@@ -108,8 +108,8 @@
       active: {
         label: 'Active',
         copy: 'Synthetic consent is active for the approved read-only purpose. No OAuth flow or provider account was contacted.',
-        coverage: '8/8 synthetic evidence surfaces current',
-        outcome: 'Outcome coverage: 8/8 synthetic surfaces available.'
+        coverage: '7/8 synthetic evidence surfaces current · Claude unavailable',
+        outcome: 'Outcome coverage: 7/8 synthetic surfaces; Claude unavailable and excluded.'
       },
       degraded: {
         label: 'Degraded — fail closed',
@@ -219,6 +219,7 @@
       connectorState: 'active',
       recoveryFilter: 'milestones',
       pendingDeletion: false,
+      pendingDeletionPoint: '',
       selectedPlan: 'proof',
       billingState: 'active',
       outcomeFilter: 'all',
@@ -242,7 +243,6 @@
     let diagnosticToken = 0;
     let diagnosticRunning = false;
     let pendingDialogAction = null;
-    let deletionPointIndex = 0;
     let recoveryUndoMode = '';
     let motionPaused = false;
     let eventSequence = 0;
@@ -257,6 +257,7 @@
       connectorState: DEFAULT_STATE.connectorState,
       recoveryFilter: DEFAULT_STATE.recoveryFilter,
       pendingDeletion: DEFAULT_STATE.pendingDeletion,
+      pendingDeletionPoint: DEFAULT_STATE.pendingDeletionPoint,
       selectedPlan: DEFAULT_STATE.selectedPlan,
       billingState: DEFAULT_STATE.billingState,
       outcomeFilter: DEFAULT_STATE.outcomeFilter,
@@ -265,6 +266,7 @@
 
     const isPlainObject = (value) => Boolean(value && typeof value === 'object' && !Array.isArray(value));
     const enumValue = (value, values, fallback) => values.includes(value) ? value : fallback;
+    const cleanRecoveryPointId = (value) => typeof value === 'string' && /^[a-z][a-z0-9-]{0,63}$/.test(value) ? value : '';
     const cleanTimestamp = (value) => {
       if (typeof value !== 'string' || !/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/.test(value)) return null;
       return Number.isNaN(Date.parse(value)) ? null : value;
@@ -285,6 +287,7 @@
 
     const normalizeState = (value) => {
       const candidate = isPlainObject(value) ? value : {};
+      const pendingDeletionPoint = cleanRecoveryPointId(candidate.pendingDeletionPoint);
       return {
         activeView: enumValue(candidate.activeView, VIEWS, DEFAULT_STATE.activeView),
         role: enumValue(candidate.role, Object.keys(ROLE_CAPABILITIES), DEFAULT_STATE.role),
@@ -296,7 +299,8 @@
         actionState: enumValue(candidate.actionState, ACTION_STATES, DEFAULT_STATE.actionState),
         connectorState: enumValue(candidate.connectorState, Object.keys(CONNECTOR_COPY), DEFAULT_STATE.connectorState),
         recoveryFilter: enumValue(candidate.recoveryFilter, ['milestones', 'all'], DEFAULT_STATE.recoveryFilter),
-        pendingDeletion: candidate.pendingDeletion === true,
+        pendingDeletion: candidate.pendingDeletion === true && Boolean(pendingDeletionPoint),
+        pendingDeletionPoint,
         selectedPlan: enumValue(candidate.selectedPlan, ['proof', 'action'], DEFAULT_STATE.selectedPlan),
         billingState: enumValue(candidate.billingState, Object.keys(BILLING_COPY), DEFAULT_STATE.billingState),
         outcomeFilter: enumValue(candidate.outcomeFilter, ['all', 'direct', 'assisted', 'correlated', 'unknown'], DEFAULT_STATE.outcomeFilter),
@@ -409,6 +413,8 @@
 
     const selectedRoleCapabilities = () => ROLE_CAPABILITIES[state.role] || [];
     const can = (capability) => selectedRoleCapabilities().includes(capability);
+    const canAccessView = (view) => can('view') || (view === 'billing' && can('billing'));
+    const defaultAccessibleView = () => can('view') ? 'overview' : can('billing') ? 'billing' : 'overview';
     const requiredCapabilities = (element, fallback = '') => {
       const declared = element?.getAttribute('data-requires') || fallback;
       return declared.split(/[\s,]+/).filter(Boolean);
@@ -500,7 +506,8 @@
     };
 
     const activateView = (requestedView, options = {}) => {
-      const view = VIEWS.includes(requestedView) && first(`[data-view="${requestedView}"]`) ? requestedView : 'overview';
+      const knownView = VIEWS.includes(requestedView) && first(`[data-view="${requestedView}"]`) ? requestedView : 'overview';
+      const view = canAccessView(knownView) ? knownView : defaultAccessibleView();
       state.activeView = view;
       queryAll('[data-view]').forEach((section) => {
         const active = section.dataset.view === view;
@@ -512,11 +519,13 @@
       });
       queryAll('[data-view-target]').forEach((control) => {
         const active = control.dataset.viewTarget === view;
+        const allowed = canAccessView(control.dataset.viewTarget);
         control.classList.toggle('is-active', active);
         control.setAttribute('aria-pressed', String(active));
         control.setAttribute('aria-selected', String(active));
         if (active) control.setAttribute('aria-current', 'page');
         else control.removeAttribute('aria-current');
+        setDisabled(control, !allowed, 'This role can only open its permitted workspace views');
       });
       const [title, summary] = VIEW_COPY[view];
       setText('[data-page-title]', title);
@@ -597,7 +606,16 @@
       queryAll('[data-diagnostic-start]').forEach((button) => {
         const released = state.diagnosticState === 'released';
         const allowed = meetsRequirements(button, 'action');
-        setDisabled(button, diagnosticRunning || released || !allowed, diagnosticRunning ? 'Synthetic diagnostic running' : released ? 'Scorecard already released' : 'Role cannot start diagnostics');
+        const connectorReady = state.connectorState === 'active';
+        const disabled = diagnosticRunning || released || !allowed || !connectorReady;
+        const reason = diagnosticRunning
+          ? 'Synthetic diagnostic running'
+          : released
+            ? 'Scorecard already released'
+            : !connectorReady
+              ? 'Connector is fail-closed; new collection is blocked'
+              : 'Role cannot start diagnostics';
+        setDisabled(button, disabled, reason);
         button.textContent = diagnosticRunning ? 'Running synthetic diagnostic…' : released ? 'Synthetic scorecard released' : 'Start synthetic diagnostic';
         button.setAttribute('aria-busy', String(diagnosticRunning));
       });
@@ -744,9 +762,10 @@
         control.setAttribute('aria-pressed', String(active));
         control.classList.toggle('is-active', active);
       });
-      points.forEach((point, index) => {
+      points.forEach((point) => {
         point.hidden = state.recoveryFilter === 'milestones' && !isMilestone(point);
-        const pending = state.pendingDeletion && index === Math.min(deletionPointIndex, Math.max(0, points.length - 1));
+        const pointId = cleanRecoveryPointId(point.dataset.recoveryPoint);
+        const pending = state.pendingDeletion && Boolean(pointId) && pointId === state.pendingDeletionPoint;
         point.classList.toggle('is-pending-deletion', pending);
         point.dataset.pendingDeletion = String(pending);
         const status = point.querySelector('[data-recovery-point-state], [data-point-state]');
@@ -767,6 +786,8 @@
       queryAll('[data-recovery-undo], [data-recovery-restore-undo]').forEach((button) => {
         button.hidden = !recoveryUndoMode;
         button.textContent = recoveryUndoMode === 'delete' ? 'Undo pending deletion' : 'Undo synthetic restore';
+        const requiredCapability = recoveryUndoMode === 'delete' ? 'delete' : 'restore';
+        setDisabled(button, Boolean(recoveryUndoMode) && !can(requiredCapability), `Role cannot undo this ${recoveryUndoMode || 'recovery'} operation`);
       });
       if (recoveryUndoMode === 'delete') {
         setReceipt('[data-recovery-receipt]', 'Synthetic checkpoint is pending deletion for 24 hours and can be undone. No customer data was deleted.', true);
@@ -783,6 +804,7 @@
         setText('[data-recovery-receipt-title]', latest === 'recovery_compared' ? 'Comparison prepared locally' : 'No recovery operation pending');
       }
       body.dataset.pendingDeletion = String(state.pendingDeletion);
+      body.dataset.pendingDeletionPoint = state.pendingDeletionPoint;
     };
 
     const planKey = (value) => String(value || '').toLowerCase().includes('action') ? 'action' : 'proof';
@@ -928,6 +950,11 @@
 
     const runDiagnostic = async () => {
       if (diagnosticRunning || state.diagnosticState === 'released') return;
+      if (state.connectorState !== 'active') {
+        renderDiagnostic();
+        announce('Connector is fail-closed. New synthetic collection remains blocked and no provider was contacted.');
+        return;
+      }
       diagnosticRunning = true;
       const token = ++diagnosticToken;
       renderDiagnostic();
@@ -968,8 +995,9 @@
       const points = queryAll('[data-recovery-point]');
       const point = control.closest('[data-recovery-point]');
       const index = Math.max(0, points.indexOf(point));
+      const id = cleanRecoveryPointId(point?.dataset.recoveryPoint);
       const label = control.dataset.label || point?.dataset.label || `Synthetic recovery point ${index + 1}`;
-      return { index, label: String(label).slice(0, 100) };
+      return { id, index, label: String(label).slice(0, 100) };
     };
 
     const controlledDisplayState = () => ({
@@ -982,6 +1010,7 @@
       connectorState: state.connectorState,
       recoveryFilter: state.recoveryFilter,
       pendingDeletion: state.pendingDeletion,
+      pendingDeletionPoint: state.pendingDeletionPoint,
       selectedPlan: state.selectedPlan,
       billingState: state.billingState,
       outcomeFilter: state.outcomeFilter
@@ -1071,7 +1100,6 @@
     const resetDemo = () => {
       diagnosticToken += 1;
       diagnosticRunning = false;
-      deletionPointIndex = 0;
       recoveryUndoMode = '';
       state = makeDefaultState();
       try {
@@ -1354,8 +1382,12 @@
           ],
           confirmLabel: 'Mark pending deletion',
           onConfirm: () => {
-            deletionPointIndex = context.index;
+            if (!context.id) {
+              announce('This recovery point has no stable identifier, so no pending-deletion state was created.');
+              return;
+            }
             state.pendingDeletion = true;
+            state.pendingDeletionPoint = context.id;
             recoveryUndoMode = 'delete';
             appendAudit('recovery_delete_pending');
             renderRecovery();
@@ -1365,8 +1397,14 @@
         return;
       }
       if (target.matches('[data-recovery-undo], [data-recovery-restore-undo]')) {
+        const requiredCapability = (recoveryUndoMode === 'delete' || state.pendingDeletion) ? 'delete' : recoveryUndoMode === 'restore' ? 'restore' : '';
+        if (!requiredCapability || !can(requiredCapability)) {
+          announce(`Role cannot undo this ${recoveryUndoMode || 'recovery'} operation. No customer data changed.`);
+          return;
+        }
         if (recoveryUndoMode === 'delete' || state.pendingDeletion) {
           state.pendingDeletion = false;
+          state.pendingDeletionPoint = '';
           recoveryUndoMode = '';
           appendAudit('recovery_delete_undo');
           renderRecovery();

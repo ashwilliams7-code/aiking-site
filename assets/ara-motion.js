@@ -9,6 +9,7 @@
   const saveData = Boolean(navigator.connection && navigator.connection.saveData);
   const motionAllowed = !reducedMotion && !saveData;
   root.classList.add('ara-motion-on');
+  root.classList.toggle('ara-motion-disabled', !motionAllowed);
 
   /* Reveal choreography: content stays readable without JavaScript or with reduced motion. */
   const revealTargets = Array.from(document.querySelectorAll([
@@ -60,7 +61,11 @@
     const setStage = (index) => {
       if (!stages.length) return;
       activeIndex = ((index % stages.length) + stages.length) % stages.length;
-      stages.forEach((stage, stageIndex) => stage.classList.toggle('is-active', stageIndex === activeIndex));
+      stages.forEach((stage, stageIndex) => {
+        const isActive = stageIndex === activeIndex;
+        stage.classList.toggle('is-active', isActive);
+        stage.setAttribute('aria-hidden', String(!isActive));
+      });
       buttons.forEach((button) => button.setAttribute('aria-pressed', String(Number(button.dataset.araStageButton) === activeIndex)));
     };
 

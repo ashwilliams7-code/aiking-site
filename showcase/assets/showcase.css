@@ -56,6 +56,7 @@ button{color:inherit}
 .button.ghost{min-height:40px;padding:9px 13px}
 .button.danger{border-color:var(--danger);color:var(--danger)}
 .button:disabled{opacity:.38;cursor:not-allowed;transform:none}
+.plan.is-disabled,.billing-switch button.is-disabled{opacity:.42;cursor:not-allowed}
 .hero-proof{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 0;padding:0;list-style:none}
 .hero-proof li{padding:7px 10px;border:1px solid var(--line);background:var(--surface-glass);color:var(--muted);font:500 9px var(--mono);letter-spacing:.07em;text-transform:uppercase}
 .hero-note{max-width:610px;margin:14px 0 0;color:var(--muted);font-size:12px}
@@ -204,6 +205,12 @@ button{color:inherit}
 .recovery-toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:12px}
 .filter-switch,.billing-switch{display:flex;flex-wrap:wrap;gap:7px}
 .compare-action{display:flex;align-items:center;gap:10px;color:var(--muted);font:500 9px var(--mono);text-transform:uppercase}
+.recovery-comparison{margin:-2px 0 14px;padding:18px;border:1px solid var(--accent);background:var(--accent-faint)}
+.recovery-comparison h3{margin:0 0 12px;font:500 10px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.recovery-comparison>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.recovery-comparison article{display:grid;gap:5px;padding:14px;border:1px solid var(--line-strong);background:var(--panel)}
+.recovery-comparison strong{font-size:13px}.recovery-comparison span,.recovery-comparison small{color:var(--muted);font:500 8px var(--mono)}
+.recovery-comparison p{margin:4px 0;color:var(--soft);font-size:10px}
 .recovery-list{display:grid;border:1px solid var(--line-strong);background:var(--panel)}
 .recovery-point{display:grid;grid-template-columns:32px minmax(160px,.9fr) minmax(180px,1.4fr) 120px auto;gap:15px;align-items:center;min-height:78px;padding:12px 18px;border-bottom:1px solid var(--line);transition:opacity .2s,background .2s}
 .recovery-point:last-child{border-bottom:0}.recovery-point.is-pending-deletion{background:var(--danger-bg);opacity:.82}
@@ -346,7 +353,7 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(7px)}
   .organisation-strip{grid-template-columns:1fr 1fr}.organisation-strip>div:nth-child(2){border-right:0}.organisation-strip>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
   .connector-row{grid-template-columns:38px 1fr;gap:7px 12px;padding:16px}.connector-row>.status,.connector-row>span:last-child{grid-column:2}.connector-state-switch{grid-template-columns:repeat(3,1fr)}.connector-state-switch>span,.connector-state-switch p{grid-column:1/-1}.connector-state-switch>span{padding:0}.connector-state-switch p{margin:5px 0 0}.connector-actions{display:grid}.connector-actions .button{width:100%}
   .proof-summary{grid-template-columns:1fr}.proof-summary article,.proof-summary article:nth-child(2){border-right:0;border-bottom:1px solid var(--line)}.proof-summary article:last-child{border-bottom:0}.comparison-bars>div{grid-template-columns:1fr}.comparison-bars i{grid-row:2}.outcome-toolbar{display:grid}.outcome-filters{display:grid;grid-template-columns:1fr 1fr}.outcome-toolbar>.button{width:100%}.outcome-ledger article{grid-template-columns:1fr auto;gap:7px 12px;padding:16px}.outcome-ledger article>div,.outcome-ledger article>.icon-button{grid-column:1/-1}.outcome-ledger article>b{grid-column:2;grid-row:1}.outcome-ledger article>.icon-button{justify-self:start}
-  .recovery-toolbar{display:grid}.compare-action{justify-content:space-between}.recovery-point{grid-template-columns:24px 1fr;gap:6px 12px;padding:16px}.point-change,.point-state,.point-actions{grid-column:2}.point-actions{justify-content:flex-start}.restore-status{display:grid}
+  .recovery-toolbar{display:grid}.compare-action{justify-content:space-between}.recovery-comparison>div{grid-template-columns:1fr}.recovery-point{grid-template-columns:24px 1fr;gap:6px 12px;padding:16px}.point-change,.point-state,.point-actions{grid-column:2}.point-actions{justify-content:flex-start}.restore-status{display:grid}
   .pricing-grid{grid-template-columns:1fr}.billing-preview,.billing-banner{grid-template-columns:1fr}.billing-preview .button{width:100%}.boundary-note{grid-template-columns:1fr}
   .footer-grid{display:grid}.footer-links{flex-wrap:wrap}.toast{left:18px;right:18px;bottom:18px;max-width:none}
 }
