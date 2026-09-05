@@ -102,7 +102,7 @@ def check_suite(page: Page, profile: dict[str, Any], width: int, height: int, re
         page.locator('[data-nav-toggle]').click()
     if reduced:
         assertions["reduced_motion_css"] = page.locator('[data-reveal]').first.evaluate(
-            "el => getComputedStyle(el).transitionDuration === '1e-06s' && getComputedStyle(document.documentElement).scrollBehavior === 'auto'"
+            "el => parseFloat(getComputedStyle(el).transitionDuration) <= 0.001 && getComputedStyle(document.documentElement).scrollBehavior === 'auto'"
         )
 
     page.locator('[data-path-stage="act"]').click()
@@ -201,7 +201,7 @@ def check_suite(page: Page, profile: dict[str, Any], width: int, height: int, re
         assertions["kinetic_scroll_progress"] = progress_value > 20
         assertions["kinetic_offscreen_motion_pauses"] = (
             not page.locator('#overview').evaluate("el => el.classList.contains('is-motion-zone-active')")
-            and page.locator('.hero-frame').evaluate("el => getComputedStyle(el).animationPlayState === 'paused'")
+            and page.locator('.ref-preview').evaluate("el => getComputedStyle(el).animationPlayState === 'paused'")
         )
 
     assertions["milestone_default"] = visible_count(page, '[data-recovery-point]') == 2
@@ -295,7 +295,7 @@ def main() -> None:
                     "fallback_font_forced": "Arial" in page.locator("h1").evaluate("el => getComputedStyle(el).fontFamily"),
                     "no_horizontal_overflow": page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"),
                     "headline_contained": page.locator("h1").evaluate("el => el.getBoundingClientRect().right <= innerWidth && el.getBoundingClientRect().left >= 0"),
-                    "primary_cta_visible": page.locator('.hero-actions .button').first.is_visible(),
+                    "primary_cta_visible": page.locator('.hero-join, .hero-actions .button').first.is_visible(),
                     "page_errors_clean": not fallback_errors,
                 }
                 results.append({

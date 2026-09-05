@@ -1,0 +1,50 @@
+[
+  {
+    "file": "anton-0.woff2",
+    "source": "https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm3Kz-C8CSKlv.woff2",
+    "bytes": 12004,
+    "licence": "Google Fonts / SIL Open Font License"
+  },
+  {
+    "file": "inter-0.woff2",
+    "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+    "bytes": 48432,
+    "licence": "Google Fonts / SIL Open Font License"
+  },
+  {
+    "file": "inter-1.woff2",
+    "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+    "bytes": 48432,
+    "licence": "Google Fonts / SIL Open Font License"
+  },
+  {
+    "file": "inter-2.woff2",
+    "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+    "bytes": 48432,
+    "licence": "Google Fonts / SIL Open Font License"
+  },
+  {
+    "file": "inter-3.woff2",
+    "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+    "bytes": 48432,
+    "licence": "Google Fonts / SIL Open Font License"
+  },
+  {
+    "file": "inter-4.woff2",
+    "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+    "bytes": 48432,
+    "licence": "Google Fonts / SIL Open Font License"
+  },
+  {
+    "file": "inter-5.woff2",
+    "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+    "bytes": 48432,
+    "licence": "Google Fonts / SIL Open Font License"
+  },
+  {
+    "file": "construction-hero.jpg",
+    "source": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=85",
+    "bytes": 647980,
+    "licence": "Unsplash License; decorative construction image, not a customer endorsement"
+  }
+]

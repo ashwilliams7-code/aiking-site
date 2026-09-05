@@ -1,0 +1,17 @@
+{
+  "verifiedAt": "2026-09-05T20:00:16.349222+10:00",
+  "status": "PASS",
+  "existingCases": {
+    "total": 35,
+    "passed": 35
+  },
+  "referenceChecks": {
+    "total": 169,
+    "passed": 169
+  },
+  "baseline": "72be25b",
+  "editorialAndSharedEngineHashes": "Verified unchanged by additional acceptance lane",
+  "scope": "Local synthetic review build; no production deployment or customer connectivity",
+  "evidenceDirectory": "/tmp/ara-reference-final-gate",
+  "tvDelivery": "Not verified: screen lock and disconnected AirPlay observed; local Safari tabs preloaded"
+}

@@ -2,6 +2,7 @@
 """Exercise future suite namespaces and invalid metadata; no third design is published."""
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any
 from playwright.sync_api import sync_playwright  # type: ignore[import-not-found]
@@ -17,8 +18,10 @@ def main():
     OUTPUT.mkdir(parents=True, exist_ok=True)
     results = []
     source = (SHOWCASE_ROOT / READY_SUITES[0]['workspace']).read_text()
-    body = '<body data-suite="kinetic" data-suite-label="Kinetic Signal System" data-product-contract="v1" data-product-workspace>'
-    assert body in source
+    body_match = re.search(r'<body\b[^>]*data-product-workspace[^>]*>', source)
+    assert body_match
+    body = body_match.group(0)
+    assert 'data-suite="kinetic"' in body and 'data-suite-label="Kinetic Signal System"' in body and 'data-product-contract="v1"' in body
     with sync_playwright() as p:
         args: dict[str, Any] = {'headless': True}
         if CHROME.exists(): args['executable_path'] = str(CHROME)

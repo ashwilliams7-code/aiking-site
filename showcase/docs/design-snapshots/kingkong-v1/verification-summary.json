@@ -1,0 +1,75 @@
+{
+  "design": "ara-kinetic-kingkong-v1",
+  "testSummaries": {
+    "landing": {
+      "total": 15,
+      "passed": 15,
+      "failed": []
+    },
+    "product": {
+      "total": 13,
+      "passed": 13,
+      "failed": []
+    },
+    "extension": {
+      "total": 7,
+      "passed": 7,
+      "failed": []
+    },
+    "reference": {
+      "total": 169,
+      "passed": 169,
+      "failed": []
+    }
+  },
+  "reviewedPreviewByteMatches": [
+    {
+      "path": "kinetic.html",
+      "sha256": "f22773ddd29869b220ef6d663b2c73cb9baa2fe8ace620033879ba3370fa826a"
+    },
+    {
+      "path": "kinetic-product.html",
+      "sha256": "5cdf6c9a0cc0d99e55a43ff74e9041db7cd5f64e3f8a684004dc6bad5dbd47dc"
+    },
+    {
+      "path": "assets/showcase.css",
+      "sha256": "327d51a8ee174bcdb1f4914f10644e82e68617ba972d1318380d3a0a48e1ae64"
+    },
+    {
+      "path": "assets/showcase.js",
+      "sha256": "227f9772b50c6b68cc78e5318fec1122b7e3c686bc5f14a58952b352d4c0746c"
+    },
+    {
+      "path": "assets/product-base.css",
+      "sha256": "d90a4a6167b057d8ee84de98ac05e030665adea4a63db1f6195a4f73a00b2a8a"
+    },
+    {
+      "path": "assets/product.js",
+      "sha256": "8da6c786498bbd72c84779b9ab43ce99a05ec99b61565576655949472c77bfe8"
+    },
+    {
+      "path": "assets/kinetic-product.css",
+      "sha256": "f82b4a65d2b0e05a18209205eee60d767482802126828a923d8586001bcf926f"
+    },
+    {
+      "path": "assets/reference-design.css",
+      "sha256": "e97ae64ae0e674ad1fcb4868cd26e198de8feef0de7f6bfb0a2beb862af818f1"
+    },
+    {
+      "path": "assets/reference-ui.js",
+      "sha256": "ed658642c3565e6813f76bc9b4011b6f0f9a50d65fcbda917ecf26ee554cfc4a"
+    },
+    {
+      "path": "assets/kinetic-decisions.js",
+      "sha256": "af4ad269598735ebe44deff8cf4dde4cf33b09939891888e22cc08e12dcc8f60"
+    }
+  ],
+  "visualBaselines": [
+    "landing-1440x900.png",
+    "landing-390x844.png",
+    "workspace-overview-1440x900.png",
+    "workspace-overview-390x844.png"
+  ],
+  "boundary": "Synthetic review only; no production activation",
+  "visualCapture": "Fresh public routes after network/font readiness, correct active navigation and settled view opacity; not intermediate transition frames."
+}

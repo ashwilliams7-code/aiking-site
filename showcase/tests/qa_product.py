@@ -58,6 +58,19 @@ def download_json(page: Page, selector: str) -> tuple[str, dict[str, Any]]:
     return download.suggested_filename, json.loads(Path(path).read_text())
 
 
+def navigate(page: Page, view: str) -> None:
+    # Exercise the real mobile drawer, never force-click hidden navigation.
+    drawer = page.locator('body').get_attribute('data-product-nav-mode') == 'drawer'
+    if drawer and page.viewport_size and page.viewport_size['width'] <= 760:
+        toggle = page.locator('[data-product-nav-toggle]')
+        if toggle.get_attribute('aria-expanded') != 'true':
+            toggle.click()
+        assert toggle.get_attribute('aria-expanded') == 'true'
+    page.locator(f'[data-view-target="{view}"]').click()
+    if drawer and page.viewport_size and page.viewport_size['width'] <= 760:
+        assert page.locator('[data-product-nav-toggle]').get_attribute('aria-expanded') == 'false'
+
+
 def check_product(page: Page, profile: dict[str, Any], width: int, height: int, reduced: bool) -> dict[str, Any]:
     suite = profile["slug"]
     console_errors, page_errors, failed_requests = listen(page)
@@ -125,7 +138,7 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
             page.locator("[data-motion-toggle]").click()
 
     for view in VIEWS:
-        page.locator(f'[data-view-target="{view}"]').click()
+        navigate(page, view)
         page.wait_for_timeout(20)
         assertions[f"view_{view}"] = (
             visible_views(page) == [view]
@@ -133,7 +146,7 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
             and page.url.endswith(f"#{view}")
         )
 
-    page.locator('[data-view-target="onboarding"]').click()
+    navigate(page, 'onboarding')
     for _ in range(3):
         page.locator("[data-onboarding-next]").click()
     assertions["onboarding_complete"] = (
@@ -142,7 +155,7 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
         and "7" in page.locator("[data-onboarding-progress]").inner_text()
     )
 
-    page.locator('[data-view-target="diagnostic"]').click()
+    navigate(page, 'diagnostic')
     page.locator("[data-diagnostic-reset]").click()
     page.locator("[data-diagnostic-start]").click()
     page.wait_for_function("document.body.dataset.diagnosticState === 'released'", timeout=7000)
@@ -151,10 +164,10 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
         and page.locator("[data-diagnostic-stage].is-complete").count() == 5
         and "no provider" in page.locator("[data-diagnostic-copy]").inner_text().lower()
     )
-    page.locator('[data-view-target="scorecard"]').click()
+    navigate(page, 'scorecard')
     assertions["scorecard_fresh"] = page.locator("[data-scorecard-fresh]").get_attribute("data-fresh") == "true"
 
-    page.locator('[data-view-target="truth"]').click()
+    navigate(page, 'truth')
     page.locator("[data-fact-propose]").click()
     assertions["dialog_escape"] = page.locator("#product-dialog").evaluate("el => el.open")
     page.locator("#product-dialog").press("Escape")
@@ -170,7 +183,7 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
     confirm_dialog(page)
     assertions["fact_approved"] = page.locator("body").get_attribute("data-fact-state") == "current"
 
-    page.locator('[data-view-target="actions"]').click()
+    navigate(page, 'actions')
     page.locator("[data-action-prepare]").click(); confirm_dialog(page)
     page.locator("[data-action-review]").click(); confirm_dialog(page)
     page.locator("[data-action-approve]").click(); confirm_dialog(page)
@@ -180,7 +193,7 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
         and "customer commitment" in page.locator("[data-action-receipt]").inner_text().lower()
     )
 
-    page.locator('[data-view-target="connectors"]').click()
+    navigate(page, 'connectors')
     page.locator('[data-connector-state="degraded"]').click()
     assertions["connector_degraded_closed"] = (
         page.locator("body").get_attribute("data-connector-state") == "degraded"
@@ -194,7 +207,7 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
     page.locator("[data-connector-consent]").click(); confirm_dialog(page)
     assertions["connector_reconsented"] = page.locator("body").get_attribute("data-connector-state") == "active"
 
-    page.locator('[data-view-target="team"]').click()
+    navigate(page, 'team')
     page.locator('[data-role="reviewer"]').click()
     assertions["reviewer_restricted"] = (
         page.locator("[data-invite-prepare]").is_disabled()
@@ -210,7 +223,7 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
         and "no authority" in page.locator("[data-team-receipt]").inner_text().lower()
     )
 
-    page.locator('[data-view-target="recovery"]').click()
+    navigate(page, 'recovery')
     page.locator('[data-recovery-filter="all"]').click()
     points = page.locator("[data-recovery-point]")
     assertions["four_recovery_points"] = points.count() == 4 and all(points.nth(i).is_visible() for i in range(4))
@@ -226,7 +239,7 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
     page.locator("[data-recovery-undo]").click()
     assertions["deletion_undo"] = page.locator("body").get_attribute("data-pending-deletion") == "false"
 
-    page.locator('[data-view-target="billing"]').click()
+    navigate(page, 'billing')
     page.locator('[data-plan="action"]').click()
     page.locator('[data-billing-state="restricted"]').click()
     assertions["billing_preview"] = (
@@ -236,7 +249,7 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
     )
     page.locator("[data-checkout-preview]").click(); confirm_dialog(page)
 
-    page.locator('[data-view-target="outcomes"]').click()
+    navigate(page, 'outcomes')
     page.locator('[data-outcome-filter="assisted"]').click()
     assertions["outcome_filter"] = page.locator('[data-outcome-row="assisted"]').is_visible() and not page.locator('[data-outcome-row="direct"]').is_visible()
     page.locator('[data-outcome-open="assisted"]').click()
@@ -253,7 +266,7 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
         and proof.get("organisation", {}).get("fictional") is True
     )
 
-    page.locator('[data-view-target="audit"]').click()
+    navigate(page, 'audit')
     audit_name, audit = download_json(page, "[data-audit-export]")
     assertions["audit_download"] = (
         audit_name == f"ara-{suite}-synthetic-audit.json"
@@ -289,6 +302,8 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
             """() => {
               const last = document.querySelector('[data-view="overview"] .workspace-boundary');
               const dock = document.querySelector('.command-rail');
+              const drawer = document.body.dataset.productNavMode === 'drawer';
+              if (drawer) return Boolean(last && dock && document.body.dataset.productNavOpen !== 'true' && dock.getBoundingClientRect().right <= 0 && last.getBoundingClientRect().bottom <= innerHeight + 1);
               return Boolean(last && dock && last.getBoundingClientRect().bottom <= innerHeight - dock.getBoundingClientRect().height + 1);
             }"""
         )
@@ -306,10 +321,10 @@ def check_product(page: Page, profile: dict[str, Any], width: int, height: int, 
     page.screenshot(path=str(OUTPUT / f"{label}-overview.png"), full_page=False)
     if width >= 1000 and not reduced:
         for view in ("diagnostic", "truth", "actions", "outcomes", "team", "recovery", "billing"):
-            page.locator(f'[data-view-target="{view}"]').click()
+            navigate(page, view)
             page.wait_for_timeout(420)
             page.screenshot(path=str(OUTPUT / f"{label}-{view}.png"), full_page=False)
-        page.locator('[data-view-target="overview"]').click()
+        navigate(page, 'overview')
 
     return {
         "label": label,
@@ -348,7 +363,7 @@ def storage_namespace_check(browser: Any) -> dict[str, Any]:
         page.goto(f"{BASE_URL}/{profile['workspace']}", wait_until="networkidle")
         defaults_isolated = defaults_isolated and page.locator("body").get_attribute("data-selected-plan") == "proof"
         if index == 0:
-            page.locator('[data-view-target="billing"]').click()
+            navigate(page, 'billing')
             page.locator('[data-plan="action"]').click()
     first = READY_SUITES[0]
     page.goto(f"{BASE_URL}/{first['workspace']}", wait_until="networkidle")

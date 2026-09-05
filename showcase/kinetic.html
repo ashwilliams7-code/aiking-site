@@ -9,47 +9,40 @@
   <meta name="theme-color" content="#050706" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050706'/%3E%3Cpath d='M6 25 15 6h3l8 19h-5l-2-5h-7l-2 5Zm8-9h4l-2-6Z' fill='%23d8ff2f'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="assets/showcase.css" />
+  <link rel="stylesheet" href="assets/reference-design.css" />
+  <script src="assets/kinetic-decisions.js" defer></script>
+  <script src="assets/reference-ui.js" defer></script>
 </head>
 <body class="kinetic" data-suite="kinetic">
   <a class="skip-link" href="#main">Skip to showcase</a>
   <div class="demo-ribbon">Interactive synthetic scaffold · no real customers, authentication, billing, connectors, storage or messages</div>
   <header class="site-header">
     <div class="shell nav-shell">
-      <a class="wordmark" href="index.html"><strong>ARA</strong><span>by AIKING / Signal system</span></a>
+      <a class="header-context" href="#diagnostic"><i aria-hidden="true"></i>Australian businesses</a>
+      <a class="wordmark" href="index.html" aria-label="ARA by AIKING — suite catalogue"><strong>ARA</strong><span>AN AIKING OFFER</span></a>
       <nav class="site-nav" data-site-nav aria-label="Showcase navigation">
         <a href="#overview">Overview</a><a href="#diagnostic">Diagnostic</a><a href="#scorecard">Scorecard</a><a href="#workspace">Workspace</a><a href="#connectors">Connectors</a><a href="#recovery">Recovery</a><a href="#outcomes">Proof</a><a href="#billing">Plans</a>
+        <a href="kinetic-product.html">Full suite ↗</a><a href="#build-decisions">Decisions</a>
       </nav>
-      <a class="nav-switch" href="kinetic-product.html">Open product workspace ↗</a>
-      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation"><span></span></button>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">menu <span aria-hidden="true"></span></button>
     </div>
   </header>
   <div class="journey-progress" aria-hidden="true"><span data-journey-progress></span></div>
 
   <main id="main">
-    <section class="hero" id="overview" data-motion-zone>
-      <div class="shell hero-grid">
-        <div class="hero-copy" data-reveal>
-          <p class="eyebrow">ARA / Ask → Verify → Answer → Act</p>
-          <h1><span>Turn questions</span><span>into verified</span><em>demand.</em></h1>
-          <p class="hero-lead">ARA helps Australian businesses become understandable to AI, measurable across AI-search surfaces and ready for approved customer actions—with the evidence visible at every step.</p>
-          <div class="hero-actions">
-            <a class="button primary" href="kinetic-product.html">Open full product workspace <span>↗</span></a>
-            <a class="button secondary" href="#diagnostic">Run the landing journey <span>↓</span></a>
-            <a class="button secondary" href="index.html">Compare both systems</a>
-            <button class="button ghost motion-toggle" type="button" data-motion-toggle aria-pressed="false">Pause motion</button>
-          </div>
-          <ul class="hero-proof" aria-label="Trust principles"><li>Business-owned truth</li><li>Two independent runs</li><li>Human-controlled actions</li></ul>
-          <p class="hero-note">Display build only. Every result, company and workflow on this page is synthetic and performs no external action.</p>
-        </div>
-        <div class="hero-visual" aria-label="Synthetic ARA signal map" data-reveal>
-          <div class="hero-frame">
-            <div class="hero-frame-head"><span>Discovery signal / sample</span><span class="live-dot">Ready</span></div>
-            <div class="signal-map" aria-hidden="true"><div class="signal-scan"></div><div class="signal-route"></div><div class="signal-packet p1"></div><div class="signal-packet p2"></div><i class="signal-node n1"></i><i class="signal-node n2"></i><i class="signal-node n3"></i><i class="signal-node n4"></i></div>
-            <div class="frame-metrics"><div><span>Visibility</span><strong>62%</strong></div><div><span>Accuracy</span><strong>87%</strong></div><div><span>Action path</span><strong>54%</strong></div></div>
-            <div class="frame-foot"><span>8 surfaces · 2 runs</span><span>Sample data / no ranking promise</span></div>
-          </div>
-        </div>
+    <section class="hero ref-hero" id="overview" data-motion-zone>
+      <div class="hero-copy">
+        <h1><span>GET FOUND.<sup>*</sup></span><span>GET CHOSEN.</span></h1>
+        <p class="hero-lead">Get found when customers ask AI who to hire. Make your business easier to understand, trust and contact—with the evidence to back it up.</p>
+        <a class="hero-join" href="#diagnostic" aria-label="See how AI sees my business — open the free diagnostic"><span><b aria-hidden="true">↗</b> See how AI sees my business</span><strong>Show me <i aria-hidden="true">→</i></strong></a>
+        <div class="ref-reassurance"><span>Free diagnostic</span><span>No ranking promises</span><a href="#scorecard">See a sample report</a><button class="motion-toggle" type="button" data-motion-toggle aria-pressed="false">Pause motion</button></div>
+        <p class="ref-reassurance">*Interactive review build. Fictional business. No customer data collected.</p>
       </div>
+      <i class="ref-stripe s1" aria-hidden="true"></i><i class="ref-stripe s2" aria-hidden="true"></i><i class="ref-stripe s3" aria-hidden="true"></i>
+      <a class="ref-preview hero-visual" href="kinetic-product.html" aria-label="Open the complete ARA interactive product workspace">
+        <div class="ref-preview-inner"><div><small>Not a pitch deck. The product.</small><strong>FROM A QUESTION.<br>TO A CLEAR NEXT STEP.</strong><p>Explore the complete 12-view interactive suite.</p></div><span class="ref-play" aria-hidden="true">↗</span></div>
+        <div class="signal-packet p1" aria-hidden="true"></div><div class="signal-packet p2" aria-hidden="true"></div>
+      </a>
     </section>
 
     <aside class="kinetic-ticker" aria-label="Synthetic ARA signal status" data-motion-zone>
@@ -58,6 +51,35 @@
         <div class="ticker-group" aria-hidden="true"><span>Ask <b>captured</b></span><span>Verify <b>four facts current</b></span><span>Answer <b>two runs compared</b></span><span>Act <b>human confirmation</b></span><span>Proof <b>limits visible</b></span></div>
       </div>
     </aside>
+
+    <section class="ref-letter" aria-labelledby="letter-heading">
+      <div class="ref-letter-inner">
+        <span class="letter-kicker" id="letter-heading">A note for the business doing the work</span>
+        <p>You do the work. You know your trade.</p>
+        <p>But when someone asks AI who to hire, does it understand your business—or send them somewhere else?</p>
+        <p>A better-looking website alone cannot answer that.</p>
+        <p>Neither can another dashboard full of impressive numbers with no explanation.</p>
+        <p><mark>You need to know what AI actually sees.</mark></p>
+        <p>Which facts it gets right. Where your services disappear. Whether someone can take a useful next step.</p>
+        <p>ARA puts those questions in one place. Your approved facts. Repeatable checks. Clear corrections. Actions that stay under human control.</p>
+        <p>No mystery score. No “number one” promises. <strong>And no sales call standing between you and your free scorecard.</strong></p>
+        <p class="letter-signoff">Less guessing. More evidence.</p>
+      </div>
+    </section>
+    <section class="ref-offers" aria-labelledby="offers-heading">
+      <p>Choose the support your business needs</p><h2 class="ref-section-title" id="offers-heading">FIRST, SEE IT.<br>THEN, IMPROVE IT.</h2>
+      <div class="ref-offer-grid">
+        <article class="ref-offer"><span class="ref-offer-badge" aria-hidden="true">P</span><small>Know where you stand</small><h3>ARA PROOF</h3><p>Your facts, AI-search visibility and next priorities in one evidence-led workspace.</p><div class="ref-offer-price">A$149 <small>/ active location / month + GST</small></div><ul><li>Truth Sheet and evidence-backed scorecards</li><li>Daily full consistency checkpoints</li><li>Complete self-service recovery</li><li>One guided recovery incident per quarter</li></ul><a class="ref-pill" href="kinetic-product.html#billing" data-ref-plan="proof">Explore Proof <span aria-hidden="true">→</span></a></article>
+        <article class="ref-offer"><span class="ref-offer-badge" aria-hidden="true">A</span><small>Make the next step useful</small><h3>ARA ACTION</h3><p>Proof, plus a governed booking, quote-request or human-handoff workflow.</p><div class="ref-offer-price">A$399 <small>/ active location / month + GST</small></div><ul><li>One owner-approved action workflow</li><li>Full consistency checkpoints every six hours</li><li>Complete self-service recovery</li><li>One priority recovery incident per month</li></ul><a class="ref-pill" href="kinetic-product.html#billing" data-ref-plan="action">Explore Action <span aria-hidden="true">→</span></a></article>
+      </div>
+      <p class="ref-pricing-note">Internal launch-test prices, not a public offer. Both month-to-month; no annual lock-in. Material connector work may require a separately approved A$1,500 + GST implementation quote—not an automatic fee.</p>
+    </section>
+    <section class="ref-proof-statement" aria-labelledby="proof-statement-title">
+      <h2 class="ref-section-title" id="proof-statement-title">NO MADE-UP WINS.<br>JUST A CLEARER PICTURE.</h2>
+      <p>Start with a private scorecard. See the observations, the gaps and the three corrections that matter most. Decide on paid work after the free value is available.</p>
+      <a class="ref-pill" href="#diagnostic">See how AI sees my business <span aria-hidden="true">→</span></a>
+      <div class="ref-proof-stat-row" aria-label="Agreed free diagnostic scope, not customer results"><div><strong>8</strong><span>Named AI / search surfaces</span></div><div><strong>5</strong><span>Approved localities</span></div><div><strong>2</strong><span>Independent runs</span></div><div><strong>3</strong><span>Separate measures</span></div></div>
+    </section>
 
     <section class="section" data-code="SYS / 01" aria-labelledby="path-title">
       <div class="shell">
@@ -198,6 +220,7 @@
         <div class="boundary-note" data-reveal><strong>Scaffolding boundary</strong><p>Stripe is the selected target provider and ARA’s server ledger is the selected authority. This page simulates those states in the browser and cannot authenticate, bill, send, restore or delete real information.</p></div>
       </div>
     </section>
+    <section class="section" id="build-decisions" aria-label="Product decision traceability"><div class="shell"><details class="ref-decisions" id="decision-bank-panel" data-requirements-bank><summary>Your banked product decisions</summary><p>Q1–Q72 are settled. This review build preserves their interface contract; a clickable preview is not evidence that production services exist. Execution choices E1–E4 remain banked; E5 remains unanswered.</p><div class="ref-decision-tools"><input type="search" aria-label="Search banked ARA decisions" data-decision-search placeholder="Search a question, feature or rule…"></div><p data-decision-count role="status"></p><div class="ref-decision-list" data-decision-list></div></details></div></section>
   </main>
 
   <footer class="site-footer"><div class="shell footer-grid"><p>ARA — by AIKING. Functional synthetic showcase for product review and marketing preparation. No production capability is implied.</p><div class="footer-links"><a href="kinetic-product.html">Full product</a><a href="docs/ara-kinetic-product-decision-pack-2026-09-04.pdf">Decision pack</a><a href="index.html">Compare suites</a><a href="editorial.html">Editorial system</a><span>© <span data-current-year></span></span></div></div></footer>
