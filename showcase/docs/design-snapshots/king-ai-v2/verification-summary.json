@@ -1,0 +1,126 @@
+{
+  "recordedAt": "2026-09-06T08:01:10.121265+10:00",
+  "brand": "King AI",
+  "domain": "kingai.au",
+  "retainedBaseline": "design/ara-kinetic-kingkong-v1",
+  "currentRevision": "design/king-ai-kinetic-v2",
+  "localBrandAcceptance": {
+    "total": 346,
+    "passed": 346,
+    "failed": []
+  },
+  "remoteBrandAcceptance": {
+    "total": 346,
+    "passed": 346,
+    "failed": []
+  },
+  "postFixProductRegression": {
+    "total": 13,
+    "passed": 13,
+    "failed": []
+  },
+  "landingRegression": {
+    "total": 15,
+    "passed": 15,
+    "failed": []
+  },
+  "extensionRegression": {
+    "total": 7,
+    "passed": 7,
+    "failed": []
+  },
+  "sourcePreservationGuards": {
+    "passed": 7,
+    "total": 7,
+    "scope": "Exact original source with only the declared public-brand transformations; original style sources and raw bank retained."
+  },
+  "liveByteParity": {
+    "base": "https://invisible-interactions-closes-baltimore.trycloudflare.com",
+    "byteParity": [
+      {
+        "path": "kinetic.html",
+        "sha256": "8222f3232baaaa8bc9c7d0995ffc5e18b96d4ec8113d5d8a2f95392c246d3e5e",
+        "matchesSource": true
+      },
+      {
+        "path": "kinetic-product.html",
+        "sha256": "d9088ce5e27a90a6723ab16b43c1abd441d7ff0f5081671396bcfced697f16c1",
+        "matchesSource": true
+      },
+      {
+        "path": "editorial.html",
+        "sha256": "5c42b69327ecf26c7edb9ca27d029a4835bb13a2f9646990b805cd03a5a4cb70",
+        "matchesSource": true
+      },
+      {
+        "path": "editorial-product.html",
+        "sha256": "1683afcd8e32594b76f1b12ff2001afcdd572fdd2021dab17cbd405c7ae08d78",
+        "matchesSource": true
+      },
+      {
+        "path": "index.html",
+        "sha256": "a5cc6379c76b1b0cf6ad31ad95e4f743daeff8e73bfbcfa2e0d074b0a39369db",
+        "matchesSource": true
+      },
+      {
+        "path": "assets/product.js",
+        "sha256": "a7d3b2b5393178947f8c44c20b978eeaa4b26f5fff4a7a4639b1a5c6c8ce9571",
+        "matchesSource": true
+      },
+      {
+        "path": "assets/showcase.js",
+        "sha256": "b11a918844da68fd9a71aa7a76a435ccdd731a0d156290359c84eec6ebca3bf1",
+        "matchesSource": true
+      },
+      {
+        "path": "assets/reference-ui.js",
+        "sha256": "0c12588cfe7d27aa536f6b7d2512d685c7ed4dea3c047ddb7c96c04fb76cc98e",
+        "matchesSource": true
+      },
+      {
+        "path": "assets/king-ai-brand.css",
+        "sha256": "e7d22a7004c6f3766f1314521dd51538bdb0f3501f35a10713570f4832a8ea4a",
+        "matchesSource": true
+      },
+      {
+        "path": "assets/king-ai-mark.svg",
+        "sha256": "94affd7eb1707fd2d05aaa8dbd2d438731542625cb390cdd76be84aff10da727",
+        "matchesSource": true
+      },
+      {
+        "path": "assets/reference-design.css",
+        "sha256": "e97ae64ae0e674ad1fcb4868cd26e198de8feef0de7f6bfb0a2beb862af818f1",
+        "matchesSource": true
+      },
+      {
+        "path": "assets/kinetic-decisions.js",
+        "sha256": "af4ad269598735ebe44deff8cf4dde4cf33b09939891888e22cc08e12dcc8f60",
+        "matchesSource": true
+      }
+    ],
+    "excludedPaths": [
+      {
+        "path": "/.git/config",
+        "status": 404
+      },
+      {
+        "path": "/assets/",
+        "status": 404
+      },
+      {
+        "path": "/CURRENT_BRAND.md",
+        "status": 404
+      },
+      {
+        "path": "/docs/KINETIC_REFERENCE_QA_2026-09-05.json",
+        "status": 404
+      }
+    ]
+  },
+  "boundaries": [
+    "Synthetic review only; no production integrations activated.",
+    "No DNS, hosting or production-branch changes.",
+    "Original raw answers, E5 status, historical PDFs and saved V1 retained.",
+    "Final mobile checks include the corrected Editorial wordmark/byline and narrow diagnostic grid."
+  ]
+}

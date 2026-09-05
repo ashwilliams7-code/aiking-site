@@ -1,0 +1,24 @@
+/* Brand-only successor to the retained ARA design snapshot. */
+body[data-product-brand="King AI"] .wordmark{white-space:nowrap}
+body[data-product-brand="King AI"] .wordmark strong{white-space:nowrap;text-transform:uppercase}
+body.kinetic[data-product-brand="King AI"] .wordmark strong{font-size:46px;letter-spacing:0;line-height:1}
+body.kinetic[data-product-brand="King AI"] .wordmark>span{display:block;font:600 9px/1.4 var(--ref-body);letter-spacing:.12em;text-transform:none}
+body.kinetic[data-product-brand="King AI"] .nav-shell{column-gap:10px}
+body[data-product-workspace][data-product-brand="King AI"] .rail-brand{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+body[data-product-workspace][data-product-brand="King AI"] .ara-mark>span:first-child{font-size:40px;white-space:nowrap;text-transform:uppercase;letter-spacing:0;line-height:1}
+body[data-product-workspace][data-product-brand="King AI"] .ara-mark>small{text-transform:none;letter-spacing:.1em;font-size:9px;margin-top:7px}
+body[data-product-workspace][data-product-brand="King AI"] .rail-brand>p{max-width:none;text-align:left;font-size:10px;line-height:1.5}
+body[data-suite="editorial"][data-product-brand="King AI"] .ara-mark>span:first-child{font-size:34px}
+@media(max-width:760px){
+ body.kinetic[data-product-brand="King AI"] .wordmark strong{font-size:37px}
+ body.kinetic[data-product-brand="King AI"] .wordmark>span{font-size:8px;letter-spacing:.08em}
+ body[data-product-workspace][data-suite="editorial"][data-product-brand="King AI"] .rail-brand{display:none}
+}
+@media(max-width:350px){body.kinetic[data-product-brand="King AI"] .wordmark strong{font-size:32px}body.kinetic[data-product-brand="King AI"] .header-context{max-width:77px}}
+body.kinetic[data-product-brand="King AI"] .ref-offer>h3{text-transform:uppercase}
+/* Keep the narrow Editorial diagnostic track within its page, including long manifest tokens. */
+@media(max-width:760px){
+ body[data-suite="editorial"][data-product-brand="King AI"] .diagnostic-spread{grid-template-columns:minmax(0,1fr)}
+ body[data-suite="editorial"][data-product-brand="King AI"] .diagnostic-spread>*{min-width:0}
+ body[data-suite="editorial"][data-product-brand="King AI"] .manifest-list dd{overflow-wrap:anywhere}
+}

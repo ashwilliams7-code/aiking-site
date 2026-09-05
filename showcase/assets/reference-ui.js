@@ -14,6 +14,8 @@
     event.preventDefault(); event.stopImmediatePropagation(); location.assign(url.href);
   }, true);
 
+  // Project historical wording into the current brand without rewriting the answers.
+  const displayBrand = value => String(value).replace(/\bARA\b/g,'King AI').replace(/\b([Aa])n King AI\b/g,'$1 King AI');
   const bank = Array.isArray(window.ARA_BANKED_DECISIONS) ? window.ARA_BANKED_DECISIONS : [];
   const navigate = (view) => {
     if (!/^(overview|onboarding|diagnostic|truth|scorecard|actions|outcomes|connectors|team|recovery|billing|audit)$/.test(view)) return;
@@ -34,13 +36,16 @@
     const count = container.querySelector('[data-decision-count]');
     const render = () => {
       const q = (input?.value || '').trim().toLowerCase();
-      const rows = bank.filter(r => `${r.id} ${r.choice} ${r.decision} ${r.state}`.toLowerCase().includes(q));
+      const rows = bank.filter(r => {
+        const original = `${r.id} ${r.choice} ${r.decision} ${r.state}`;
+        return `${original} ${displayBrand(original)}`.toLowerCase().includes(q);
+      });
       list.replaceChildren();
       rows.forEach(r => {
         const article = document.createElement('article'); article.className='ref-decision-item'; article.dataset.questionId=r.id;
         const heading=document.createElement('strong');heading.textContent=`${r.id} · ${r.choice || 'Custom'}`;
         const body=document.createElement('div');
-        const text=document.createElement('p');text.textContent=r.decision.replace(/[*`]/g,'');
+        const text=document.createElement('p');text.textContent=displayBrand(r.decision.replace(/[*`]/g,''));
         const state=document.createElement('p');state.textContent=r.state;state.style.fontWeight='600';state.style.marginTop='8px';
         const link=document.createElement('a');link.href=`kinetic-product.html#${r.view}`;link.textContent=`Explore ${r.view === 'truth' ? 'Truth Sheet' : r.view} →`;
         link.addEventListener('click',e=>{if(isWorkspace){e.preventDefault();navigate(r.view);}});

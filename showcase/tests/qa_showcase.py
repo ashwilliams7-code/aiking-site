@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Headless interaction and responsive QA for the static ARA dual-suite showcase."""
+"""Headless interaction and responsive QA for the static King AI dual-suite showcase."""
 
 from __future__ import annotations
 
@@ -225,8 +225,8 @@ def check_suite(page: Page, profile: dict[str, Any], width: int, height: int, re
     first_point.locator('[data-delete-undo]').click()
     assertions["deletion_undo"] = not first_point.evaluate("el => el.classList.contains('is-pending-deletion')")
 
-    page.locator('[data-plan="ARA Action"]').click()
-    assertions["plan_selection"] = "ARA Action selected" in page.locator('[data-plan-summary]').inner_text()
+    page.locator('[data-plan="King AI Action"]').click()
+    assertions["plan_selection"] = "King AI Action selected" in page.locator('[data-plan-summary]').inner_text()
     page.locator('[data-checkout-preview]').click()
     assertions["safe_checkout_dialog"] = page.locator('#checkout-dialog').evaluate("el => el.open")
     page.locator('[data-checkout-confirm]').click()

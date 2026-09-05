@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Additional reference-design and decision-bank acceptance; no remote side effects."""
-import json,os,hashlib,subprocess
+import json,os,hashlib,subprocess,re
 from pathlib import Path
 from playwright.sync_api import sync_playwright  # type: ignore[import-not-found]
 ROOT=Path(__file__).resolve().parents[2]
@@ -43,7 +43,19 @@ with sync_playwright() as p:
   context.close()
  browser.close()
 for file in ['showcase/editorial.html','showcase/editorial-product.html','showcase/assets/editorial-product.css','showcase/assets/product.js','showcase/assets/showcase.js','showcase/assets/showcase.css','showcase/assets/product-base.css']:
- baseline=subprocess.check_output(['git','show','72be25b:'+file],cwd=ROOT)
- check('unchanged '+file,hashlib.sha256(baseline).digest()==hashlib.sha256((ROOT/file).read_bytes()).digest())
+ baseline=subprocess.check_output(['git','show','design/ara-kinetic-kingkong-v1:'+file],cwd=ROOT)
+ # The approved rename permits copy/metadata edits, not design or engine changes.
+ expected=baseline
+ if file.endswith(('.html','.js')):
+  text=re.sub(r'\bARA\b','King AI',baseline.decode())
+  if file.endswith('.html'):
+   text=text.replace('<body','<body data-product-brand="King AI" data-product-domain="kingai.au"',1)
+   text=re.sub(r'<link\s+rel="icon"[^>]*>','<link rel="icon" href="assets/king-ai-mark.svg">',text)
+   text=text.replace('</head>','  <meta name="application-name" content="King AI">\n  <meta property="og:site_name" content="King AI">\n  <link rel="stylesheet" href="assets/king-ai-brand.css">\n</head>')
+   text=text.replace('<span>AN AIKING OFFER</span>','<span>kingai.au</span>').replace('<span>An AIKING offer</span>','<span>kingai.au</span>').replace('<small>by AIKING</small>','<small>kingai.au</small>')
+   text=text.replace('SYS.King AI','SYS.KING-AI').replace('Technical + UX pack','Archived decision pack')
+   text=text.replace('<span class="ara-byline">by AIKING<br>Evidence edition</span>','<span class="ara-byline">kingai.au<br>Evidence edition</span>')
+  expected=text.replace('an King AI','a King AI').replace('An King AI','A King AI').encode()
+ check('unchanged except approved branding '+file,hashlib.sha256(expected).digest()==hashlib.sha256((ROOT/file).read_bytes()).digest())
 report={'total':len(results),'passed':sum(r['pass'] for r in results),'failed':[r for r in results if not r['pass']],'results':results}
 (OUT/'report.json').write_text(json.dumps(report,indent=2));print(json.dumps({k:report[k] for k in ('total','passed','failed')},indent=2));raise SystemExit(bool(report['failed']))

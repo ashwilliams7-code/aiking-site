@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Headless interaction, persistence and responsive QA for ARA product workspaces."""
+"""Headless interaction, persistence and responsive QA for King AI product workspaces."""
 
 from __future__ import annotations
 

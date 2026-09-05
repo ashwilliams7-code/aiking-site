@@ -139,7 +139,7 @@
         details: [
           'Class: Direct',
           'Confidence: High',
-          'Provenance: ARA-controlled synthetic route plus reconciled first-party fixture event.',
+          'Provenance: King AI-controlled synthetic route plus reconciled first-party fixture event.',
           'Value treatment: Included only in direct recorded synthetic value.',
           'No customer event, message, booking, quote or financial transaction occurred.'
         ]
@@ -149,7 +149,7 @@
         details: [
           'Class: Assisted',
           'Confidence: Medium',
-          'Provenance: Synthetic ARA exposure plus first-party fixture event and a phone step.',
+          'Provenance: Synthetic King AI exposure plus first-party fixture event and a phone step.',
           'Value treatment: Reported separately from direct value.',
           'No customer event, message, booking, quote or financial transaction occurred.'
         ]
@@ -532,7 +532,7 @@
       setText('[data-page-summary]', summary);
       setText('[data-current-view]:not(body)', title);
       body.dataset.currentView = view;
-      document.title = `${title} — ARA ${suiteLabel} synthetic workspace`;
+      document.title = `${title} — King AI ${suiteLabel} synthetic workspace`;
       if (options.updateHash !== false) updateHash(view);
       closeMobileNavigation();
       if (options.scrollTop === true) {
@@ -808,7 +808,7 @@
     };
 
     const planKey = (value) => String(value || '').toLowerCase().includes('action') ? 'action' : 'proof';
-    const planName = (value) => value === 'action' ? 'ARA Action' : 'ARA Proof';
+    const planName = (value) => value === 'action' ? 'King AI Action' : 'King AI Proof';
 
     const renderBilling = () => {
       queryAll('[data-plan]').forEach((control) => {
@@ -1047,8 +1047,8 @@
         }
       },
       plans: [
-        { id: 'proof', name: 'ARA Proof', amountAUD: 149, cadence: 'per active location/month', gst: 'excluded', status: 'internal test hypothesis only' },
-        { id: 'action', name: 'ARA Action', amountAUD: 399, cadence: 'per active location/month', gst: 'excluded', status: 'internal test hypothesis only' }
+        { id: 'proof', name: 'King AI Proof', amountAUD: 149, cadence: 'per active location/month', gst: 'excluded', status: 'internal test hypothesis only' },
+        { id: 'action', name: 'King AI Action', amountAUD: 399, cadence: 'per active location/month', gst: 'excluded', status: 'internal test hypothesis only' }
       ],
       outcomes: [
         { class: 'Direct', confidence: 'High', valueTreatment: 'included in direct recorded synthetic value' },

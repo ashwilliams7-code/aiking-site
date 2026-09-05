@@ -399,15 +399,15 @@
   const connectorStates = {
     active: {
       label: 'Active', freshness: 'Reconciled 8 min ago', ledger: '2 active · 1 proposed · 8/8 evidence surfaces current',
-      copy: 'Provider and ARA state agree. Read-only collection is available.', proof: '7/8 current · GBP active', className: ''
+      copy: 'Provider and King AI state agree. Read-only collection is available.', proof: '7/8 current · GBP active', className: ''
     },
     degraded: {
       label: 'Reconciliation required', freshness: 'Provider scope drift detected', ledger: '1 active · 1 degraded · 1 proposed · 6/8 surfaces current',
-      copy: 'Provider and ARA scopes disagree. Collection and affected actions are paused without widening access.', proof: '6/8 current · GBP degraded', className: 'volatile'
+      copy: 'Provider and King AI scopes disagree. Collection and affected actions are paused without widening access.', proof: '6/8 current · GBP degraded', className: 'volatile'
     },
     revoked: {
       label: 'Revoked', freshness: 'New collection blocked immediately', ledger: '1 active · 1 revoked · 1 proposed · 5/8 surfaces current',
-      copy: 'ARA is internally blocked. Provider revocation retry is simulated; existing evidence was not silently deleted.', proof: '5/8 current · GBP revoked', className: 'unavailable'
+      copy: 'King AI is internally blocked. Provider revocation retry is simulated; existing evidence was not silently deleted.', proof: '5/8 current · GBP revoked', className: 'unavailable'
     }
   };
   const setConnectorState = (state) => {
@@ -584,9 +584,9 @@
   const planSummary = document.querySelector('[data-plan-summary]');
   const checkoutDialog = document.querySelector('#checkout-dialog');
   const checkoutPlan = document.querySelector('[data-checkout-plan]');
-  let selectedPlan = 'ARA Proof';
+  let selectedPlan = 'King AI Proof';
   const setPlan = (button) => {
-    selectedPlan = button.dataset.plan || 'ARA Proof';
+    selectedPlan = button.dataset.plan || 'King AI Proof';
     planButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
     if (planSummary) planSummary.textContent = `${selectedPlan} selected for preview · no checkout created`;
   };
@@ -608,7 +608,7 @@
   const billingButtons = Array.from(document.querySelectorAll('[data-billing-state]'));
   const billingBanner = document.querySelector('[data-billing-banner]');
   const billingCopy = {
-    active: ['Active entitlement', 'Protected capabilities available from the reconciled ARA ledger.'],
+    active: ['Active entitlement', 'Protected capabilities available from the reconciled King AI ledger.'],
     grace: ['Past due · grace', 'Days 0–7 preview. Existing capability remains available while payment recovery is attempted.'],
     restricted: ['Past due · restricted', 'Days 8–14 preview. Read-only, export and billing remain; new costly actions pause.'],
     review: ['Billing review', 'Refund or dispute preview. Data stays protected and destructive actions remain blocked.'],
@@ -646,9 +646,9 @@
   const outcomeProvenance = document.querySelector('[data-outcome-provenance]');
   const outcomeTreatment = document.querySelector('[data-outcome-treatment]');
   const outcomeDetails = {
-    direct: ['Direct outcome', 'Direct', 'High', 'ARA route + first-party event', 'Included in direct recorded value', 'A verified ARA-controlled route links the approved answer/action to this reconciled synthetic first-party outcome.'],
-    assisted: ['Assisted outcome', 'Assisted', 'Medium', 'ARA exposure + first-party event + phone step', 'Reported separately from direct value', 'ARA is one verified step, but a phone conversation or another known channel also materially contributed.'],
-    correlated: ['Correlated outcome', 'Correlated', 'Low', 'Temporal comparison only', 'Excluded from attributable value', 'The event followed an ARA change inside the sample window, but the available evidence does not establish contribution or causation.'],
+    direct: ['Direct outcome', 'Direct', 'High', 'King AI route + first-party event', 'Included in direct recorded value', 'A verified King AI-controlled route links the approved answer/action to this reconciled synthetic first-party outcome.'],
+    assisted: ['Assisted outcome', 'Assisted', 'Medium', 'King AI exposure + first-party event + phone step', 'Reported separately from direct value', 'King AI is one verified step, but a phone conversation or another known channel also materially contributed.'],
+    correlated: ['Correlated outcome', 'Correlated', 'Low', 'Temporal comparison only', 'Excluded from attributable value', 'The event followed a King AI change inside the sample window, but the available evidence does not establish contribution or causation.'],
     unknown: ['Unknown outcome', 'Unknown', 'Unresolved', 'Unmatched first-party event', 'Excluded from attributable value', 'The synthetic event lacks enough consented journey evidence for a stronger attribution class.']
   };
   document.querySelectorAll('[data-outcome-open]').forEach((button) => button.addEventListener('click', () => {
