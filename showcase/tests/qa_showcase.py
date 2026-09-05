@@ -9,24 +9,12 @@ from pathlib import Path
 from typing import Any
 
 from playwright.sync_api import Page, sync_playwright  # type: ignore[import-not-found]
+from suite_profiles import CONFIGS, READY_SUITES, RESERVED_SLOTS, selector_contract
 
 BASE_URL = os.environ.get("ARA_SHOWCASE_URL", "http://127.0.0.1:8765/showcase")
 OUTPUT = Path(os.environ.get("ARA_SHOWCASE_QA_OUTPUT", "/tmp/ara-showcase-qa"))
 CHROME = Path("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 OUTPUT.mkdir(parents=True, exist_ok=True)
-
-CONFIGS = [
-    ("kinetic", 1440, 900, False),
-    ("kinetic", 1280, 720, False),
-    ("kinetic", 390, 844, False),
-    ("kinetic", 320, 568, False),
-    ("kinetic", 390, 844, True),
-    ("editorial", 1440, 900, False),
-    ("editorial", 1280, 720, False),
-    ("editorial", 390, 844, False),
-    ("editorial", 320, 568, False),
-    ("editorial", 390, 844, True),
-]
 
 
 def visible_count(page: Page, selector: str) -> int:
@@ -35,7 +23,8 @@ def visible_count(page: Page, selector: str) -> int:
     )
 
 
-def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) -> dict[str, Any]:
+def check_suite(page: Page, profile: dict[str, Any], width: int, height: int, reduced: bool) -> dict[str, Any]:
+    suite = profile["slug"]
     console_errors: list[str] = []
     page_errors: list[str] = []
     failed_requests: list[str] = []
@@ -48,7 +37,7 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
         else None,
     )
 
-    page.goto(f"{BASE_URL}/{suite}.html", wait_until="domcontentloaded")
+    page.goto(f"{BASE_URL}/{profile['landing']}", wait_until="domcontentloaded")
     page.wait_for_timeout(500)
     assertions: dict[str, bool] = {}
 
@@ -79,16 +68,13 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
     assertions["dialogs_labelled"] = page.locator("dialog[aria-labelledby]").count() == metrics["dialogs"]
     page.keyboard.press("Tab")
     assertions["skip_link_first"] = page.evaluate("document.activeElement.classList.contains('skip-link')")
-    if suite == "kinetic":
-        assertions["kinetic_motion_system_present"] = (
-            page.locator('[data-motion-toggle]').count() == 1
-            and page.locator('[data-motion-zone]').count() == 2
-            and page.locator('.kinetic-ticker').count() == 1
-            and page.locator('.signal-packet').count() == 2
-            and page.locator('[data-journey-progress]').count() == 1
-        )
+    identity = profile["identity"]
+    assertions["registered_landing_identity"] = selector_contract(
+        page, identity["landingRequired"], identity["landingForbidden"]
+    )
+    if profile["capabilities"]["kineticMotion"]:
         if reduced:
-            assertions["kinetic_reduced_motion_contract"] = (
+            assertions["suite_reduced_motion_contract"] = (
                 page.locator('[data-motion-toggle]').is_disabled()
                 and page.locator('[data-motion-toggle]').inner_text().lower() == "motion reduced"
                 and page.locator('.ticker-track').evaluate("el => getComputedStyle(el).animationName === 'none'")
@@ -98,21 +84,15 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
             packet_before = page.locator('.signal-packet.p1').evaluate("el => el.getBoundingClientRect().left")
             page.wait_for_timeout(180)
             packet_after = page.locator('.signal-packet.p1').evaluate("el => el.getBoundingClientRect().left")
-            assertions["kinetic_motion_visibly_advances"] = abs(packet_after - packet_before) > 0.5
+            assertions["suite_motion_visibly_advances"] = abs(packet_after - packet_before) > 0.5
             page.locator('[data-motion-toggle]').click()
-            assertions["kinetic_motion_pause"] = (
+            assertions["suite_motion_pause"] = (
                 page.locator('body').get_attribute('data-motion-paused') == "true"
                 and page.locator('[data-motion-toggle]').get_attribute('aria-pressed') == "true"
                 and page.locator('.ticker-track').evaluate("el => getComputedStyle(el).animationPlayState === 'paused'")
             )
             page.locator('[data-motion-toggle]').click()
-            assertions["kinetic_motion_resume"] = page.locator('body').get_attribute('data-motion-paused') == "false"
-    else:
-        assertions["editorial_motion_identity_separate"] = (
-            page.locator('[data-motion-toggle]').count() == 0
-            and page.locator('.kinetic-ticker').count() == 0
-            and page.locator('[data-journey-progress]').count() == 0
-        )
+            assertions["suite_motion_resume"] = page.locator('body').get_attribute('data-motion-paused') == "false"
     if width < 1000:
         page.locator('[data-nav-toggle]').click()
         assertions["mobile_navigation_opens"] = (
@@ -212,7 +192,7 @@ def check_suite(page: Page, suite: str, width: int, height: int, reduced: bool) 
         and "Customer-confirmed synthetic invoice value" in page.locator('#proof-export-dialog').inner_text()
     )
     page.locator('[data-proof-export-confirm]').click()
-    if suite == "kinetic" and not reduced:
+    if profile["capabilities"]["kineticMotion"] and not reduced:
         page.locator('#outcomes').scroll_into_view_if_needed()
         page.wait_for_timeout(220)
         progress_value = page.locator('[data-journey-progress]').evaluate(
@@ -292,22 +272,23 @@ def main() -> None:
             launch["executable_path"] = str(CHROME)
         browser = playwright.chromium.launch(**launch)
         try:
-            for suite, width, height, reduced in CONFIGS:
+            for profile, width, height, reduced in CONFIGS:
                 context = browser.new_context(
                     viewport={"width": width, "height": height},
                     reduced_motion="reduce" if reduced else "no-preference",
-                    color_scheme="dark" if suite == "kinetic" else "light",
+                    color_scheme=profile["colorScheme"],
                 )
                 page = context.new_page()
-                results.append(check_suite(page, suite, width, height, reduced))
+                results.append(check_suite(page, profile, width, height, reduced))
                 context.close()
 
-            for suite in ("kinetic", "editorial"):
+            for profile in READY_SUITES:
+                suite = profile["slug"]
                 context = browser.new_context(viewport={"width": 390, "height": 844})
                 page = context.new_page()
                 fallback_errors: list[str] = []
                 page.on("pageerror", lambda error: fallback_errors.append(str(error)))
-                page.goto(f"{BASE_URL}/{suite}.html", wait_until="domcontentloaded")
+                page.goto(f"{BASE_URL}/{profile['landing']}", wait_until="domcontentloaded")
                 page.add_style_tag(content="html body * { font-family: Arial, sans-serif !important; }")
                 page.wait_for_timeout(300)
                 checks = {
@@ -329,15 +310,67 @@ def main() -> None:
             page = context.new_page()
             page.goto(f"{BASE_URL}/", wait_until="domcontentloaded")
             page.wait_for_timeout(300)
+            ready_slugs = sorted(profile["slug"] for profile in READY_SUITES)
+            reserved_slugs = sorted(slot["slug"] for slot in RESERVED_SLOTS)
+            displayed_ready = sorted(
+                page.locator('[data-suite-card]').evaluate_all("els => els.map(el => el.dataset.suiteCard)")
+            )
+            displayed_reserved = sorted(
+                page.locator('[data-suite-slot]').evaluate_all("els => els.map(el => el.dataset.suiteSlot)")
+            )
+            review_panels = page.locator('.review-suite[data-review-suite]')
+            score_selects = page.locator('[data-review-score]')
+            for index in range(score_selects.count()):
+                score_selects.nth(index).select_option("5")
+            review_complete = (
+                page.locator("body").get_attribute("data-review-boot") == "ready"
+                and page.locator("body").get_attribute("data-review-complete") == "true"
+                and review_panels.count() == len(READY_SUITES)
+                and all(
+                    review_panels.nth(index).locator('[data-review-total]').inner_text() == "25 / 25"
+                    for index in range(review_panels.count())
+                )
+            )
+            with page.expect_download(timeout=5000) as review_download_info:
+                page.locator('[data-review-export]').click()
+            review_download = review_download_info.value
+            review_path = review_download.path()
+            review_payload = json.loads(Path(review_path).read_text()) if review_path else {}
+            review_export_valid = (
+                review_download.suggested_filename == "ara-founder-design-review.json"
+                and review_payload.get("boundary", {}).get("productionDecision") is False
+                and sorted(suite.get("slug") for suite in review_payload.get("suites", [])) == ready_slugs
+                and all(suite.get("complete") is True for suite in review_payload.get("suites", []))
+            )
+            page.reload(wait_until="domcontentloaded")
+            page.wait_for_function("document.body.dataset.reviewBoot === 'ready'")
+            review_persisted = page.locator('[data-review-score]').evaluate_all("els => els.every(el => el.value === '5')")
+            page.locator('[data-review-reset]').click()
+            review_reset = (
+                page.locator("body").get_attribute("data-review-complete") == "false"
+                and page.locator('[data-review-score]').evaluate_all("els => els.every(el => el.value === '0')")
+            )
             launcher = {
                 "label": "launcher-390x844",
-                "passed": page.locator('.suite-card').count() == 2
+                "passed": displayed_ready == ready_slugs
+                and displayed_reserved == reserved_slugs
+                and review_complete
+                and review_export_valid
+                and review_persisted
+                and review_reset
                 and page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"),
                 "assertions": {
-                    "two_suite_links": page.locator('.suite-card').count() == 2,
+                    "registered_suite_links": displayed_ready == ready_slugs,
+                    "reserved_design_slots": displayed_reserved == reserved_slugs,
+                    "founder_review_complete": review_complete,
+                    "founder_review_export": review_export_valid,
+                    "founder_review_persistence": review_persisted,
+                    "founder_review_reset": review_reset,
                     "no_horizontal_overflow": page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"),
                 },
             }
+            page.evaluate("document.activeElement.blur(); document.documentElement.style.scrollBehavior='auto'; window.scrollTo(0,0)")
+            page.wait_for_timeout(100)
             page.screenshot(path=str(OUTPUT / "launcher-390x844.png"), full_page=True)
             results.append(launcher)
             context.close()

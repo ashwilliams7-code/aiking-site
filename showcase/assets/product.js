@@ -225,7 +225,13 @@
       audit: Object.freeze([])
     });
 
-    const suite = body.dataset.suite === 'editorial' ? 'editorial' : 'kinetic';
+    const suite = (body.dataset.suite || '').trim();
+    const suiteLabel = (body.dataset.suiteLabel || '').trim();
+    const productContract = (body.dataset.productContract || '').trim();
+    if (!/^[a-z][a-z0-9-]{0,31}$/.test(suite) || !suiteLabel || productContract !== 'v1') {
+      body.dataset.productBoot = 'invalid-suite';
+      return;
+    }
     const storageKey = `ara-showcase-product:${suite}:v1`;
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const nativeDisableTags = new Set(['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'FIELDSET', 'OPTGROUP']);
@@ -517,7 +523,7 @@
       setText('[data-page-summary]', summary);
       setText('[data-current-view]:not(body)', title);
       body.dataset.currentView = view;
-      document.title = `${title} — ARA ${suite === 'kinetic' ? 'Kinetic' : 'Editorial'} synthetic workspace`;
+      document.title = `${title} — ARA ${suiteLabel} synthetic workspace`;
       if (options.updateHash !== false) updateHash(view);
       closeMobileNavigation();
       if (options.scrollTop === true) {
@@ -1514,6 +1520,7 @@
     if (initialHash) state.activeView = initialHash;
     renderAll();
     activateView(state.activeView, { updateHash: true });
+    body.dataset.productBoot = 'ready';
     body.classList.add('product-js-ready');
     document.documentElement.classList.add('product-js-ready');
   };

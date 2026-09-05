@@ -1,8 +1,8 @@
-# ARA full-product dual-suite contract
+# ARA full-product multi-suite contract
 
 ## Purpose
 
-Extend the existing ARA dual-suite showcase into two complete, independently coherent product workspaces that founders can compare before selecting a visual direction.
+Maintain complete, independently coherent ARA product workspaces that founders can compare before selecting a visual direction. Kinetic and Editorial are the two current review-ready suites; the contract deliberately permits another original suite.
 
 The suites share product truth, synthetic fixtures, state semantics and completion criteria. They do not share presentation grammar.
 
@@ -23,6 +23,8 @@ The suites share product truth, synthetic fixtures, state semantics and completi
 - `assets/kinetic-product.css` — Kinetic presentation system.
 - `assets/editorial-product.css` — Editorial presentation system.
 - `assets/product.js` — shared synthetic state semantics.
+- `suite-registry.json` — canonical review-ready suite profiles, QA identity rules and explicitly reserved design slots.
+- `tests/suite_profiles.py` — strict registry validation and generated QA matrix.
 
 ## Shared fixture
 
@@ -55,20 +57,20 @@ Each workspace must expose all of these as real navigable views with one visible
 
 ## Required structural hooks
 
-Both pages must contain:
+Every registered product workspace must contain:
 
-- `<body data-suite="kinetic|editorial" data-product-workspace>`.
+- `<body data-suite="<registered-slug>" data-suite-label="<display-label>" data-product-contract="v1" data-product-workspace>`.
 - `.product-shell`, one `h1`, and `<main id="product-main">`.
 - `[data-product-nav]` with exactly 12 `[data-view-target]` controls.
 - Exactly 12 `[data-view]` sections whose values match the navigation targets.
 - `[data-page-title]`, `[data-page-summary]`, `[data-role-label]`, `[data-current-view]`.
 - `[data-reset-demo]`, `[data-toast]`, and one labelled `<dialog id="product-dialog">`.
 - Visible synthetic/demo boundary in the shell and within consequential dialogs.
-- Links back to the suite landing, other product workspace and neutral launcher.
+- Links back to the suite landing and neutral launcher. Direct sibling-suite links are optional; the launcher is the authoritative catalogue.
 
 ## Shared state semantics
 
-`assets/product.js` owns one state object per suite in localStorage under `ara-showcase-product:<suite>:v1`. Storage is display state only and never identity/authentication.
+`assets/product.js` owns one state object per suite in localStorage under `ara-showcase-product:<registered-slug>:v1`. Suite slugs are validated, never silently mapped to an existing design, and remain display state only—not identity or authentication.
 
 Default state:
 
@@ -206,9 +208,25 @@ Dialog:
 - Mobile becomes a compact masthead and chapter selector with calm stacked sheets.
 - Do not borrow Kinetic command rails, angular cuts, electric-lime emphasis or operational ticker grammar.
 
+## Suite registration and the reserved third lane
+
+The neutral launcher exposes Kinetic and Editorial as review-ready peers and `concept-c` as an honest reserved slot with no route. A reserved slot is not a design claim and is excluded from product QA until its complete routes and identity profile exist.
+
+To register another review-ready suite:
+
+1. Create `showcase/<slug>.html`, `showcase/<slug>-product.html` and one suite-owned product stylesheet. A suite-owned landing stylesheet is optional.
+2. Use a unique lowercase slug matching `[a-z][a-z0-9-]{0,31}` plus a non-empty display label and `data-product-contract="v1"`.
+3. Implement all 12 canonical product views, shared state semantics, roles, consequence boundaries and exports. Do not remove or redefine canonical view IDs.
+4. Define a concept charter, one memorable signature mechanism and explicit anti-convergence rules against every existing suite.
+5. Add required and forbidden landing/product selectors to `suite-registry.json`. Moving a slot from reserved to ready without complete routes, identity rules and capability declarations must fail registry validation.
+6. Add a launcher card with matching `data-suite-card` and `data-suite-label`. The founder comparison lab discovers registered cards automatically.
+7. Run every generated viewport, interaction, accessibility, export, fallback-font and cross-suite storage-isolation check before calling the suite review-ready.
+
+Shared fixtures and behavior are welcome. Shared presentation components, typography, spacing, navigation, card anatomy, motion choreography or signature mechanisms are not when they collapse the concepts into reskins.
+
 ## Accessibility and QA floor
 
-For both product workspaces:
+For every review-ready product workspace:
 
 - 1440×900, 1280×720, 390×844 and 320×568.
 - Keyboard navigation, visible focus, skip link and named controls.

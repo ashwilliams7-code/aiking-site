@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from playwright.sync_api import Page, sync_playwright  # type: ignore[import-not-found]
+from suite_profiles import CONFIGS, READY_SUITES, selector_contract
 
 BASE_URL = os.environ.get("ARA_SHOWCASE_URL", "http://127.0.0.1:8765/showcase")
 OUTPUT = Path(os.environ.get("ARA_PRODUCT_QA_OUTPUT", "/tmp/ara-product-qa"))
@@ -19,20 +20,6 @@ VIEWS = (
     "overview", "onboarding", "diagnostic", "truth", "scorecard", "actions",
     "outcomes", "connectors", "team", "recovery", "billing", "audit",
 )
-CONFIGS = [
-    ("kinetic", 1440, 900, False),
-    ("kinetic", 1280, 720, False),
-    ("kinetic", 390, 844, False),
-    ("kinetic", 320, 568, False),
-    ("kinetic", 390, 844, True),
-    ("editorial", 1440, 900, False),
-    ("editorial", 1280, 720, False),
-    ("editorial", 390, 844, False),
-    ("editorial", 320, 568, False),
-    ("editorial", 390, 844, True),
-]
-
-
 def visible_views(page: Page) -> list[str]:
     return page.locator("[data-view]").evaluate_all(
         "els => els.filter(el => !el.hidden && getComputedStyle(el).display !== 'none').map(el => el.dataset.view)"
@@ -71,15 +58,19 @@ def download_json(page: Page, selector: str) -> tuple[str, dict[str, Any]]:
     return download.suggested_filename, json.loads(Path(path).read_text())
 
 
-def check_product(page: Page, suite: str, width: int, height: int, reduced: bool) -> dict[str, Any]:
+def check_product(page: Page, profile: dict[str, Any], width: int, height: int, reduced: bool) -> dict[str, Any]:
+    suite = profile["slug"]
     console_errors, page_errors, failed_requests = listen(page)
-    page.goto(f"{BASE_URL}/{suite}-product.html", wait_until="networkidle")
+    page.goto(f"{BASE_URL}/{profile['workspace']}", wait_until="networkidle")
     page.wait_for_timeout(180)
     assertions: dict[str, bool] = {}
 
     metrics = page.evaluate(
         """() => ({
           suite: document.body.dataset.suite,
+          suiteLabel: document.body.dataset.suiteLabel,
+          productContract: document.body.dataset.productContract,
+          productBoot: document.body.dataset.productBoot,
           nav: document.querySelectorAll('[data-view-target]').length,
           views: document.querySelectorAll('[data-view]').length,
           h1: document.querySelectorAll('h1').length,
@@ -92,6 +83,12 @@ def check_product(page: Page, suite: str, width: int, height: int, reduced: bool
         })"""
     )
     assertions["correct_suite"] = metrics["suite"] == suite
+    assertions["suite_contract_ready"] = (
+        metrics["suiteLabel"] == profile["label"]
+        and metrics["productContract"] == "v1"
+        and metrics["productBoot"] == "ready"
+        and profile["label"] in page.title()
+    )
     assertions["twelve_views"] = metrics["views"] == len(VIEWS)
     assertions["twelve_navigation_controls"] = metrics["nav"] == len(VIEWS)
     assertions["one_visible_view"] = visible_views(page) == ["overview"]
@@ -111,31 +108,21 @@ def check_product(page: Page, suite: str, width: int, height: int, reduced: bool
     page.keyboard.press("Tab")
     assertions["skip_link_first"] = page.evaluate("document.activeElement.classList.contains('skip-link')")
 
-    if suite == "kinetic":
-        assertions["kinetic_identity"] = (
-            page.locator(".command-rail").count() == 1
-            and page.locator("[data-signal-spine]").count() == 1
-            and page.locator("[data-motion-toggle]").count() == 1
-            and page.locator(".evidence-folio").count() == 0
-        )
+    identity = profile["identity"]
+    assertions["registered_product_identity"] = selector_contract(
+        page, identity["productRequired"], identity["productForbidden"]
+    )
+    if profile["capabilities"]["kineticMotion"]:
         if reduced:
-            assertions["kinetic_reduced_motion"] = (
+            assertions["suite_reduced_motion"] = (
                 page.locator("[data-motion-toggle]").is_disabled()
                 and page.locator("[data-motion-toggle]").inner_text().lower() == "motion reduced"
                 and page.locator("body").get_attribute("data-motion-reduced") == "true"
             )
         else:
             page.locator("[data-motion-toggle]").click()
-            assertions["kinetic_motion_pause"] = page.locator("body").get_attribute("data-motion-paused") == "true"
+            assertions["suite_motion_pause"] = page.locator("body").get_attribute("data-motion-paused") == "true"
             page.locator("[data-motion-toggle]").click()
-    else:
-        assertions["editorial_identity"] = (
-            page.locator(".journal-masthead").count() == 1
-            and page.locator(".evidence-folio").count() == 1
-            and page.locator(".command-rail").count() == 0
-            and page.locator("[data-motion-toggle]").count() == 0
-            and page.locator(".signal-feed").count() == 0
-        )
 
     for view in VIEWS:
         page.locator(f'[data-view-target="{view}"]').click()
@@ -289,7 +276,7 @@ def check_product(page: Page, suite: str, width: int, height: int, reduced: bool
         and page.locator("body").get_attribute("data-selected-plan") == "proof"
         and page.locator("body").get_attribute("data-billing-state") == "active"
     )
-    if suite == "kinetic" and width <= 760:
+    if profile["capabilities"]["mobileCommandDock"] and width <= 760:
         page.wait_for_timeout(420)
         page.evaluate(
             """() => {
@@ -335,10 +322,11 @@ def check_product(page: Page, suite: str, width: int, height: int, reduced: bool
     }
 
 
-def fallback_font_check(browser: Any, suite: str) -> dict[str, Any]:
+def fallback_font_check(browser: Any, profile: dict[str, Any]) -> dict[str, Any]:
+    suite = profile["slug"]
     context = browser.new_context(viewport={"width": 390, "height": 844})
     page = context.new_page()
-    page.goto(f"{BASE_URL}/{suite}-product.html", wait_until="networkidle")
+    page.goto(f"{BASE_URL}/{profile['workspace']}", wait_until="networkidle")
     page.add_style_tag(content="html body * { font-family: Arial, sans-serif !important; }")
     page.wait_for_timeout(80)
     checks = {
@@ -352,6 +340,30 @@ def fallback_font_check(browser: Any, suite: str) -> dict[str, Any]:
     return {"label": f"{suite}-product-390x844-fallback", "assertions": checks, "passed": all(checks.values())}
 
 
+def storage_namespace_check(browser: Any) -> dict[str, Any]:
+    context = browser.new_context(viewport={"width": 390, "height": 844})
+    page = context.new_page()
+    defaults_isolated = True
+    for index, profile in enumerate(READY_SUITES):
+        page.goto(f"{BASE_URL}/{profile['workspace']}", wait_until="networkidle")
+        defaults_isolated = defaults_isolated and page.locator("body").get_attribute("data-selected-plan") == "proof"
+        if index == 0:
+            page.locator('[data-view-target="billing"]').click()
+            page.locator('[data-plan="action"]').click()
+    first = READY_SUITES[0]
+    page.goto(f"{BASE_URL}/{first['workspace']}", wait_until="networkidle")
+    first_persisted = page.locator("body").get_attribute("data-selected-plan") == "action"
+    keys = page.evaluate("Object.keys(localStorage).filter(key => key.startsWith('ara-showcase-product:')).sort()")
+    expected_keys = sorted(f"ara-showcase-product:{profile['slug']}:v1" for profile in READY_SUITES)
+    context.close()
+    checks = {
+        "every_other_suite_stayed_default": defaults_isolated,
+        "first_suite_retained_own_state": first_persisted,
+        "separate_storage_keys": keys == expected_keys,
+    }
+    return {"label": "cross-suite-storage-isolation", "assertions": checks, "passed": all(checks.values())}
+
+
 def main() -> None:
     results: list[dict[str, Any]] = []
     with sync_playwright() as playwright:
@@ -360,16 +372,17 @@ def main() -> None:
             launch["executable_path"] = str(CHROME)
         browser = playwright.chromium.launch(**launch)
         try:
-            for suite, width, height, reduced in CONFIGS:
+            for profile, width, height, reduced in CONFIGS:
                 context = browser.new_context(
                     viewport={"width": width, "height": height},
                     reduced_motion="reduce" if reduced else "no-preference",
-                    color_scheme="dark" if suite == "kinetic" else "light",
+                    color_scheme=profile["colorScheme"],
                     accept_downloads=True,
                 )
-                results.append(check_product(context.new_page(), suite, width, height, reduced))
+                results.append(check_product(context.new_page(), profile, width, height, reduced))
                 context.close()
-            results.extend(fallback_font_check(browser, suite) for suite in ("kinetic", "editorial"))
+            results.extend(fallback_font_check(browser, profile) for profile in READY_SUITES)
+            results.append(storage_namespace_check(browser))
         finally:
             browser.close()
 
