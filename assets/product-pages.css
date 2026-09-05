@@ -128,7 +128,7 @@
 
 .product-use-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .product-use-card{min-height:260px;padding:30px;border:1px solid var(--line);background:rgba(255,255,255,.022)}
-.product-use-card span{color:#747b72;font:9px var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.product-use-card span{color:#858c83;font:9px var(--mono);letter-spacing:.16em;text-transform:uppercase}
 .product-use-card h3{margin:32px 0 13px}
 .product-use-card p{font-size:15px;line-height:1.68}
 

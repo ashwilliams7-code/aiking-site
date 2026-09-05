@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/assets/site.css?v=20260829-ara1" />
-    <link rel="stylesheet" href="/assets/titan-mark-1.css?v=20260813-titan2" />
+    <link rel="stylesheet" href="/assets/titan-mark-1.css?v=20260905-audit1" />
     <link rel="icon" href="/assets/aiking-king-icon.svg" type="image/svg+xml" />
   </head>
   <body class="titan-page">
@@ -244,7 +244,7 @@
       <p>© <span data-year></span> KingAi Enterprise</p>
     </footer>
 
-    <script src="/assets/site.js?v=20260829-ara1" defer></script>
+    <script src="/assets/site.js?v=20260905-audit1" defer></script>
 
     <!-- Cinematic 3D hero (three.js via import map; graceful fallback) -->
     <script type="importmap">
@@ -257,7 +257,7 @@
     <script type="module">
       const c = document.querySelector('[data-titan-3d]');
       if (c && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        import('/assets/titan-3d.js?v=20260814-3d9')
+        import('/assets/titan-3d.js?v=20260905-audit1')
           .then(() => requestAnimationFrame(() => c.classList.add('is-live')))
           .catch(() => {});
       }
