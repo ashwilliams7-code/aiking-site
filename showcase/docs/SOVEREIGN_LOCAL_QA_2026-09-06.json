@@ -1,0 +1,1447 @@
+{
+  "base": "http://127.0.0.1:8782/showcase",
+  "checks": 223,
+  "passed": 223,
+  "failed": [],
+  "results": [
+    {
+      "name": "sovereign.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign.html 320 layout",
+      "ok": true,
+      "detail": {
+        "width": 320,
+        "scroll": 320,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign.html brand 320",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Photo-tile and dark-CTA contrast 320",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html 320 layout",
+      "ok": true,
+      "detail": {
+        "width": 320,
+        "scroll": 320,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-start.html brand 320",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html 320 layout",
+      "ok": true,
+      "detail": {
+        "width": 320,
+        "scroll": 320,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-product.html brand 320",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html 320 layout",
+      "ok": true,
+      "detail": {
+        "width": 320,
+        "scroll": 320,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "designs.html brand 320",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "JS errors width 320",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "sovereign.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign.html 390 layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign.html brand 390",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Photo-tile and dark-CTA contrast 390",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html 390 layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-start.html brand 390",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html 390 layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-product.html brand 390",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html 390 layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "designs.html brand 390",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "JS errors width 390",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "sovereign.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign.html 430 layout",
+      "ok": true,
+      "detail": {
+        "width": 430,
+        "scroll": 430,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign.html brand 430",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Photo-tile and dark-CTA contrast 430",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html 430 layout",
+      "ok": true,
+      "detail": {
+        "width": 430,
+        "scroll": 430,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-start.html brand 430",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html 430 layout",
+      "ok": true,
+      "detail": {
+        "width": 430,
+        "scroll": 430,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-product.html brand 430",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html 430 layout",
+      "ok": true,
+      "detail": {
+        "width": 430,
+        "scroll": 430,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "designs.html brand 430",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "JS errors width 430",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "sovereign.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign.html 760 layout",
+      "ok": true,
+      "detail": {
+        "width": 760,
+        "scroll": 760,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign.html brand 760",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Photo-tile and dark-CTA contrast 760",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html 760 layout",
+      "ok": true,
+      "detail": {
+        "width": 760,
+        "scroll": 760,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-start.html brand 760",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html 760 layout",
+      "ok": true,
+      "detail": {
+        "width": 760,
+        "scroll": 760,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-product.html brand 760",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html 760 layout",
+      "ok": true,
+      "detail": {
+        "width": 760,
+        "scroll": 760,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "designs.html brand 760",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "JS errors width 760",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "sovereign.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign.html 1050 layout",
+      "ok": true,
+      "detail": {
+        "width": 1050,
+        "scroll": 1050,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign.html brand 1050",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Photo-tile and dark-CTA contrast 1050",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html 1050 layout",
+      "ok": true,
+      "detail": {
+        "width": 1050,
+        "scroll": 1050,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-start.html brand 1050",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html 1050 layout",
+      "ok": true,
+      "detail": {
+        "width": 1050,
+        "scroll": 1050,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-product.html brand 1050",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html 1050 layout",
+      "ok": true,
+      "detail": {
+        "width": 1050,
+        "scroll": 1050,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "designs.html brand 1050",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "JS errors width 1050",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "sovereign.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign.html 1280 layout",
+      "ok": true,
+      "detail": {
+        "width": 1280,
+        "scroll": 1280,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign.html brand 1280",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Photo-tile and dark-CTA contrast 1280",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html 1280 layout",
+      "ok": true,
+      "detail": {
+        "width": 1280,
+        "scroll": 1280,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-start.html brand 1280",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html 1280 layout",
+      "ok": true,
+      "detail": {
+        "width": 1280,
+        "scroll": 1280,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-product.html brand 1280",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html 1280 layout",
+      "ok": true,
+      "detail": {
+        "width": 1280,
+        "scroll": 1280,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "designs.html brand 1280",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "JS errors width 1280",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "sovereign.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign.html 1440 layout",
+      "ok": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign.html brand 1440",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Photo-tile and dark-CTA contrast 1440",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html 1440 layout",
+      "ok": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-start.html brand 1440",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-product.html 1440 layout",
+      "ok": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign-product.html brand 1440",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "designs.html 1440 layout",
+      "ok": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "designs.html brand 1440",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "JS errors width 1440",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "sovereign.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Photographic motion actually changes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Motion pause receives click and pauses",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Motion resumes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Offscreen hero motion pauses",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Menu opens native focus-trapped dialog",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Escape closes menu",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Empty URL validation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Single current question website",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "onboarding website layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "Single current question business",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "onboarding business layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "Single current question trade",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "onboarding trade layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "Single current question areas",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "onboarding areas layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "Single current question name",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "onboarding name layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "Single current question email",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "onboarding email layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "Single current question role",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "onboarding role layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "Single current question consent",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "onboarding consent layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "Explicit consent required",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "All eight questions reached",
+      "ok": true,
+      "detail": [
+        "website",
+        "business",
+        "trade",
+        "areas",
+        "name",
+        "email",
+        "role",
+        "consent"
+      ]
+    },
+    {
+      "name": "Intake demo consent persisted",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Workspace motion has its own working pause",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Desktop onboarding has its own working pause",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign-start.html?no-website=1 HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "No-website branch profile one",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "No-website branch profile two",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Duplicate public surfaces rejected",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Second distinct surface advances",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace home 320 layout",
+      "ok": true,
+      "detail": {
+        "width": 320,
+        "scroll": 320,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View home 320",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace facts 320 layout",
+      "ok": true,
+      "detail": {
+        "width": 320,
+        "scroll": 320,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View facts 320",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace discovery 320 layout",
+      "ok": true,
+      "detail": {
+        "width": 320,
+        "scroll": 320,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View discovery 320",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace actions 320 layout",
+      "ok": true,
+      "detail": {
+        "width": 320,
+        "scroll": 320,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View actions 320",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace results 320 layout",
+      "ok": true,
+      "detail": {
+        "width": 320,
+        "scroll": 320,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View results 320",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace account 320 layout",
+      "ok": true,
+      "detail": {
+        "width": 320,
+        "scroll": 320,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View account 320",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace home 390 layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View home 390",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace facts 390 layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View facts 390",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace discovery 390 layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View discovery 390",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace actions 390 layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View actions 390",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace results 390 layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View results 390",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace account 390 layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View account 390",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace home 760 layout",
+      "ok": true,
+      "detail": {
+        "width": 760,
+        "scroll": 760,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View home 760",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace facts 760 layout",
+      "ok": true,
+      "detail": {
+        "width": 760,
+        "scroll": 760,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View facts 760",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace discovery 760 layout",
+      "ok": true,
+      "detail": {
+        "width": 760,
+        "scroll": 760,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View discovery 760",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace actions 760 layout",
+      "ok": true,
+      "detail": {
+        "width": 760,
+        "scroll": 760,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View actions 760",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace results 760 layout",
+      "ok": true,
+      "detail": {
+        "width": 760,
+        "scroll": 760,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View results 760",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace account 760 layout",
+      "ok": true,
+      "detail": {
+        "width": 760,
+        "scroll": 760,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View account 760",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace home 1440 layout",
+      "ok": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View home 1440",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace facts 1440 layout",
+      "ok": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View facts 1440",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace discovery 1440 layout",
+      "ok": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View discovery 1440",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace actions 1440 layout",
+      "ok": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View actions 1440",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace results 1440 layout",
+      "ok": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View results 1440",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "workspace account 1440 layout",
+      "ok": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "View account 1440",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Reviewer cannot draft facts",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Draft does not silently overwrite truth",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Explicit evidence gate required",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Approved demo correction creates version",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Restore changes state and preserves undo",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Undo restores pre-restore head",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Point deletion is pending not physical",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Point deletion undo works",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Report exception holds release",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Reviewed sample releases",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Queued collecting validating released exercised",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Complete 8x5x5x2 synthetic matrix",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Unavailable excluded honestly",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Metrics internally bounded",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Volatility explicitly exists",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Export is real local JSON without intake PII",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Proof cannot execute Action capability",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Approved queue is explicitly demo",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Safety-critical case routes to human",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Connector cannot activate without consent",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Read-only sample manifest reconciles",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Scope drift pauses access",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Immediate internal revocation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Invite remains pending, no email sent",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Ownership handover held",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Ownership handover reversible",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Restricted billing blocks new canonical work",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Broad deletion remains pending",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Broad deletion undo works",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Open E5 not silently answered",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Recorded pricing retained",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "No unexpected JavaScript errors",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "No provider or third-party requests from suite",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "sovereign.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "fallback reduced layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "Reduced motion no animation",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "sovereign.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "fallback fontless layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "sovereign.html HTTP",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "fallback save-data layout",
+      "ok": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390,
+        "lock": "visible",
+        "clipped": []
+      }
+    },
+    {
+      "name": "Save-data omits decorative hero image",
+      "ok": true,
+      "detail": null
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "fontSource": "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap",
+  "fontLicences": "SIL Open Font License, copies included",
+  "images": [
+    {
+      "file": "home.jpg",
+      "source": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1700&q=85",
+      "dimensions": [
+        1700,
+        1133
+      ],
+      "licence": "Unsplash licence https://unsplash.com/license",
+      "use": "Illustrative stock image; not a King AI customer/project."
+    },
+    {
+      "file": "electrical.jpg",
+      "source": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1200&q=85",
+      "dimensions": [
+        1200,
+        801
+      ],
+      "licence": "Unsplash licence https://unsplash.com/license",
+      "use": "Illustrative stock image; not a King AI customer/project."
+    },
+    {
+      "file": "architecture.jpg",
+      "source": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=85",
+      "dimensions": [
+        1400,
+        788
+      ],
+      "licence": "Unsplash licence https://unsplash.com/license",
+      "use": "Illustrative stock image; not a King AI customer/project."
+    }
+  ],
+  "kingKongAssetsUsed": false
+}

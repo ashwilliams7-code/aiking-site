@@ -1,0 +1,425 @@
+{
+  "asset_count": 53,
+  "assets_all_hash_match": true,
+  "blocked_paths": [
+    {
+      "path": "/.git/config",
+      "status": 404
+    },
+    {
+      "path": "/.env",
+      "status": 404
+    },
+    {
+      "path": "/.jspace/third-suite-ledger.md",
+      "status": 404
+    },
+    {
+      "path": "/tests/qa_sovereign.py",
+      "status": 404
+    },
+    {
+      "path": "/CURRENT_BRAND.md",
+      "status": 404
+    },
+    {
+      "path": "/docs/",
+      "status": 404
+    }
+  ],
+  "missing_internal_links": [],
+  "final_contrast_geometry": [
+    {
+      "width": 320,
+      "scroll": 320,
+      "white": true
+    },
+    {
+      "width": 390,
+      "scroll": 390,
+      "white": true
+    },
+    {
+      "width": 430,
+      "scroll": 430,
+      "white": true
+    },
+    {
+      "width": 760,
+      "scroll": 760,
+      "white": true
+    },
+    {
+      "width": 1050,
+      "scroll": 1050,
+      "white": true
+    },
+    {
+      "width": 1280,
+      "scroll": 1280,
+      "white": true
+    },
+    {
+      "width": 1440,
+      "scroll": 1440,
+      "white": true
+    }
+  ],
+  "legacy_pages": [
+    {
+      "route": "kinetic.html",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "brand": "King AI"
+      }
+    },
+    {
+      "route": "kinetic.html",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "geometry": {
+        "width": 1440,
+        "scroll": 1440,
+        "brand": "King AI"
+      }
+    },
+    {
+      "route": "kinetic-product.html",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "brand": "King AI"
+      }
+    },
+    {
+      "route": "kinetic-product.html",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "geometry": {
+        "width": 1440,
+        "scroll": 1440,
+        "brand": "King AI"
+      }
+    },
+    {
+      "route": "editorial.html",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "brand": "King AI"
+      }
+    },
+    {
+      "route": "editorial.html",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "geometry": {
+        "width": 1440,
+        "scroll": 1440,
+        "brand": "King AI"
+      }
+    },
+    {
+      "route": "editorial-product.html",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "brand": "King AI"
+      }
+    },
+    {
+      "route": "editorial-product.html",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "geometry": {
+        "width": 1440,
+        "scroll": 1440,
+        "brand": "King AI"
+      }
+    }
+  ],
+  "assets": [
+    {
+      "path": "/sovereign.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/sovereign-start.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/sovereign-product.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/kinetic.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/kinetic-product.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/editorial.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/editorial-product.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/designs.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/design-suites.json",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/suite-registry.json",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/kinetic-product.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign-contract.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/showcase.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/king-ai-brand.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/kinetic-decisions.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference-ui.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference-design.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/editorial-product.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/catalogue.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/catalogue.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/product-base.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/showcase.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/king-ai-mark.svg",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/product.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/manrope-OFL.txt",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/asset-provenance.json",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/electrical.jpg",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/home.jpg",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/fonts-source.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/font-6.ttf",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/font-7.ttf",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/font-5.ttf",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/font-4.ttf",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/font-0.ttf",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/font-1.ttf",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/font-3.ttf",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/font-2.ttf",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/barlowcondensed-OFL.txt",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/fonts.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/sovereign/architecture.jpg",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference/construction-hero.jpg",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference/inter.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference/anton-0.woff2",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference/asset-provenance.json",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference/inter-5.woff2",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference/anton.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference/inter-3.woff2",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference/inter-1.woff2",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference/inter-4.woff2",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference/inter-0.woff2",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "/assets/reference/inter-2.woff2",
+      "status": 200,
+      "match": true
+    }
+  ]
+}

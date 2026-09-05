@@ -1,0 +1,26 @@
+{
+  "product": "King AI",
+  "designs": [
+    {
+      "id": "kinetic",
+      "landing": "kinetic.html",
+      "workspace": "kinetic-product.html",
+      "contract": "legacy-v1"
+    },
+    {
+      "id": "editorial",
+      "landing": "editorial.html",
+      "workspace": "editorial-product.html",
+      "contract": "legacy-v1"
+    },
+    {
+      "id": "sovereign",
+      "landing": "sovereign.html",
+      "onboarding": "sovereign-start.html",
+      "workspace": "sovereign-product.html",
+      "contract": "sovereign-v1",
+      "primaryAreas": 5,
+      "operations": "progressively disclosed"
+    }
+  ]
+}
