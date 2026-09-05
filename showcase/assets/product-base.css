@@ -1,0 +1,30 @@
+/* Shared behavior and accessibility primitives only. Suite identity lives in the two product stylesheets. */
+:root{font-synthesis:none;text-rendering:optimizeLegibility}
+*{box-sizing:border-box}
+html{min-width:280px;scroll-behavior:smooth}
+body{min-width:280px;margin:0;overflow-x:hidden}
+button,input,select,textarea{font:inherit}
+button,a{touch-action:manipulation}
+button{color:inherit}
+a{color:inherit}
+img,svg{display:block;max-width:100%}
+[hidden]{display:none!important}
+[inert]{pointer-events:none}
+.product-view[aria-hidden="true"]{display:none!important}
+.product-view[aria-hidden="false"]{display:block}
+.skip-link{position:fixed;top:10px;left:12px;z-index:10000;transform:translateY(-180%);padding:11px 15px;text-decoration:none;transition:transform .18s ease}
+.skip-link:focus{transform:none}
+:focus-visible{outline:3px solid var(--focus,#9d3024);outline-offset:3px}
+button{cursor:pointer}
+button:disabled,[aria-disabled="true"]{cursor:not-allowed;opacity:.42}
+.is-disabled{opacity:.42}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+dialog{max-width:calc(100vw - 28px);max-height:calc(100svh - 28px);overflow:auto}
+dialog:not([open]){display:none}
+dialog::backdrop{background:rgba(0,0,0,.68);backdrop-filter:blur(7px)}
+.toast{position:fixed;z-index:10000;right:18px;bottom:18px;max-width:min(430px,calc(100vw - 36px));transform:translateY(22px);opacity:0;pointer-events:none;transition:opacity .24s ease,transform .24s ease}
+.toast.is-visible{transform:none;opacity:1}
+.product-js-ready .product-view{animation:viewArrival .36s ease both}
+@keyframes viewArrival{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}.product-js-ready .product-view{animation:none}}
+@media print{.skip-link,.toast,dialog,[data-product-nav],[data-nav-toggle],[data-product-nav-toggle],[data-reset-demo],[data-motion-toggle],button{display:none!important}.product-view[hidden]{display:none!important}body{overflow:visible!important;background:#fff!important;color:#111!important}.product-shell{display:block!important}.product-view{box-shadow:none!important}}

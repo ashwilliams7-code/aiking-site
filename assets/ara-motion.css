@@ -1,0 +1,466 @@
+/* ARA kinetic experience — original mobile-first motion layer, 2026-09-03. */
+
+.ara-page .ara-hero h1 > span,
+.ara-page .ara-hero h1 > em{
+  display:block;
+}
+.ara-page:not(.home-knotch) .k-header .nav-links a.nav-sky-intelligence{color:rgba(247,248,243,.74);font-weight:500;text-shadow:none}
+.ara-page main>section{scroll-margin-top:92px}
+
+/* Purposeful ambient signal field: customer intent moving toward approved action. */
+.ara-page .ara-signal-field{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  overflow:hidden;
+  pointer-events:none;
+  opacity:.82;
+}
+.ara-page .ara-signal-field::before,
+.ara-page .ara-signal-field::after{
+  content:"";
+  position:absolute;
+  width:min(48vw,680px);
+  aspect-ratio:1;
+  border:1px solid rgba(209,254,23,.09);
+  border-radius:50%;
+  filter:drop-shadow(0 0 50px rgba(209,254,23,.04));
+}
+.ara-page .ara-signal-field::before{right:-18vw;top:-21%;animation:araOrbitDrift 22s ease-in-out infinite alternate}
+.ara-page .ara-signal-field::after{left:-28vw;bottom:-48%;animation:araOrbitDrift 28s ease-in-out -8s infinite alternate-reverse}
+.ara-page .ara-signal-field > i{
+  --size:5px;
+  position:absolute;
+  left:var(--x);
+  top:var(--y);
+  width:var(--size);
+  height:var(--size);
+  border-radius:50%;
+  background:var(--ara-lime);
+  box-shadow:0 0 0 7px rgba(209,254,23,.045),0 0 26px rgba(209,254,23,.52);
+  opacity:.26;
+  animation:araNodePulse 6.6s var(--d) ease-in-out infinite;
+}
+.ara-page .ara-signal-field > span{
+  position:absolute;
+  left:-18%;
+  width:136%;
+  height:1px;
+  opacity:.13;
+  background:linear-gradient(90deg,transparent,rgba(209,254,23,.8) 42%,transparent 70%);
+  transform:rotate(-13deg) translate3d(-9%,0,0);
+  animation:araSignalSweep 15s linear infinite;
+}
+.ara-page .ara-signal-field > span:nth-of-type(1){top:28%}
+.ara-page .ara-signal-field > span:nth-of-type(2){top:56%;animation-delay:-5s}
+.ara-page .ara-signal-field > span:nth-of-type(3){top:82%;animation-delay:-10s}
+@keyframes araNodePulse{0%,100%{opacity:.16;transform:scale(.72)}46%{opacity:.68;transform:scale(1.28)}60%{opacity:.31;transform:scale(.92)}}
+@keyframes araSignalSweep{0%{transform:rotate(-13deg) translate3d(-18%,0,0);opacity:0}16%{opacity:.14}70%{opacity:.1}100%{transform:rotate(-13deg) translate3d(18%,0,0);opacity:0}}
+@keyframes araOrbitDrift{from{transform:translate3d(-2%,0,0) scale(.94)}to{transform:translate3d(4%,3%,0) scale(1.06)}}
+
+/* Save-Data and reduced-motion users keep the layout without continuous animation. */
+.ara-page.ara-motion-disabled .ara-signal-field::before,
+.ara-page.ara-motion-disabled .ara-signal-field::after,
+.ara-page.ara-motion-disabled .ara-signal-field > i,
+.ara-page.ara-motion-disabled .ara-signal-field > span,
+.ara-page.ara-motion-disabled .ara-kinetic-divider span,
+.ara-page.ara-motion-disabled .ara-proof-orbit,
+.ara-page.ara-motion-disabled .ara-platform-track,
+.ara-page.ara-motion-disabled .ara-pathway-toggle i{animation:none!important}
+
+/* First-screen proof is concise, scannable and truthful. */
+.ara-page .ara-proof-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:20px;
+}
+.ara-page .ara-proof-chips span{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:30px;
+  padding:7px 11px;
+  border:1px solid rgba(246,243,233,.14);
+  border-radius:999px;
+  background:rgba(255,255,255,.025);
+  color:rgba(246,243,233,.68);
+  font:7.5px var(--mono);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.ara-page .ara-proof-chips i{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--ara-lime);
+  box-shadow:0 0 12px rgba(209,254,23,.55);
+}
+
+/* Interactive pathway stage control. */
+.ara-page .ara-pathway-controls{
+  position:relative;
+  z-index:3;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:1px;
+  padding:1px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.08);
+}
+.ara-page .ara-pathway-controls button{
+  min-width:0;
+  min-height:42px;
+  padding:9px 7px;
+  border:0;
+  background:#0a130e;
+  color:rgba(246,243,233,.54);
+  font:7.5px var(--mono);
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:background .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease);
+}
+.ara-page .ara-pathway-controls button span{display:block;margin-bottom:3px;color:rgba(209,254,23,.76);font-size:7.5px}
+.ara-page .ara-pathway-controls button:hover,
+.ara-page .ara-pathway-controls button:focus-visible{background:#111d15;color:#f7f4ea}
+.ara-page .ara-pathway-controls button[aria-pressed="true"]{
+  background:rgba(209,254,23,.1);
+  color:#f7f4ea;
+  box-shadow:inset 0 -2px var(--ara-lime);
+}
+.ara-page .ara-pathway-controls .ara-pathway-toggle{
+  display:grid;
+  grid-auto-flow:column;
+  place-items:center;
+  gap:7px;
+  grid-column:1/-1;
+  min-width:100%;
+  min-height:34px;
+  border-top:1px solid rgba(255,255,255,.07);
+  color:rgba(246,243,233,.72);
+}
+.ara-page .ara-pathway-toggle i{
+  display:block;
+  width:11px;
+  height:12px;
+  border-radius:0;
+  background:linear-gradient(90deg,var(--ara-lime) 0 3px,transparent 3px 7px,var(--ara-lime) 7px 10px,transparent 10px);
+  box-shadow:none;
+}
+.ara-page .ara-pathway-toggle[aria-pressed="true"] i{background:var(--ara-lime);clip-path:polygon(8% 0,100% 50%,8% 100%)}
+.ara-page .ara-pathway-toggle:disabled i{display:none}
+
+.ara-page .ara-pathway .cinema-motion{opacity:1;filter:none;transform:none}
+.ara-page [data-ara-stage]{
+  transition:opacity .34s var(--ease),transform .42s var(--ease),border-color .34s var(--ease),box-shadow .34s var(--ease),filter .34s var(--ease);
+}
+.ara-page .ara-pathway.is-playing [data-ara-stage]:not(.is-active){opacity:.72;transform:scale(.99)}
+.ara-page .ara-pathway [data-ara-stage].is-active{
+  opacity:1;
+  filter:none;
+  transform:translate3d(0,-2px,0) scale(1.008);
+  border-color:rgba(209,254,23,.42);
+  box-shadow:0 18px 50px rgba(0,0,0,.24),0 0 0 1px rgba(209,254,23,.05);
+}
+.ara-page .ara-pathway .ara-source-cluster.is-active .ara-source-card{
+  border-color:rgba(209,254,23,.27);
+  background:rgba(209,254,23,.045);
+}
+.ara-page .ara-pathway .ara-answer{background:#d9dfd3}
+.ara-page .ara-pathway .ara-panel-label{color:rgba(246,243,233,.76);font-size:9px}
+.ara-page .ara-pathway .ara-source-card span,.ara-page .ara-pathway .ara-source-card small{font-size:8.5px}
+.ara-page .ara-pathway .ara-source-card strong{font-size:13.5px}
+.ara-page .ara-pathway .ara-answer .ara-panel-label{color:#3f4a42}
+.ara-page .ara-pathway .ara-answer-head i{font-size:8.5px}
+.ara-page .ara-pathway .ara-answer li{font-size:8.5px}
+.ara-page .ara-pathway .ara-action small{font-size:8.5px}
+
+/* Diagonal transition echoes speed without copying another brand's artwork. */
+.ara-page .ara-kinetic-divider{
+  position:relative;
+  z-index:4;
+  height:34px;
+  overflow:hidden;
+  margin-top:-1px;
+  background:var(--ara-paper-bright);
+}
+.ara-page .ara-kinetic-divider span{
+  position:absolute;
+  top:-18px;
+  width:52%;
+  height:35px;
+  border-radius:5px;
+  transform:skewX(-34deg);
+  background:var(--ara-lime);
+  box-shadow:0 12px 36px rgba(76,98,7,.12);
+  animation:araStripeBreathe 7s ease-in-out infinite alternate;
+}
+.ara-page .ara-kinetic-divider span:nth-child(1){left:-13%}
+.ara-page .ara-kinetic-divider span:nth-child(2){left:35%;background:#839b24;animation-delay:-2s}
+.ara-page .ara-kinetic-divider span:nth-child(3){right:-17%;background:var(--ara-forest);animation-delay:-4s}
+@keyframes araStripeBreathe{from{transform:skewX(-34deg) translateX(-2%)}to{transform:skewX(-34deg) translateX(3%)}}
+
+/* Diagnostic proof field: precise numbers, explicitly not outcomes. */
+.ara-page .ara-proof-field{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:116px 0 0;
+  color:#f6f3e9;
+  background:
+    radial-gradient(circle at 82% 12%,rgba(209,254,23,.09),transparent 28%),
+    linear-gradient(135deg,#0c1710,#050b08 68%);
+}
+.ara-page .ara-proof-field::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background:linear-gradient(rgba(255,255,255,.021) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.021) 1px,transparent 1px);
+  background-size:68px 68px;
+  mask-image:linear-gradient(120deg,#000,transparent 84%);
+}
+.ara-page .ara-proof-field .ara-section-intro h2{color:#f6f3e9}
+.ara-page .ara-proof-field .ara-section-intro h2 em{color:var(--ara-lime)}
+.ara-page .ara-proof-field .ara-section-intro>p,
+.ara-page .ara-proof-field .ara-section-intro--split>p{color:rgba(246,243,233,.65)}
+.ara-page .ara-proof-field .ara-kicker{color:rgba(246,243,233,.62)}
+.ara-page .ara-proof-metrics{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  margin:64px 0 0;
+  border-top:1px solid rgba(255,255,255,.14);
+  border-bottom:1px solid rgba(255,255,255,.14);
+}
+.ara-page .ara-proof-metrics>div{
+  min-width:0;
+  min-height:224px;
+  padding:30px 26px;
+  border-right:1px solid rgba(255,255,255,.14);
+}
+.ara-page .ara-proof-metrics>div:last-child{border-right:0}
+.ara-page .ara-proof-metrics dt{display:flex;align-items:baseline;gap:9px;color:#f7f4e9}
+.ara-page .ara-proof-metrics strong{font:430 clamp(64px,7vw,102px)/.82 var(--serif);letter-spacing:-.07em}
+.ara-page .ara-proof-metrics span{color:var(--ara-lime);font:9.5px var(--mono);letter-spacing:.11em;text-transform:uppercase}
+.ara-page .ara-proof-metrics dd{max-width:220px;margin:61px 0 0;color:rgba(246,243,233,.68);font-size:13.5px;line-height:1.55}
+.ara-page .ara-proof-disclaimer{
+  margin:18px 0 0;
+  color:rgba(246,243,233,.66);
+  font:9px/1.6 var(--mono);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.ara-page .ara-methodology{
+  margin:18px 0 42px;
+  border-top:1px solid rgba(255,255,255,.14);
+  border-bottom:1px solid rgba(255,255,255,.14);
+}
+.ara-page .ara-methodology summary{
+  position:relative;
+  min-height:56px;
+  display:flex;
+  align-items:center;
+  padding:15px 48px 15px 0;
+  color:#f6f3e9;
+  font:9px var(--mono);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  cursor:pointer;
+  list-style:none;
+}
+.ara-page .ara-methodology summary::-webkit-details-marker{display:none}
+.ara-page .ara-methodology summary::after{
+  content:"+";
+  position:absolute;
+  right:8px;
+  top:12px;
+  color:var(--ara-lime);
+  font:27px var(--serif);
+  transition:transform .24s var(--ease);
+}
+.ara-page .ara-methodology[open] summary::after{transform:rotate(45deg)}
+.ara-page .ara-methodology ul{display:grid;gap:11px;max-width:920px;padding:0 48px 24px 0}
+.ara-page .ara-methodology li{position:relative;padding-left:18px;color:rgba(246,243,233,.66);font-size:13px;line-height:1.58}
+.ara-page .ara-methodology li::before{content:"";position:absolute;left:0;top:.65em;width:5px;height:5px;border-radius:50%;background:var(--ara-lime)}
+.ara-page .ara-proof-orbit{
+  position:absolute;
+  z-index:-1;
+  top:44px;
+  right:-130px;
+  width:420px;
+  aspect-ratio:1;
+  border:1px solid rgba(209,254,23,.08);
+  border-radius:50%;
+  animation:araOrbitSpin 34s linear infinite;
+}
+.ara-page .ara-proof-orbit::before,.ara-page .ara-proof-orbit::after{content:"";position:absolute;inset:18%;border:1px solid rgba(209,254,23,.07);border-radius:50%}
+.ara-page .ara-proof-orbit::after{inset:37%}
+.ara-page .ara-proof-orbit i{position:absolute;left:50%;top:50%;width:7px;height:7px;border-radius:50%;background:var(--ara-lime);box-shadow:0 0 20px rgba(209,254,23,.55)}
+.ara-page .ara-proof-orbit i:nth-child(1){transform:translate(-50%,-50%) translateX(210px)}
+.ara-page .ara-proof-orbit i:nth-child(2){transform:translate(-50%,-50%) translateY(130px)}
+.ara-page .ara-proof-orbit i:nth-child(3){transform:translate(-50%,-50%) translateX(-78px)}
+.ara-page .ara-proof-orbit i:nth-child(4){transform:translate(-50%,-50%) translateY(-44px)}
+@keyframes araOrbitSpin{to{transform:rotate(1turn)}}
+
+.ara-page .ara-platform-marquee{
+  overflow:hidden;
+  border-top:1px solid rgba(255,255,255,.12);
+  background:var(--ara-lime);
+  color:var(--ara-ink);
+}
+.ara-page .ara-platform-track{
+  display:flex;
+  width:max-content;
+  animation:araMarquee 28s linear infinite;
+}
+.ara-page .ara-platform-track span{
+  display:flex;
+  align-items:center;
+  min-height:66px;
+  padding:0 30px;
+  font:700 12px var(--sans);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.ara-page .ara-platform-track span::after{content:"✦";margin-left:60px;font-size:10px}
+@keyframes araMarquee{to{transform:translateX(-50%)}}
+
+/* Section entry choreography, progressive-enhancement only. */
+.ara-page.ara-motion-on .ara-motion-reveal{
+  opacity:0;
+  transform:translate3d(0,34px,0);
+  transition:opacity .72s var(--ease),transform .82s var(--ease);
+  transition-delay:var(--ara-reveal-delay,0ms);
+}
+.ara-page.ara-motion-on .ara-motion-reveal.is-visible{
+  opacity:1;
+  transform:none;
+}
+.ara-page.ara-motion-on .ara-service.ara-motion-reveal{transform:translate3d(0,52px,0)}
+.ara-page.ara-motion-on .ara-service.ara-motion-reveal.is-visible{transform:none}
+
+/* Floating mobile conversion path; hidden until the hero is no longer the primary action. */
+.ara-page .ara-mobile-dock{display:none}
+
+@media(max-width:900px){
+  .ara-page .ara-proof-metrics{grid-template-columns:1fr 1fr}
+  .ara-page .ara-proof-metrics>div:nth-child(2){border-right:0}
+  .ara-page .ara-proof-metrics>div:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.14)}
+}
+
+@media(max-width:680px){
+  .ara-page .site-header .nav-actions > .btn{display:none}
+  .ara-page .ara-breadcrumb{display:none}
+  .ara-page .ara-hero{padding-top:22px}
+  .ara-page .ara-hero-grid{gap:28px}
+  .ara-page .ara-hero-copy{padding-top:10px}
+  .ara-page .ara-eyebrow{margin-top:0}
+  .ara-page .ara-hero h1{
+    max-width:100%;
+    margin-top:22px;
+    font-size:clamp(47px,13.6vw,61px);
+    line-height:.89;
+    letter-spacing:-.052em;
+  }
+  .ara-page .ara-lead{max-width:35ch;margin-top:22px;color:rgba(246,243,233,.81);font-size:16.5px;line-height:1.56}
+  .ara-page .ara-actions{margin-top:25px}
+  .ara-page .ara-actions .btn.secondary{min-height:45px;border-color:rgba(246,243,233,.32);background:rgba(255,255,255,.018);box-shadow:none}
+  .ara-page .ara-proof-chips{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .ara-page .ara-proof-chips span{justify-content:flex-start;min-height:36px;padding-inline:11px;font-size:9.5px;letter-spacing:.045em}
+  .ara-page .ara-proof-chips span:last-child{grid-column:1/-1}
+  .ara-page .ara-hero-note{margin-top:18px;padding-top:16px;color:rgba(246,243,233,.74);font-size:9.5px;line-height:1.7}
+  .ara-page .ara-signal-field>i{display:none}
+  .ara-page .ara-pathway-controls{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .ara-page .ara-pathway-controls .ara-pathway-toggle{grid-column:1/-1;min-height:36px}
+  .ara-page .ara-pathway.is-playing [data-ara-stage]:not(.is-active){opacity:.58;transform:scale(.982)}
+  .ara-page .ara-kinetic-divider{height:25px}
+  .ara-page .ara-kinetic-divider span{top:-22px;height:34px}
+  .ara-page .ara-proof-field{padding-top:78px}
+  .ara-page .ara-proof-metrics{grid-template-columns:1fr 1fr;margin-top:42px}
+  .ara-page .ara-proof-metrics>div{min-height:175px;padding:22px 16px}
+  .ara-page .ara-proof-metrics strong{font-size:64px}
+  .ara-page .ara-proof-metrics span{font-size:9px}
+  .ara-page .ara-proof-metrics dd{margin-top:35px;color:rgba(246,243,233,.72);font-size:12px}
+  .ara-page .ara-proof-disclaimer{font-size:8.5px;line-height:1.7}
+  .ara-page .ara-methodology{margin-bottom:30px}
+  .ara-page .ara-methodology summary{font-size:9px;line-height:1.5}
+  .ara-page .ara-methodology ul{padding-right:8px}
+  .ara-page .ara-methodology li{font-size:12.5px}
+  .ara-page .ara-proof-orbit{right:-235px;opacity:.7}
+  .ara-page .ara-platform-track span{min-height:54px;padding-inline:22px;font-size:10px}
+  .ara-page .ara-platform-track span::after{margin-left:44px}
+  .ara-page .ara-mobile-dock{
+    position:fixed;
+    left:12px;
+    right:12px;
+    bottom:max(12px,env(safe-area-inset-bottom));
+    z-index:40;
+    display:block;
+    opacity:0;
+    visibility:hidden;
+    transform:translate3d(0,24px,0);
+    pointer-events:none;
+    transition:opacity .28s var(--ease),transform .34s var(--ease),visibility .28s;
+  }
+  .ara-page .ara-mobile-dock.is-visible{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+  .ara-page .ara-mobile-dock a{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    min-height:64px;
+    padding:11px 13px 11px 18px;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:18px;
+    background:rgba(7,16,12,.93);
+    color:#f7f4e9;
+    box-shadow:0 18px 58px rgba(0,0,0,.38);
+    backdrop-filter:blur(18px) saturate(125%);
+  }
+  .ara-page .ara-mobile-dock span{display:grid;gap:4px;font-size:13px;font-weight:700}
+  .ara-page .ara-mobile-dock small{color:var(--ara-lime);font:6.8px var(--mono);letter-spacing:.13em;text-transform:uppercase}
+  .ara-page .ara-mobile-dock b{display:grid;place-items:center;width:39px;height:39px;border-radius:13px;background:var(--ara-lime);color:var(--ara-ink);font-size:18px}
+}
+
+@media(max-width:420px){
+  .ara-page .ara-proof-chips{grid-template-columns:1fr}
+  .ara-page .ara-proof-chips span:last-child{grid-column:auto}
+}
+
+@media(max-width:360px){
+  .ara-page .ara-hero h1{font-size:clamp(43px,13.4vw,53px)}
+  .ara-page .ara-proof-metrics{grid-template-columns:1fr}
+  .ara-page .ara-proof-metrics>div,.ara-page .ara-proof-metrics>div:nth-child(2){min-height:0;border-right:0;border-bottom:1px solid rgba(255,255,255,.14)}
+  .ara-page .ara-proof-metrics>div:last-child{border-bottom:0}
+  .ara-page .ara-proof-metrics dd{margin-top:20px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .ara-page .ara-signal-field,
+  .ara-page .ara-proof-orbit{display:none}
+  .ara-page .ara-kinetic-divider span,
+  .ara-page .ara-platform-track,
+  .ara-page .ara-pathway-toggle i{animation:none!important}
+  .ara-page .ara-platform-track{width:100%;flex-wrap:wrap;justify-content:center;transform:none!important}
+  .ara-page .ara-platform-track span[aria-hidden="true"]{display:none}
+  .ara-page .ara-platform-track span{min-height:44px;padding-inline:13px}
+  .ara-page .ara-platform-track span::after{margin-left:26px}
+  .ara-page.ara-motion-on .ara-motion-reveal,
+  .ara-page.ara-motion-on .ara-motion-reveal.is-visible,
+  .ara-page [data-ara-stage],
+  .ara-page .ara-pathway-controls button,
+  .ara-page .ara-methodology summary::after,
+  .ara-page .ara-methodology summary::after{
+    opacity:1;
+    visibility:visible;
+    transform:none;
+    transition:none!important;
+    filter:none;
+  }
+  .ara-page .ara-mobile-dock{transition:none!important}
+  .ara-page .ara-pathway.is-playing [data-ara-stage]:not(.is-active){opacity:1;filter:none;transform:none}
+}

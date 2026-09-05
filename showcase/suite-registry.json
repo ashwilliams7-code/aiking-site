@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "productContract": "v1",
+  "readySuites": [
+    {
+      "slug": "kinetic",
+      "label": "Kinetic Signal System",
+      "landing": "kinetic.html",
+      "workspace": "kinetic-product.html",
+      "colorScheme": "dark",
+      "capabilities": {
+        "kineticMotion": true,
+        "mobileCommandDock": true
+      },
+      "identity": {
+        "landingRequired": {
+          "[data-motion-toggle]": 1,
+          "[data-motion-zone]": 2,
+          ".kinetic-ticker": 1,
+          ".signal-packet": 2,
+          "[data-journey-progress]": 1
+        },
+        "landingForbidden": [
+          ".editorial-proof-index"
+        ],
+        "productRequired": {
+          ".command-rail": 1,
+          "[data-signal-spine]": 1,
+          "[data-motion-toggle]": 1
+        },
+        "productForbidden": [
+          ".evidence-folio",
+          ".journal-masthead"
+        ]
+      }
+    },
+    {
+      "slug": "editorial",
+      "label": "Editorial Evidence System",
+      "landing": "editorial.html",
+      "workspace": "editorial-product.html",
+      "colorScheme": "light",
+      "capabilities": {
+        "kineticMotion": false,
+        "mobileCommandDock": false
+      },
+      "identity": {
+        "landingRequired": {
+          "body.editorial": 1,
+          "[data-chapter]": 8
+        },
+        "landingForbidden": [
+          "[data-motion-toggle]",
+          ".kinetic-ticker",
+          "[data-journey-progress]"
+        ],
+        "productRequired": {
+          ".journal-masthead": 1,
+          ".evidence-folio": 1
+        },
+        "productForbidden": [
+          ".command-rail",
+          "[data-motion-toggle]",
+          ".signal-feed"
+        ]
+      }
+    }
+  ],
+  "reservedDesignSlots": [
+    {
+      "slug": "concept-c",
+      "label": "Open Design Lane",
+      "status": "reserved",
+      "rule": "Must preserve the v1 product contract while defining an original silhouette, signature mechanism, presentation grammar and explicit anti-convergence rules."
+    }
+  ]
+}
